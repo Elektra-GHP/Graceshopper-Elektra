@@ -175,13 +175,13 @@ async function seed() {
       light: 'low',
       water: 'weekly',
       humidity: 'high',
-      species: '',
-      family: ''
+      species: orchids.id,
+      family: orchidaceae.id
     },
     {
       name: 'Tiger Lily',
       imageUrl:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Lilium_lancifolium_7757.jpg/440px-Lilium_lancifolium_7757.jpg',
+        'https://i.etsystatic.com/8732782/r/il/55a16e/1197239532/il_570xN.1197239532_9eqo.jpg',
       description:
         'An Asian species of lily, native to China, Japan, Korea, and the Russian Far East. It is widely planted as an ornamental because of its showy orange-and-black flowers, and sporadically occurs as garden escape in North America, particularly the eastern United States including New England,  and has made incursions into some southern states such as Georgia.',
       price: 24.99,
@@ -192,38 +192,108 @@ async function seed() {
       family: araceae.id
     },
     {
-      name: '',
-      imageUrl: '',
-      description: '',
-      price: '',
-      light: '',
-      water: '',
-      humidity: '',
-      species: '',
-      family: ''
+      name: 'Rattlesnake Plant',
+      imageUrl:
+        'https://cdn.shopify.com/s/files/1/0662/5489/products/Calathea_lancifolia_-_rattlesnake_plant_-_pistils_nursery.jpg?v=1609194468',
+      description:
+        'One of the very best indoor ornamental houseplants, Rattlesnake Calathea has long, medium green leaves with dark decorative spots. The undersides of the leaves are deep purple. A beautiful accent plant for the home or patio, Calathea lancifolia grows to 30" tall and creates a magnificent specimen.',
+      price: 29.99,
+      light: 'indirect',
+      water: 'weekly',
+      humidity: 'high',
+      species: calathea.id,
+      family: marantaceae.id
     },
 
     {
-      name: '',
-      imageUrl: '',
-      description: '',
-      price: '',
-      light: '',
-      water: '',
-      humidity: '',
-      species: '',
-      family: ''
+      name: 'Vanilla',
+      imageUrl:
+        'https://i.pinimg.com/originals/75/a0/ac/75a0acb4ea77b18022cd1288e97c3937.jpg',
+      description:
+        'The vanilla orchid (Vanilla planifolia) is the only orchid that produces an edible fruit.',
+      price: 35.25,
+      light: 'direct',
+      water: 'daily',
+      humidity: 'high',
+      species: orchids.id,
+      family: orchidaceae.id
     },
     {
-      name: '',
-      imageUrl: '',
-      description: '',
-      price: '',
-      light: '',
-      water: '',
-      humidity: '',
-      species: '',
-      family: ''
+      name: 'Red Prayer Plant',
+      imageUrl:
+        'https://i.etsystatic.com/21083994/r/il/a6365e/2724118680/il_794xN.2724118680_h038.jpg',
+      description:
+        'The Maranta plant is a prostrate evergreen species that rises from rhizomes. It grows 12-15 inches (30-38 cm.) tall. The beautiful foliage is broadly oval and features 5-inch (13 cm.) long olive-green leaves with prominent red midribs and veining in a herringbone design. The center of the leaf is a lighter green and the undersides are even lighter still. The best thing about the plant is its ability to “pray.” This is called a nastic movement and is the plant’s response to light. During the day the leaves are flat, but at night they move upward as if praying to the heavens. This also allows the plant to conserve moisture at night.',
+      price: 15.99,
+      light: 'indirect',
+      water: 'weekly',
+      humidity: 'high',
+      species: calathea.id,
+      family: marantaceae.id
+    },
+    {
+      name: 'Satin Pothos',
+      imageUrl: 'https://www.ourhouseplants.com/imgs-content/pothos_satin.jpg',
+      description:
+        'A charming indoor plant for a houseplant lover of any level, the Silver Satin Pothos makes a beautiful splash of greenery to any space. Each leaf is vastly unique with silver and green hues that feature a shimmery sheen. This fast grower is easy to keep alive and requires very little maintenance.',
+      price: 29.99,
+      light: 'indirect',
+      water: 'weekly',
+      humidity: 'high',
+      species: devilsIvy.id,
+      family: araceae.id
+    },
+    {
+      name: 'Humboldt’s Lily',
+      imageUrl:
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0y_CxNPO8qYI3wt51hVH2IipuCPN2A5dmMQ&usqp=CAU',
+      description:
+        'Humboldt’s Lilygrows up to 6 feet tall, with flowers that are maroon-spotted, golden-orange with dark red splotches, with orange to brown stamens. The plant flowers in June, with flowers growing in a pyramidal inflorescence. The flowers are on stout stems, which are sometimes brown-purple. The subrhizomatous bulb is large, with yellowish-white scales, and grows very deep in the soil. The leaves grow in whorls, and are undulate, shiny, and oblanceolate. It is summer-deciduous, dying back after flowering in mid- to late summer.',
+      price: 29.99,
+      light: 'direct',
+      water: 'daily',
+      humidity: 'low',
+      species: arumLily.id,
+      family: araceae.id
+    },
+    {
+      name: 'Brazilian Philodendron',
+      imageUrl:
+        'https://i.etsystatic.com/22612434/r/il/a201a5/2459085376/il_794xN.2459085376_ewk0.jpg',
+      description:
+        'The Brazilian Philodendron  offers a colorful twist on a classic houseplant and is surprisingly easy to care for. With heart-shaped leaves in different shades of green and yellow, this trailing plant earned its name thanks to the close resemblance to the Brazilian flag.',
+      price: 19.99,
+      light: 'indirect',
+      water: 'weekly',
+      humidity: 'high',
+      species: devilsIvy.id,
+      family: araceae.id
+    },
+    {
+      name: 'Easter Cactus',
+      imageUrl:
+        'https://www.logees.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/s/7/s7835-4-large.jpg',
+      description:
+        'Native to Brazil, the easter cactus blooms in late winter and early spring. Its flowers vary from whites to oranges to lavenders. The plant’s spines are stacked on top of each other, giving it a unique shape.',
+      price: 35.99,
+      light: 'indirect',
+      water: 'weekly',
+      humidity: 'medium',
+      species: cactus.id,
+      family: cactaceae.id
+    },
+    {
+      name: 'Barrel Cactus',
+      imageUrl:
+        'https://microplantstudio.com/wp-content/uploads/2020/04/barrol-cactus.jpg',
+      description:
+        'The barrel cactus is named after its barrel or circular shape. Ribs line the sides of the plant and spiky spines grow from them. Some popular varieties include the golden barrel, california barrel, fishhook cactus, blue barrel and colviller’s barrel. Flowers bloom in May and June, showing off red or yellow colors.',
+      price: 25.0,
+      light: 'indirect',
+      water: 'weekly',
+      humidity: 'low',
+      species: cactus.id,
+      family: cactaceae.id
     }
   ]
 
