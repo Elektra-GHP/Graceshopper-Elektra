@@ -2,17 +2,18 @@ const router = require('express').Router()
 const {Plant, Type} = require('../db/models')
 module.exports = router
 
-// GET api/plant/all
-router.get('/all', async (req, res, next) => {
+// GET api/plants/
+router.get('/', async (req, res, next) => {
   try {
     const plants = await Plant.findAll({include: Type})
+    console.log('plants:', plants)
     res.json(plants)
   } catch (e) {
     next(e)
   }
 })
 
-// GET api/plant/${plant.id}
+// GET api/plants/${plant.id}
 router.get('/:id', async (req, res, next) => {
   try {
     const plant = await Plant.findByPk(req.params.id, {include: Type})
@@ -36,7 +37,7 @@ router.post('/', async (req, res, next) => {
 router.put('/:id', async (req, res, next) => {
   try {
     const singlePlant = await Plant.findByPk(Number(req.params.id), {
-      include: Type
+      include: Type,
     })
     res.send(await singlePlant.update(req.body))
   } catch (e) {

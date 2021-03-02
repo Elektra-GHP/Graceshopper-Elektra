@@ -16,11 +16,11 @@ const Plant = require('./plant')
  * instead of: const User = require('../db/models/user')
  */
 
-Plant.belongsTo(Type)
 Type.hasMany(Plant)
+Plant.belongsTo(Type)
 
 module.exports = {
   User,
   Type,
-  Plant
+  Plant,
 }
