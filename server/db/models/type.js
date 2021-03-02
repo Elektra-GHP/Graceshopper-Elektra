@@ -5,14 +5,14 @@ const Type = db.define('type', {
   name: {
     type: Sequelize.STRING,
     unique: true,
-    allowNull: false
+    allowNull: false,
   },
   description: {
-    type: Sequelize.TEXT
+    type: Sequelize.TEXT,
   },
   origin: {
-    type: Sequelize.STRING
-  }
+    type: Sequelize.TEXT,
+  },
 })
 
 module.exports = Type

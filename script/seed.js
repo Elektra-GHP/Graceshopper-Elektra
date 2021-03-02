@@ -71,11 +71,10 @@ async function seed() {
     calathea,
     orchids,
     devilsIvy,
-    paintersPalette,
     arumLily,
     stromanthe,
     maranta,
-  ] = await Type.bulkCreate(types)
+  ] = await Promise.all(types.map((type) => Type.create(type)))
 
   const plants = [
     {
@@ -88,7 +87,7 @@ async function seed() {
       light: 'direct',
       water: 'weekly',
       humidity: 'low',
-      typeId: 1,
+      typeId: cactus.id,
     },
     {
       name: 'Dottie',
@@ -272,6 +271,7 @@ async function seed() {
       typeId: cactus.id,
     },
   ]
+
   await Plant.bulkCreate(plants)
 
   console.log('cactus:', cactus)
