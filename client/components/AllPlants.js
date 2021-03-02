@@ -15,16 +15,16 @@ class AllPlants extends Component {
 
   render() {
     const plants = this.props.plants
-    console.log('plants in AllPlants render:', this.props)
+    console.log('plants in AllPlants render:', plants)
     return (
       <div>
         <h1>Plants</h1>
-        {plants.map((plant) => {
+        {plants.map(plant => {
           return (
             <div key={plant.id}>
               <img scr={plant.imageUrl} />
               <h2>{plant.name}</h2>
-              <div>{plant.type}</div>
+              <div>{plant.type.name}</div>
               <div>{plant.price}</div>
             </div>
           )
@@ -34,15 +34,15 @@ class AllPlants extends Component {
   }
 }
 
-const mapState = (state) => {
+const mapState = state => {
   return {
-    plants: state.plants.all,
+    plants: state.plants.all
   }
 }
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = dispatch => {
   return {
-    fetchPlants: () => dispatch(fetchPlants()),
+    fetchPlants: () => dispatch(fetchPlants())
   }
 }
 
