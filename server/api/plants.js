@@ -8,8 +8,8 @@ router.get('/', async (req, res, next) => {
     const plants = await Plant.findAll({include: Type})
     console.log('plants:', plants)
     res.json(plants)
-  } catch (err) {
-    next(err)
+  } catch (e) {
+    next(e)
   }
 })
 
@@ -18,7 +18,40 @@ router.get('/:id', async (req, res, next) => {
   try {
     const plant = await Plant.findByPk(req.params.id, {include: Type})
     res.json(plant)
-  } catch (err) {
-    next(err)
+  } catch (e) {
+    next(e)
+  }
+})
+
+// POST /api/plant
+router.post('/', async (req, res, next) => {
+  try {
+    const newPlant = await Plant.create(req.body)
+    res.status(201).send(newPlant)
+  } catch (e) {
+    next(e)
+  }
+})
+
+// PUT /api/plant/:id
+router.put('/:id', async (req, res, next) => {
+  try {
+    const singlePlant = await Plant.findByPk(Number(req.params.id), {
+      include: Type,
+    })
+    res.send(await singlePlant.update(req.body))
+  } catch (e) {
+    next(e)
+  }
+})
+
+// DELETE /api/plant/:id
+router.delete('/:id', async (req, res, next) => {
+  try {
+    const singlePlant = await Plant.findByPk(Number(req.params.id))
+    await singlePlant.destroy()
+    res.send(singlePlant)
+  } catch (e) {
+    next(e)
   }
 })
