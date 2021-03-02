@@ -18,7 +18,8 @@ if (process.env.DATABASE_URL) {
   }
 } else {
   config = {
-    logging: false
+    logging: false,
+    username: 'alisa'
   }
 }
 
