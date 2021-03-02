@@ -71,7 +71,9 @@ async function seed() {
     orchids,
     devilsIvy,
     paintersPalette,
-    arumLily
+    arumLily,
+    stromanthe,
+    maranta
   ] = await Type.bulkCreate(types)
 
   const plants = [
@@ -155,7 +157,7 @@ async function seed() {
       description:
         'Phalaenopsis, the moth orchid, is perhaps the best orchid for growing in the home, and is also a favorite with greenhouse growers. Well-grown plants can flower often, sometimes with a few flowers throughout the year, though the main season is late winter into spring.',
       price: 30.99,
-      light: 'low',
+      light: 'indirect',
       water: 'weekly',
       humidity: 'high',
       type: orchids.id
@@ -269,6 +271,7 @@ async function seed() {
       type: cactus.id
     }
   ]
+  await Plant.bulkCreate(plants)
 
   console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)
