@@ -24,7 +24,7 @@ describe('Plant routes', () => {
       light: 'direct',
       water: 'daily',
       humidity: 'high',
-      typeId: 1,
+      typeId: 1
     }
     const testplant2 = {
       name: 'Mangifera',
@@ -37,13 +37,13 @@ describe('Plant routes', () => {
       light: 'direct',
       water: 'daily',
       humidity: 'high',
-      typeId: 1,
+      typeId: 1
     }
     const testtype = {
       name: 'Cashew',
       description:
         'The cashew family or sumac family, are a family of flowering plants, including about 83 genera with about 860 known species.',
-      origin: 'native to tropical Americas, Africa and India',
+      origin: 'native to tropical Americas, Africa and India'
     }
 
     beforeEach(async () => {
@@ -53,7 +53,9 @@ describe('Plant routes', () => {
     it('GET /plant/all', async () => {
       await Plant.create(testplant1)
       await Plant.create(testplant2)
-      const res = await request(app).get('/api/plant/all').expect(200)
+      const res = await request(app)
+        .get('/api/plants')
+        .expect(200)
 
       expect(res.body).to.be.an('array')
       expect(res.body.length).to.be.equal(2)
@@ -64,7 +66,9 @@ describe('Plant routes', () => {
     it('GET /plant/:id', async () => {
       await Plant.create(testplant1)
       await Plant.create(testplant2)
-      const res = await request(app).get('/api/plant/1').expect(200)
+      const res = await request(app)
+        .get('/api/plants/1')
+        .expect(200)
 
       //expect(res.body).to.be.an('object')
       expect(res.body.name).to.be.equal(testplant1.name)
