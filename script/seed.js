@@ -1,7 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Family, Species, Plant} = require('../server/db/models')
+const {User, Type, Plant} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
@@ -12,67 +12,56 @@ async function seed() {
     User.create({email: 'murphy@email.com', password: '123'})
   ])
 
-  const families = [
+  const types = [
     {
-      name: 'Cactaceae',
+      name: 'Cactus',
       description:
         'The cactus family (Cactaceae) consists of about 131 genera and 1,866 species of flowering plants, almost all of which are found in the New World. Most cacti are adapted to arid environments, though a number of species are native to rainforests and other tropical or subtropical areas. Many have succulent photosynthetic stems and reduced leaves that are often modified as spines. The flowers are typically showy with numerous petals. The following is a list of some of the major genera and species in the family Cactaceae, arranged alphabetically by common name or genus.',
       origin:
-        'Cactaceae are native to the Americas, ranging from Patagonia in the south to parts of western Canada in the north—except for Rhipsalis baccifera, which also grows in Africa and Sri Lanka'
-    },
-    {
-      name: 'Marantaceae',
-      description:
-        'The Marantaceae are a family, the arrowroot family, of flowering plants consisting of 31 genera and around 530 species, defining it as one of the most species rich families in its order.  They are commonly called the prayer-plant family and are also known for their unique secondary pollination presentation.',
-      origin:
-        'Species of this family are found in lowland tropical forests of Africa, Asia, and the Americas. The majority (80%) of the species are found in the American tropics, followed by Asian (11%) and African (9%) tropics.'
-    },
-    {
-      name: 'Orchidaceae',
-      description:
-        'The orchid family (Orchidaceae) is the second largest family of flowering plants, with about 880 genera and some 26,000 species distributed nearly worldwide. Orchids are perennial herbs and feature unusual bilaterally symmetric flowers, with masses of pollen known as pollinia, and tiny, dustlike seeds. Many are grown as ornamentals for their showy flowers, and several are of economic importance as the source of the flavouring vanilla. The following is a list of some of the major genera and species in the family Orchidaceae, arranged alphabetically by common name or genus.',
-      origin: 'worldwide'
-    },
-    {
-      name: 'Araceae',
-      description:
-        'Plants in the Araceae are monocots. Most members of the arum family are tropical plants, though an obvious exception would be the Jack-in-the-Pulpit which grows extensively in the temperate zone. Vining forms often have large, fleshy aerial roots. Leaves can vary greatly in shape and many have deep lobes, slits or holes in them. The inflorescence of this family is unusual, consisting of an expanded, leaf-like spathe and a column of tiny flowers, the spadix. The spathe is often colorful, as in many anthuriums and the closet plant. The spadix may have male and female flowers or perfect flowers or all types. They are tropical and many suffer chilling injury at temperatures below 50oF. They are among the easiest houseplants to grow and among the most popular. Some members of the family have toxic sap. ',
-      origin:
-        'The 2,500 arum species are distributed worldwide, primarily in tropical and subtropical regions, where they grow in rainforests both on the ground and as epiphytes. Arums are generally absent from the arctic and deserts. Only eleven species occur in North America and other temperate northern regions.'
-    }
-  ]
-
-  const [
-    cactaceae,
-    marantaceae,
-    orchidaceae,
-    araceae
-  ] = await Family.bulkCreate(families)
-
-  const species = [
-    {
-      name: 'Cactus',
-      family: cactaceae.id
+        'Cacti are native to the Americas, ranging from Patagonia in the south to parts of western Canada in the north—except for Rhipsalis baccifera, which also grows in Africa and Sri Lanka.'
     },
     {
       name: 'Calathea',
-      family: marantaceae.id
+      description:
+        ' Many of the species are popular as pot plants due to their decorative leaves and, in some species, colorful inflorescences. They are commonly called calatheas or (like their relatives) prayer plants.',
+      origin: 'Native to the tropical Americas'
     },
     {
       name: 'Orchids',
-      family: orchidaceae.id
+      description:
+        'The orchid family is a diverse and widespread family of flowering plants, with blooms that are often colourful and fragrant. The number of orchid species is nearly equal to the number of bony fishes, more than twice the number of bird species, and about four times the number of mammal species.',
+      origin:
+        'Orchids are cosmopolitan, occurring in almost every habitat apart from glaciers.'
     },
     {
       name: 'Devil’s ivy',
-      family: araceae.id
+      description:
+        'It is a gorgeous vining plant with heart - shaped leaves that are variegated in green and yellow. It is a fast grower, hardy, and can tolerate a wide variety of growing conditions. The vines can reach 10′ or longer, making them ideal for hanging baskets where they will create beautiful draping foliage.',
+      origin:
+        'This plant is a native of Australia, Indonesia, China, Japan and India.'
     },
     {
-      name: 'painter’s palette',
-      family: araceae.id
+      name: 'Painter’s Palette',
+      description:
+        'The Painter’s Palette has arrow shaped and highly polished leaves with an almost unreal looking appearance, which may get people wondering if the plant is genuine or artificial.The leaf or spathe surrounding the flowering spike is normally red, cream or purple but either way the flower spike itself is always straight.',
+      origin: 'Native to Columbia and Ecuador.'
     },
     {
-      name: ' arum-lily',
-      family: araceae.id
+      name: 'Arum-lily',
+      description:
+        'Arum lily is a robust, dark green, succulent herb, also known as calla or white arum lily. It was introduced to WA from South Africa as a garden plant and subsequently escaped to become established as a weed. It is found in creeks, irrigation ditches and areas of summer-moist land in the higher rainfall south west of WA, often forming large dense clumps.',
+      origin: 'Native to South Africa'
+    },
+    {
+      name: 'Stromanthe',
+      description:
+        "Stromanthe sanguinea, commonly called stromanthe, is an upright rhizomatous perennial that typically grows to 5' tall and 3' wide outdoors but to a more modest 2-3' tall when grown indoors as a houseplant.",
+      origin: 'native to rainforests in Brazil'
+    },
+    {
+      name: 'Maranta',
+      description: `The crowded oval, evergreen leaves are undivided with sheathing stalks. The leaves are flat by day and folded up as the day comes to an end, hence the common name "prayer plant" which attaches to the genus and its species.`,
+      origin: 'native to tropical Central and South America and the West Indies'
     }
   ]
 
@@ -83,7 +72,7 @@ async function seed() {
     devilsIvy,
     paintersPalette,
     arumLily
-  ] = await Species.bulkCreate(species)
+  ] = await Type.bulkCreate(types)
 
   const plants = [
     {
@@ -96,8 +85,7 @@ async function seed() {
       light: 'direct',
       water: 'weekly',
       humidity: 'low',
-      species: cactus.id,
-      family: cactaceae.id
+      type: cactus.id
     },
     {
       name: 'Dottie',
@@ -109,8 +97,7 @@ async function seed() {
       light: 'indirect',
       water: 'weekly',
       humidity: 'high',
-      species: calathea.id,
-      family: marantaceae.id
+      type: calathea.id
     },
     {
       name: 'Stromanthe Triostar',
@@ -122,8 +109,7 @@ async function seed() {
       light: 'indirect',
       water: 'weekly',
       humidity: 'high',
-      species: calathea.id,
-      family: marantaceae.id
+      type: stromanthe.id
     },
     {
       name: 'Lily',
@@ -135,8 +121,7 @@ async function seed() {
       light: 'direct',
       water: 'daily',
       humidity: 'low',
-      species: arumLily.id,
-      family: araceae.id
+      type: arumLily.id
     },
 
     {
@@ -149,8 +134,7 @@ async function seed() {
       light: 'direct',
       water: 'weekly',
       humidity: 'low',
-      species: cactus.id,
-      family: cactaceae.id
+      type: cactus.id
     },
     {
       name: 'Peacock Plant',
@@ -162,8 +146,7 @@ async function seed() {
       light: 'indirect',
       water: 'weekly',
       humidity: 'high',
-      species: calathea.id,
-      family: marantaceae.id
+      type: calathea.id
     },
     {
       name: 'Phalaenopsis amabilis',
@@ -175,8 +158,7 @@ async function seed() {
       light: 'low',
       water: 'weekly',
       humidity: 'high',
-      species: orchids.id,
-      family: orchidaceae.id
+      type: orchids.id
     },
     {
       name: 'Tiger Lily',
@@ -188,8 +170,7 @@ async function seed() {
       light: 'direct',
       water: 'daily',
       humidity: 'low',
-      species: arumLily.id,
-      family: araceae.id
+      type: arumLily.id
     },
     {
       name: 'Rattlesnake Plant',
@@ -201,8 +182,7 @@ async function seed() {
       light: 'indirect',
       water: 'weekly',
       humidity: 'high',
-      species: calathea.id,
-      family: marantaceae.id
+      type: calathea.id
     },
 
     {
@@ -215,8 +195,7 @@ async function seed() {
       light: 'direct',
       water: 'daily',
       humidity: 'high',
-      species: orchids.id,
-      family: orchidaceae.id
+      type: orchids.id
     },
     {
       name: 'Red Prayer Plant',
@@ -228,8 +207,7 @@ async function seed() {
       light: 'indirect',
       water: 'weekly',
       humidity: 'high',
-      species: calathea.id,
-      family: marantaceae.id
+      type: maranta.id
     },
     {
       name: 'Satin Pothos',
@@ -240,21 +218,19 @@ async function seed() {
       light: 'indirect',
       water: 'weekly',
       humidity: 'high',
-      species: devilsIvy.id,
-      family: araceae.id
+      type: devilsIvy.id
     },
     {
       name: 'Humboldt’s Lily',
       imageUrl:
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0y_CxNPO8qYI3wt51hVH2IipuCPN2A5dmMQ&usqp=CAU',
       description:
-        'Humboldt’s Lilygrows up to 6 feet tall, with flowers that are maroon-spotted, golden-orange with dark red splotches, with orange to brown stamens. The plant flowers in June, with flowers growing in a pyramidal inflorescence. The flowers are on stout stems, which are sometimes brown-purple. The subrhizomatous bulb is large, with yellowish-white scales, and grows very deep in the soil. The leaves grow in whorls, and are undulate, shiny, and oblanceolate. It is summer-deciduous, dying back after flowering in mid- to late summer.',
+        'Humboldt’s Lily grows up to 6 feet tall, with flowers that are maroon-spotted, golden-orange with dark red splotches, with orange to brown stamens. The plant flowers in June, with flowers growing in a pyramidal inflorescence. The flowers are on stout stems, which are sometimes brown-purple. The subrhizomatous bulb is large, with yellowish-white scales, and grows very deep in the soil. The leaves grow in whorls, and are undulate, shiny, and oblanceolate. It is summer-deciduous, dying back after flowering in mid- to late summer.',
       price: 29.99,
       light: 'direct',
       water: 'daily',
       humidity: 'low',
-      species: arumLily.id,
-      family: araceae.id
+      type: arumLily.id
     },
     {
       name: 'Brazilian Philodendron',
@@ -266,8 +242,7 @@ async function seed() {
       light: 'indirect',
       water: 'weekly',
       humidity: 'high',
-      species: devilsIvy.id,
-      family: araceae.id
+      type: devilsIvy.id
     },
     {
       name: 'Easter Cactus',
@@ -279,8 +254,7 @@ async function seed() {
       light: 'indirect',
       water: 'weekly',
       humidity: 'medium',
-      species: cactus.id,
-      family: cactaceae.id
+      type: cactus.id
     },
     {
       name: 'Barrel Cactus',
@@ -292,8 +266,7 @@ async function seed() {
       light: 'indirect',
       water: 'weekly',
       humidity: 'low',
-      species: cactus.id,
-      family: cactaceae.id
+      type: cactus.id
     }
   ]
 
