@@ -15,7 +15,9 @@ export const setPlant = (plant) => {
 export const fetchPlant = (id) => {
   return async (dispatch) => {
     try {
+      console.log('in fetchPlant')
       const {data: plant} = await axios.get(`/api/plants/${id}`)
+      console.log('plant in fetchPlant:', plant)
       dispatch(setPlant(plant))
     } catch (error) {
       console.log('Error in fetching plant')
