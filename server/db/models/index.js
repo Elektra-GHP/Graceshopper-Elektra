@@ -21,6 +21,6 @@ Type.hasMany(Plant)
 
 module.exports = {
   User,
-  Plant,
-  Type
+  Type,
+  Plant
 }
