@@ -271,8 +271,10 @@ async function seed() {
       typeId: cactus.id,
     },
   ]
+
   await Plant.bulkCreate(plants)
 
+  console.log('cactus:', cactus)
   console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)
 }

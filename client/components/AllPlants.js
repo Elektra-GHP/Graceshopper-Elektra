@@ -1,13 +1,13 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {fetchPlants} from '../store/allplantsReducer'
+import {fetchPlants} from '../store/allPlantsReducer'
 
 // COMPONENT
 
 class AllPlants extends Component {
-  constructor() {
-    super()
-  }
+  // constructor(props) {
+  //   super(props)
+  // }
 
   componentDidMount() {
     this.props.fetchPlants()
@@ -15,6 +15,7 @@ class AllPlants extends Component {
 
   render() {
     const plants = this.props.plants
+    console.log('plants in AllPlants render:', this.props)
     return (
       <div>
         <h1>Plants</h1>
