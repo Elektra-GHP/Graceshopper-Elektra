@@ -70,7 +70,6 @@ async function seed() {
     calathea,
     orchids,
     devilsIvy,
-    paintersPalette,
     arumLily,
     stromanthe,
     maranta
@@ -87,7 +86,7 @@ async function seed() {
       light: 'direct',
       water: 'weekly',
       humidity: 'low',
-      type: cactus.id
+      typeId: cactus.id
     },
     {
       name: 'Dottie',
@@ -99,7 +98,7 @@ async function seed() {
       light: 'indirect',
       water: 'weekly',
       humidity: 'high',
-      type: calathea.id
+      typeId: calathea.id
     },
     {
       name: 'Stromanthe Triostar',
@@ -111,7 +110,7 @@ async function seed() {
       light: 'indirect',
       water: 'weekly',
       humidity: 'high',
-      type: stromanthe.id
+      typeId: stromanthe.id
     },
     {
       name: 'Lily',
@@ -123,7 +122,7 @@ async function seed() {
       light: 'direct',
       water: 'daily',
       humidity: 'low',
-      type: arumLily.id
+      typeId: arumLily.id
     },
 
     {
@@ -136,7 +135,7 @@ async function seed() {
       light: 'direct',
       water: 'weekly',
       humidity: 'low',
-      type: cactus.id
+      typeId: cactus.id
     },
     {
       name: 'Peacock Plant',
@@ -148,7 +147,7 @@ async function seed() {
       light: 'indirect',
       water: 'weekly',
       humidity: 'high',
-      type: calathea.id
+      typeId: calathea.id
     },
     {
       name: 'Phalaenopsis amabilis',
@@ -160,7 +159,7 @@ async function seed() {
       light: 'indirect',
       water: 'weekly',
       humidity: 'high',
-      type: orchids.id
+      typeId: orchids.id
     },
     {
       name: 'Tiger Lily',
@@ -172,7 +171,7 @@ async function seed() {
       light: 'direct',
       water: 'daily',
       humidity: 'low',
-      type: arumLily.id
+      typeId: arumLily.id
     },
     {
       name: 'Rattlesnake Plant',
@@ -184,7 +183,7 @@ async function seed() {
       light: 'indirect',
       water: 'weekly',
       humidity: 'high',
-      type: calathea.id
+      typeId: calathea.id
     },
 
     {
@@ -197,7 +196,7 @@ async function seed() {
       light: 'direct',
       water: 'daily',
       humidity: 'high',
-      type: orchids.id
+      typeId: orchids.id
     },
     {
       name: 'Red Prayer Plant',
@@ -209,7 +208,7 @@ async function seed() {
       light: 'indirect',
       water: 'weekly',
       humidity: 'high',
-      type: maranta.id
+      typeId: maranta.id
     },
     {
       name: 'Satin Pothos',
@@ -220,7 +219,7 @@ async function seed() {
       light: 'indirect',
       water: 'weekly',
       humidity: 'high',
-      type: devilsIvy.id
+      typeId: devilsIvy.id
     },
     {
       name: 'Humboldt’s Lily',
@@ -232,7 +231,7 @@ async function seed() {
       light: 'direct',
       water: 'daily',
       humidity: 'low',
-      type: arumLily.id
+      typeId: arumLily.id
     },
     {
       name: 'Brazilian Philodendron',
@@ -244,7 +243,7 @@ async function seed() {
       light: 'indirect',
       water: 'weekly',
       humidity: 'high',
-      type: devilsIvy.id
+      typeId: devilsIvy.id
     },
     {
       name: 'Easter Cactus',
@@ -256,7 +255,7 @@ async function seed() {
       light: 'indirect',
       water: 'weekly',
       humidity: 'medium',
-      type: cactus.id
+      typeId: cactus.id
     },
     {
       name: 'Barrel Cactus',
@@ -268,7 +267,7 @@ async function seed() {
       light: 'indirect',
       water: 'weekly',
       humidity: 'low',
-      type: cactus.id
+      typeId: cactus.id
     }
   ]
   await Plant.bulkCreate(plants)
