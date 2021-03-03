@@ -20,18 +20,21 @@ class AllPlants extends Component {
     return (
       <div>
         <h1>Plants</h1>
-        {plants.map((plant) => {
-          return (
-            <div key={plant.id} className="all-plants-plant">
-              <img src={plant.imageUrl} className="all-plants-img" />
-              <div className="all-plants-name">
-                <Link to={`/plants/${plant.id}`}>{plant.name}</Link>
+        <div className="container">
+          {plants.map((plant) => {
+            return (
+              <div key={plant.id} className="all-plants-plant">
+                <img src={plant.imageUrl} className="all-plants-img" />
+                <div className="all-plants-name">
+                  <Link to={`/plants/${plant.id}`}>{plant.name}</Link>
+                </div>
+                <div>{plant.type.name}</div>
+                <div>{plant.price}</div>
+                <button type="button"> ADD </button>
               </div>
-              <div>{plant.type.name}</div>
-              <div>{plant.price}</div>
-            </div>
-          )
-        })}
+            )
+          })}
+        </div>
       </div>
     )
   }

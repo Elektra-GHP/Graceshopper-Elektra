@@ -29,6 +29,7 @@ class SinglePlant extends Component {
           <p>Sunlight: {plant.light}</p>
           <p>Water: {plant.water}</p>
           <p>Humidity: {plant.humidity}</p>
+          <button type="button"> ADD </button>
         </div>
       </div>
     )
