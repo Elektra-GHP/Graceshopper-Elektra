@@ -22,7 +22,7 @@ class AllPlants extends Component {
         {plants.map(plant => {
           return (
             <div key={plant.id}>
-              <img scr={plant.imageUrl} />
+              <img src={plant.imageUrl} />
               <h2>{plant.name}</h2>
               <div>{plant.type.name}</div>
               <div>{plant.price}</div>
