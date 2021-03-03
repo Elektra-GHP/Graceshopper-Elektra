@@ -1,33 +1,34 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {fetchPlant} from '../store/singlePlantReducer'
 
 // COMPONENT
 
-// Fix type FK on plant model
-// create reducer
-
 class SinglePlant extends Component {
-  constructor(props) {
-    super(props)
-  }
+  // constructor(props) {
+  //   super(props)
+  // }
 
   componentDidMount() {
-    // this.props.fetchPlants()
+    const id = this.props.match.params.id
+    this.props.fetchPlant(id)
   }
 
   render() {
     const plant = this.props.plant
+    console.log('plant in singlePlant component:', plant)
     return (
       <div>
-        <img scr={plant.imageUrl} />
+        <img src={plant.imageUrl} className="single-plant-img" />
         <h2>{plant.name}</h2>
-        <p>{plant.type}</p>
-        <p>{plant.price}</p>
+        {/* <p>{plant.type.name}</p> */}
+        <p>${plant.price}</p>
         <p>{plant.description}</p>
         <div className="care-instructions">
-          <p>Sunlight: ${plant.light}</p>
-          <p>Water: ${plant.water}</p>
-          <p>Humidity: ${plant.humidity}</p>
+          Care Instructions:
+          <p>Sunlight: {plant.light}</p>
+          <p>Water: {plant.water}</p>
+          <p>Humidity: {plant.humidity}</p>
         </div>
       </div>
     )
@@ -35,14 +36,15 @@ class SinglePlant extends Component {
 }
 
 const mapState = (state) => {
+  console.log('state:', state)
   return {
-    plants: state.plants.all,
+    plant: state.plant.single,
   }
 }
 
 const mapDispatch = (dispatch) => {
   return {
-    fetchPlants: () => dispatch(fetchPlants()),
+    fetchPlant: (id) => dispatch(fetchPlant(id)),
   }
 }
 

@@ -19,3 +19,17 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+.all-plants-plant {
+  margin: 3em;
+}
+
+.all-plants-img {
+  max-height: 30em;
+  max-width: 40em;
+}
+
+.single-plant-img {
+  max-height: 30em;
+  max-width: 50em;
+}
