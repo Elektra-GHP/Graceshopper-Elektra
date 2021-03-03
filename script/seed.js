@@ -1,16 +1,40 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Type, Plant} = require('../server/db/models')
+const {User, Type, Plant, Item, Cart} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
-  const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'}),
-  ])
+  const carts = [
+    {sessionId: '1234djs'},
+    {sessionId: '123asdfadjs'},
+    {sessionId: 'skjfasoi43'},
+  ]
+
+  const [codyCart, murphyCart, randomUser] = await Promise.all(
+    carts.map((cart) => Cart.create(cart))
+  )
+
+  const users = [
+    {
+      name: 'Cody',
+      email: 'cody@email.com',
+      password: '123',
+      cartId: codyCart.id,
+    },
+    {
+      name: 'Murphy',
+      email: 'murphy@email.com',
+      password: '123',
+      cartId: murphyCart.id,
+    },
+  ]
+
+  const [cody, murphy] = await Promise.all(
+    users.map((user) => User.create(user))
+  )
 
   const types = [
     {
@@ -271,10 +295,50 @@ async function seed() {
       typeId: cactus.id,
     },
   ]
+  // want plant name - id
+  const plantsInDb = await Promise.all(
+    plants.map((plant) => Plant.create(plant))
+  )
+  const plantNameObj = {}
+  plantsInDb.forEach(function (plant) {
+    plantNameObj[plant.name] = plant.id
+  })
 
-  await Plant.bulkCreate(plants)
+  const cartItems = [
+    {
+      quantity: 1,
+      cartId: codyCart.id,
+      userId: cody.id,
+      plantId: plantNameObj['Rattlesnake Plant'],
+    },
+    {
+      quantity: 2,
+      cartId: codyCart.id,
+      userId: cody.id,
+      plantId: plantNameObj['Old Lady Cactus'],
+    },
+    {
+      quantity: 1,
+      cartId: murphyCart.id,
+      userId: murphy.id,
+      plantId: plantNameObj['Rattlesnake Plant'],
+    },
+    {
+      quantity: 2,
+      cartId: murphyCart.id,
+      userId: murphy.id,
+      plantId: plantNameObj.Dottie,
+    },
+    {
+      quantity: 1,
+      cartId: randomUser.id,
+      plantId: plantNameObj.Dottie,
+    },
+  ]
 
-  console.log('cactus:', cactus)
+  await Promise.all(cartItems.map((item) => Item.create(item)))
+
+  console.log('plantNameObj:', plantNameObj)
   console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)
 }
