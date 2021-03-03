@@ -21,13 +21,11 @@ const Item = require('./item')
 Type.hasMany(Plant)
 Plant.belongsTo(Type)
 
-Cart.hasMany(Item)
-Item.belongsTo(Cart)
+Plant.belongsToMany(Cart, {through: Item})
+Cart.belongsToMany(Plant, {through: Item})
 
-Plant.hasMany(Item)
-Item.belongsTo(Plant)
-
-Cart.hasOne(User)
+User.hasMany(Cart)
+Cart.belongsTo(User)
 
 module.exports = {
   User,
