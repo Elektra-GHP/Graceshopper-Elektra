@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchPlants} from '../store/allPlantsReducer'
-
+import Cart from './Cart'
 // COMPONENT
 
 class AllPlants extends Component {
@@ -21,7 +21,7 @@ class AllPlants extends Component {
       <div>
         <h1>Plants</h1>
         <div className="container">
-          {plants.map((plant) => {
+          {plants.map(plant => {
             return (
               <div key={plant.id} className="all-plants-plant">
                 <img src={plant.imageUrl} className="all-plants-img" />
@@ -34,21 +34,22 @@ class AllPlants extends Component {
               </div>
             )
           })}
+          <Cart />
         </div>
       </div>
     )
   }
 }
 
-const mapState = (state) => {
+const mapState = state => {
   return {
-    plants: state.plants.all,
+    plants: state.plants.all
   }
 }
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = dispatch => {
   return {
-    fetchPlants: () => dispatch(fetchPlants()),
+    fetchPlants: () => dispatch(fetchPlants())
   }
 }
 
