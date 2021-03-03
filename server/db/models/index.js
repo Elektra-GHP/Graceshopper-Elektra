@@ -25,11 +25,15 @@ User.hasOne(Cart)
 Cart.belongsTo(User)
 
 Product.hasOne(Plant)
-Plant.belongsTo(Product)
+Plant.hasMany(Product)
+
+Cart.hasMany(Product)
+Product.belongsTo(Cart)
 
 module.exports = {
   User,
   Type,
   Plant,
-  Cart
+  Cart,
+  Product
 }
