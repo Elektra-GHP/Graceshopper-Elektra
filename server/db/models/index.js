@@ -2,7 +2,7 @@ const User = require('./user')
 const Type = require('./type')
 const Plant = require('./plant')
 const Cart = require('./cart')
-const Product = require('./product')
+const Item = require('./item')
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -21,19 +21,18 @@ const Product = require('./product')
 Type.hasMany(Plant)
 Plant.belongsTo(Type)
 
-User.hasOne(Cart)
-Cart.belongsTo(User)
+Cart.hasMany(Item)
+Item.belongsTo(Cart)
 
-Product.hasOne(Plant)
-Plant.hasMany(Product)
+Plant.hasMany(Item)
+Item.belongsTo(Plant)
 
-Cart.hasMany(Product)
-Product.belongsTo(Cart)
+Cart.hasOne(User)
 
 module.exports = {
   User,
   Type,
   Plant,
   Cart,
-  Product
+  Item,
 }
