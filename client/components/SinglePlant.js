@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchPlant} from '../store/singlePlantReducer'
 
+// in general, we shouldn't find any commented out code or debugging console logs in the main branch. Get into the habit of checking PRs for this kind of thing.
+
 // COMPONENT
 
 class SinglePlant extends Component {

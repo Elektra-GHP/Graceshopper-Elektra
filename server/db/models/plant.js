@@ -15,11 +15,11 @@ const Plant = db.define('plant', {
   description: {
     type: Sequelize.TEXT,
   },
-  inventory: {
+  inventory: { // is there a min or max value for inventory?
     type: Sequelize.INTEGER,
     defaultValue: 5,
   },
-  price: {
+  price: { // can price go below 0?
     type: Sequelize.DECIMAL(10, 2),
     allowNull: false,
   },

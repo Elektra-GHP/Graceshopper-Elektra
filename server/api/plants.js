@@ -23,6 +23,7 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
+// who can post?
 // POST /api/plant
 router.post('/', async (req, res, next) => {
   try {
@@ -33,6 +34,7 @@ router.post('/', async (req, res, next) => {
   }
 })
 
+// who can update?
 // PUT /api/plant/:id
 router.put('/:id', async (req, res, next) => {
   try {
@@ -45,6 +47,7 @@ router.put('/:id', async (req, res, next) => {
   }
 })
 
+// who can delete?
 // DELETE /api/plant/:id
 router.delete('/:id', async (req, res, next) => {
   try {
