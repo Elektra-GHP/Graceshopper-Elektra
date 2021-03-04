@@ -1,13 +1,43 @@
 body {
-  font-family: sans-serif;
+  font-family: 'Walter Turncoat';
+  margin: 0% 5% 5% 5%;
+  background-color: #f2e2db;
 }
 
 a {
   text-decoration: none;
+  color: #885053;
 }
 
 label {
   display: block;
+}
+
+.all-plants-plant button {
+  padding: 3%;
+  background-color: #94c9a9;
+  width: 25%;
+  color: white;
+  font-size: 13px;
+  border: none;
+  font-family: 'Walter Turncoat';
+}
+
+.single-plant button {
+  padding: 1vw;
+  background-color: #94c9a9;
+  color: white;
+  font-size: 13px;
+  border: none;
+  font-family: 'Walter Turncoat';
+}
+
+button:active {
+  background-color: #fe5f55;
+}
+
+hr {
+  color: #777da7;
 }
 
 nav a {
@@ -20,8 +50,28 @@ form div {
   display: inline-block;
 }
 
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .all-plants-plant {
-  margin: 3em;
+  display: flex;
+  flex-direction: column;
+  margin: 1vw;
+  padding: 10px;
+  border-radius: 20px;
+}
+
+.all-plants-plant a {
+  font-size: larger;
+}
+
+.all-plants-name {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .all-plants-img {
@@ -31,15 +81,25 @@ form div {
   height: 200px;
 }
 
+.single-plant {
+  display: flex;
+  flex-direction: row;
+  flex-direction: nowrap;
+  justify-content: space-between;
+}
+
 .single-plant-img {
   max-height: 30em;
   max-width: 50em;
   width: 400px;
   height: 400px;
+  margin: 3%;
 }
 
 .container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
