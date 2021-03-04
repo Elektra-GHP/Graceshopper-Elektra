@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchPlants} from '../store/allPlantsReducer'
-// import Cart from './Cart'
+import Cart from './Cart'
 // COMPONENT
 
 class AllPlants extends Component {
@@ -16,7 +16,8 @@ class AllPlants extends Component {
 
   render() {
     const plants = this.props.plants
-    console.log('plants in AllPlants render:', plants)
+    console.log('props via Route-------', this.props)
+    // console.log('plants in AllPlants render:', plants)
     return (
       <div>
         <h1>Plants</h1>
@@ -34,7 +35,7 @@ class AllPlants extends Component {
               </div>
             )
           })}
-          {/* <Cart /> */}
+          <Cart />
         </div>
       </div>
     )

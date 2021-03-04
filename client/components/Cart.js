@@ -1,18 +1,19 @@
 import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
-import {selectedPlant} from '../store/cartReducer'
+import {fetchCart} from '../store/cartReducer'
 // import {Cart, CheckoutButton, Product} from 'react-shopping-cart'
 
 class Cart extends PureComponent {
   componentDidMount() {
-    const id = this.props.match.params.id
-    this.props.selectedPlant(id)
+    const userId = this.props.match.id
+    this.props.fetchCart(userId)
   }
   render() {
     const plant = this.props.plant
-    // const cart = this.props.cart
-    const cart = []
-    console.log('plant in singlePlant component:', plant)
+    const cart = this.props.cart
+    // const cart = []
+    // console.log('plant in singlePlant component:', plant)
+    // console.log('user props----->', this.props)
     return (
       <div>
         {cart.length === 0 ? (
@@ -41,12 +42,12 @@ class Cart extends PureComponent {
 
 const mapState = state => {
   return {
-    plant: state.plant
+    userId: state.user.id
   }
 }
 const mapDispatch = dispatch => {
   return {
-    selectedPlant: id => dispatch(selectedPlant(id))
+    fetchCart: id => dispatch(fetchCart(id))
   }
 }
 export default connect(mapState, mapDispatch)(Cart)
