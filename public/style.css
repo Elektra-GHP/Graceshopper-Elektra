@@ -56,6 +56,11 @@ form div {
   justify-content: space-between;
 }
 
+.view {
+  display: flex;
+  flex-direction: row;
+}
+
 .all-plants-plant {
   display: flex;
   flex-direction: column;
@@ -102,4 +107,13 @@ form div {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+}
+
+.checkout-plant-img {
+  width: 10vw;
+}
+
+.cart {
+  border-left: 3px dotted #c8a898;
+  padding: 2vw;
 }

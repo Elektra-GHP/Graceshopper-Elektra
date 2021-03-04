@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchPlant} from '../store/singlePlantReducer'
+import {addPlant} from '../store/cartReducer'
+import Cart from './Cart'
 
 // COMPONENT
 
@@ -16,6 +18,7 @@ class SinglePlant extends Component {
 
   render() {
     const plant = this.props.plant
+    const user = this.props.user
     console.log('plant in singlePlant component:', plant)
     return (
       <div className="single-plant">
@@ -30,24 +33,33 @@ class SinglePlant extends Component {
             <p>Sunlight: {plant.light}</p>
             <p>Water: {plant.water}</p>
             <p>Humidity: {plant.humidity}</p>
-            <button type="button"> ADD TO CART </button>
+            <button
+              type="button"
+              onClick={() => this.props.addPlant(user.id, plant.id)}
+            >
+              {' '}
+              ADD TO CART{' '}
+            </button>
           </div>
         </div>
+        <Cart />
       </div>
     )
   }
 }
 
 const mapState = state => {
-  console.log('state:', state)
+  console.log('state in single plant:', state)
   return {
+    user: state.user,
     plant: state.plant.single
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    fetchPlant: id => dispatch(fetchPlant(id))
+    fetchPlant: id => dispatch(fetchPlant(id)),
+    addPlant: (userId, plantId) => dispatch(addPlant(userId, plantId))
   }
 }
 

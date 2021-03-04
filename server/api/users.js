@@ -9,7 +9,7 @@ router.get('/', async (req, res, next) => {
       // explicitly select only the id and email fields - even though
       // users' passwords are encrypted, it won't help if we just
       // send everything to anyone who asks!
-      attributes: ['id', 'email'],
+      attributes: ['id', 'email']
     })
     res.json(users)
   } catch (err) {
@@ -23,8 +23,8 @@ router.get('/:id/cart', async (req, res, next) => {
     let cart = await Cart.findOne({
       where: {
         userId: req.params.id,
-        complete: false,
-      },
+        complete: false
+      }
     })
     if (!cart) {
       cart = await Cart.create({userId: req.params.id})
@@ -45,9 +45,10 @@ router.post('/:id/cart', async (req, res, next) => {
     const newItem = await Item.create({
       plantId: req.body.plantId,
       cartId: cart.id,
-      quantity: req.body.quantity,
+      quantity: req.body.quantity
     })
-    res.json(newItem)
+    //res.json(newItem)
+    res.json(await cart.getPlants())
   } catch (error) {
     console.log('there was an error in user/:id/cart POST route')
     next(error)
@@ -62,11 +63,11 @@ router.put('/:id/cart', async (req, res, next) => {
     const item = await Item.findOne({
       where: {
         plantId: req.body.plantId,
-        cartId: cart.id,
-      },
+        cartId: cart.id
+      }
     })
     const editedItem = await item.update({
-      quantity: req.body.quantity,
+      quantity: req.body.quantity
     })
     res.json(editedItem)
   } catch (error) {
@@ -82,8 +83,8 @@ router.delete('/:id/cart', async (req, res, next) => {
     const item = await Item.findOne({
       where: {
         plantId: req.body.plantId,
-        cartId: cart.id,
-      },
+        cartId: cart.id
+      }
     })
     await item.destroy()
     res.sendStatus(204)
