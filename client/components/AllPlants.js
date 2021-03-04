@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchPlants} from '../store/allPlantsReducer'
-import Cart from './Cart'
+// import Cart from './Cart'
 // COMPONENT
 
 class AllPlants extends Component {
@@ -27,14 +27,14 @@ class AllPlants extends Component {
                 <img src={plant.imageUrl} className="all-plants-img" />
                 <div className="all-plants-name">
                   <Link to={`/plants/${plant.id}`}>{plant.name}</Link>
+                  <div>{plant.price}</div>
                 </div>
                 <div>{plant.type.name}</div>
-                <div>{plant.price}</div>
                 <button type="button"> ADD </button>
               </div>
             )
           })}
-          <Cart />
+          {/* <Cart /> */}
         </div>
       </div>
     )
