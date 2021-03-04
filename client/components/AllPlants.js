@@ -16,7 +16,7 @@ class AllPlants extends Component {
 
   render() {
     const plants = this.props.plants
-    console.log('plants in AllPlants render:', this.props)
+    console.log('plants in AllPlants render:', plants)
     return (
       <div>
         <h1>Plants</h1>
