@@ -7,32 +7,36 @@ async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
-  const carts = [
-    {sessionId: '1234djs'},
-    {sessionId: '123asdfadjs'},
-    {sessionId: 'skjfasoi43'}
-  ]
-
-  const [codyCart, murphyCart, randomUser] = await Promise.all(
-    carts.map(cart => Cart.create(cart))
-  )
-
   const users = [
     {
       name: 'Cody',
       email: 'cody@email.com',
       password: '123',
-      cartId: codyCart.id
     },
     {
       name: 'Murphy',
       email: 'murphy@email.com',
       password: '123',
-      cartId: murphyCart.id
-    }
+    },
   ]
 
-  const [cody, murphy] = await Promise.all(users.map(user => User.create(user)))
+  const [cody, murphy] = await Promise.all(
+    users.map((user) => User.create(user))
+  )
+
+  const carts = [
+    {userId: cody.id},
+    {userId: murphy.id},
+    {userId: cody.id, complete: true},
+    {userId: murphy.id, complete: true},
+  ]
+
+  const [
+    codyCart,
+    murphyCart,
+    codyCompleted,
+    murphyCompleted,
+  ] = await Promise.all(carts.map((cart) => Cart.create(cart)))
 
   const types = [
     {
@@ -40,51 +44,52 @@ async function seed() {
       description:
         'The cactus family (Cactaceae) consists of about 131 genera and 1,866 species of flowering plants, almost all of which are found in the New World. Most cacti are adapted to arid environments, though a number of species are native to rainforests and other tropical or subtropical areas. Many have succulent photosynthetic stems and reduced leaves that are often modified as spines. The flowers are typically showy with numerous petals. The following is a list of some of the major genera and species in the family Cactaceae, arranged alphabetically by common name or genus.',
       origin:
-        'Cacti are native to the Americas, ranging from Patagonia in the south to parts of western Canada in the north—except for Rhipsalis baccifera, which also grows in Africa and Sri Lanka.'
+        'Cacti are native to the Americas, ranging from Patagonia in the south to parts of western Canada in the north—except for Rhipsalis baccifera, which also grows in Africa and Sri Lanka.',
     },
     {
       name: 'Calathea',
       description:
         ' Many of the species are popular as pot plants due to their decorative leaves and, in some species, colorful inflorescences. They are commonly called calatheas or (like their relatives) prayer plants.',
-      origin: 'Native to the tropical Americas'
+      origin: 'Native to the tropical Americas',
     },
     {
       name: 'Orchids',
       description:
         'The orchid family is a diverse and widespread family of flowering plants, with blooms that are often colourful and fragrant. The number of orchid species is nearly equal to the number of bony fishes, more than twice the number of bird species, and about four times the number of mammal species.',
       origin:
-        'Orchids are cosmopolitan, occurring in almost every habitat apart from glaciers.'
+        'Orchids are cosmopolitan, occurring in almost every habitat apart from glaciers.',
     },
     {
       name: 'Devil’s ivy',
       description:
         'It is a gorgeous vining plant with heart - shaped leaves that are variegated in green and yellow. It is a fast grower, hardy, and can tolerate a wide variety of growing conditions. The vines can reach 10′ or longer, making them ideal for hanging baskets where they will create beautiful draping foliage.',
       origin:
-        'This plant is a native of Australia, Indonesia, China, Japan and India.'
+        'This plant is a native of Australia, Indonesia, China, Japan and India.',
     },
     {
       name: 'Painter’s Palette',
       description:
         'The Painter’s Palette has arrow shaped and highly polished leaves with an almost unreal looking appearance, which may get people wondering if the plant is genuine or artificial.The leaf or spathe surrounding the flowering spike is normally red, cream or purple but either way the flower spike itself is always straight.',
-      origin: 'Native to Columbia and Ecuador.'
+      origin: 'Native to Columbia and Ecuador.',
     },
     {
       name: 'Arum-lily',
       description:
         'Arum lily is a robust, dark green, succulent herb, also known as calla or white arum lily. It was introduced to WA from South Africa as a garden plant and subsequently escaped to become established as a weed. It is found in creeks, irrigation ditches and areas of summer-moist land in the higher rainfall south west of WA, often forming large dense clumps.',
-      origin: 'Native to South Africa'
+      origin: 'Native to South Africa',
     },
     {
       name: 'Stromanthe',
       description:
         "Stromanthe sanguinea, commonly called stromanthe, is an upright rhizomatous perennial that typically grows to 5' tall and 3' wide outdoors but to a more modest 2-3' tall when grown indoors as a houseplant.",
-      origin: 'native to rainforests in Brazil'
+      origin: 'native to rainforests in Brazil',
     },
     {
       name: 'Maranta',
       description: `The crowded oval, evergreen leaves are undivided with sheathing stalks. The leaves are flat by day and folded up as the day comes to an end, hence the common name "prayer plant" which attaches to the genus and its species.`,
-      origin: 'native to tropical Central and South America and the West Indies'
-    }
+      origin:
+        'native to tropical Central and South America and the West Indies',
+    },
   ]
 
   const [
@@ -94,8 +99,8 @@ async function seed() {
     devilsIvy,
     arumLily,
     stromanthe,
-    maranta
-  ] = await Promise.all(types.map(type => Type.create(type)))
+    maranta,
+  ] = await Promise.all(types.map((type) => Type.create(type)))
 
   const plants = [
     {
@@ -108,7 +113,7 @@ async function seed() {
       light: 'direct',
       water: 'weekly',
       humidity: 'low',
-      typeId: cactus.id
+      typeId: cactus.id,
     },
     {
       name: 'Dottie',
@@ -120,7 +125,7 @@ async function seed() {
       light: 'indirect',
       water: 'weekly',
       humidity: 'high',
-      typeId: calathea.id
+      typeId: calathea.id,
     },
     {
       name: 'Stromanthe Triostar',
@@ -132,7 +137,7 @@ async function seed() {
       light: 'indirect',
       water: 'weekly',
       humidity: 'high',
-      typeId: stromanthe.id
+      typeId: stromanthe.id,
     },
     {
       name: 'Lily',
@@ -144,7 +149,7 @@ async function seed() {
       light: 'direct',
       water: 'daily',
       humidity: 'low',
-      typeId: arumLily.id
+      typeId: arumLily.id,
     },
 
     {
@@ -157,7 +162,7 @@ async function seed() {
       light: 'direct',
       water: 'weekly',
       humidity: 'low',
-      typeId: cactus.id
+      typeId: cactus.id,
     },
     {
       name: 'Peacock Plant',
@@ -169,7 +174,7 @@ async function seed() {
       light: 'indirect',
       water: 'weekly',
       humidity: 'high',
-      typeId: calathea.id
+      typeId: calathea.id,
     },
     {
       name: 'Phalaenopsis amabilis',
@@ -181,7 +186,7 @@ async function seed() {
       light: 'indirect',
       water: 'weekly',
       humidity: 'high',
-      typeId: orchids.id
+      typeId: orchids.id,
     },
     {
       name: 'Tiger Lily',
@@ -193,7 +198,7 @@ async function seed() {
       light: 'direct',
       water: 'daily',
       humidity: 'low',
-      typeId: arumLily.id
+      typeId: arumLily.id,
     },
     {
       name: 'Rattlesnake Plant',
@@ -205,7 +210,7 @@ async function seed() {
       light: 'indirect',
       water: 'weekly',
       humidity: 'high',
-      typeId: calathea.id
+      typeId: calathea.id,
     },
 
     {
@@ -218,7 +223,7 @@ async function seed() {
       light: 'direct',
       water: 'daily',
       humidity: 'high',
-      typeId: orchids.id
+      typeId: orchids.id,
     },
     {
       name: 'Red Prayer Plant',
@@ -230,7 +235,7 @@ async function seed() {
       light: 'indirect',
       water: 'weekly',
       humidity: 'high',
-      typeId: maranta.id
+      typeId: maranta.id,
     },
     {
       name: 'Satin Pothos',
@@ -241,7 +246,7 @@ async function seed() {
       light: 'indirect',
       water: 'weekly',
       humidity: 'high',
-      typeId: devilsIvy.id
+      typeId: devilsIvy.id,
     },
     {
       name: 'Humboldt’s Lily',
@@ -253,7 +258,7 @@ async function seed() {
       light: 'direct',
       water: 'daily',
       humidity: 'low',
-      typeId: arumLily.id
+      typeId: arumLily.id,
     },
     {
       name: 'Brazilian Philodendron',
@@ -265,7 +270,7 @@ async function seed() {
       light: 'indirect',
       water: 'weekly',
       humidity: 'high',
-      typeId: devilsIvy.id
+      typeId: devilsIvy.id,
     },
     {
       name: 'Easter Cactus',
@@ -277,7 +282,7 @@ async function seed() {
       light: 'indirect',
       water: 'weekly',
       humidity: 'medium',
-      typeId: cactus.id
+      typeId: cactus.id,
     },
     {
       name: 'Barrel Cactus',
@@ -289,13 +294,15 @@ async function seed() {
       light: 'indirect',
       water: 'weekly',
       humidity: 'low',
-      typeId: cactus.id
-    }
+      typeId: cactus.id,
+    },
   ]
   // want plant name - id
-  const plantsInDb = await Promise.all(plants.map(plant => Plant.create(plant)))
+  const plantsInDb = await Promise.all(
+    plants.map((plant) => Plant.create(plant))
+  )
   const plantNameObj = {}
-  plantsInDb.forEach(function(plant) {
+  plantsInDb.forEach(function (plant) {
     plantNameObj[plant.name] = plant.id
   })
 
@@ -304,34 +311,52 @@ async function seed() {
       quantity: 1,
       cartId: codyCart.id,
       userId: cody.id,
-      plantId: plantNameObj['Rattlesnake Plant']
+      plantId: plantNameObj['Rattlesnake Plant'],
     },
     {
       quantity: 2,
       cartId: codyCart.id,
       userId: cody.id,
-      plantId: plantNameObj['Old Lady Cactus']
+      plantId: plantNameObj['Old Lady Cactus'],
     },
     {
       quantity: 1,
       cartId: murphyCart.id,
       userId: murphy.id,
-      plantId: plantNameObj['Rattlesnake Plant']
+      plantId: plantNameObj['Rattlesnake Plant'],
     },
     {
       quantity: 2,
       cartId: murphyCart.id,
       userId: murphy.id,
-      plantId: plantNameObj.Dottie
+      plantId: plantNameObj.Dottie,
     },
     {
       quantity: 1,
-      cartId: randomUser.id,
-      plantId: plantNameObj.Dottie
-    }
+      cartId: codyCompleted.id,
+      plantId: plantNameObj.Dottie,
+    },
+    {
+      quantity: 3,
+      cartId: codyCompleted.id,
+      userId: cody.id,
+      plantId: plantNameObj['Old Lady Cactus'],
+    },
+    {
+      quantity: 1,
+      cartId: murphyCompleted.id,
+      userId: murphy.id,
+      plantId: plantNameObj['Rattlesnake Plant'],
+    },
+    {
+      quantity: 2,
+      cartId: murphyCompleted.id,
+      userId: murphy.id,
+      plantId: plantNameObj.Dottie,
+    },
   ]
 
-  await Promise.all(cartItems.map(item => Item.create(item)))
+  await Promise.all(cartItems.map((item) => Item.create(item)))
 
   console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)
