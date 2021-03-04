@@ -18,34 +18,36 @@ class SinglePlant extends Component {
     const plant = this.props.plant
     console.log('plant in singlePlant component:', plant)
     return (
-      <div>
+      <div className="single-plant">
         <img src={plant.imageUrl} className="single-plant-img" />
-        <h2>{plant.name}</h2>
-        {/* <p>{plant.type.name}</p> */}
-        <p>${plant.price}</p>
-        <p>{plant.description}</p>
-        <div className="care-instructions">
-          Care Instructions:
-          <p>Sunlight: {plant.light}</p>
-          <p>Water: {plant.water}</p>
-          <p>Humidity: {plant.humidity}</p>
-          <button type="button"> ADD </button>
+        <div>
+          <h2>{plant.name}</h2>
+          {/* <p>{plant.type.name}</p> */}
+          <p>${plant.price}</p>
+          <p>{plant.description}</p>
+          <div className="care-instructions">
+            Care Instructions:
+            <p>Sunlight: {plant.light}</p>
+            <p>Water: {plant.water}</p>
+            <p>Humidity: {plant.humidity}</p>
+            <button type="button"> ADD TO CART </button>
+          </div>
         </div>
       </div>
     )
   }
 }
 
-const mapState = (state) => {
+const mapState = state => {
   console.log('state:', state)
   return {
-    plant: state.plant.single,
+    plant: state.plant.single
   }
 }
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = dispatch => {
   return {
-    fetchPlant: (id) => dispatch(fetchPlant(id)),
+    fetchPlant: id => dispatch(fetchPlant(id))
   }
 }
 

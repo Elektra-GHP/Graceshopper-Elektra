@@ -10,19 +10,30 @@ class Cart extends PureComponent {
   }
   render() {
     const plant = this.props.plant
-    const cart = this.props.cart
+    // const cart = this.props.cart
+    const cart = []
     console.log('plant in singlePlant component:', plant)
     return (
       <div>
-        <p>You have ... items in your cart</p>
-        <img src={plant.imageUrl} className="single-plant-img" />
-        <h2>{plant.name}</h2>
-        <p>
-          ${plant.price} X {cart.quantity}
-        </p>
-        <button type="button"> Remove Item </button>
-        <div>Total:</div>
-        <button type="button"> Checkout </button>
+        {cart.length === 0 ? (
+          <div>Cart is empty</div>
+        ) : (
+          <p>You have {cart.length} items in your cart</p>
+        )}
+        {cart.map(item => {
+          return (
+            <div key={item.id}>
+              <img src={plant.imageUrl} className="single-plant-img" />
+              <h2>{plant.name}</h2>
+              <p>
+                ${plant.price} X {cart.quantity}
+              </p>
+              <button type="button"> Remove Item </button>
+              <div>Total:</div>
+              <button type="button"> Checkout </button>
+            </div>
+          )
+        })}
       </div>
     )
   }
