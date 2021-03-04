@@ -10,17 +10,80 @@ module.exports = router
 //   await Cart.create({sessionId: req.session.cookie.id})
 // }
 
-// USE api/carts/
-router.use('/', async (req, res, next) => {
+// GET api/carts/user/:id
+router.get('/user/:id', async (req, res, next) => {
+  console.log('inside get route')
   try {
-    // create a cart for a user if one doesn't already exist
     let cart = await Cart.findOne({
-      where: {userId: req.params.id},
-      // include: [Item]
+      where: {
+        userId: req.params.id,
+        complete: false,
+      },
     })
+    console.log('CART --->', cart)
+    if (!cart) {
+      cart = await Cart.create({userId: req.params.id})
+    }
+    console.log('cart', cart)
+    res.json(await cart.getPlants())
+  } catch (error) {
+    console.log('there was an error in user/:id GET route')
+    next(error)
+  }
+})
 
-    next()
-  } catch (e) {
-    next(e)
+// POST api/carts/user/:id
+router.post('/user/:id', async (req, res, next) => {
+  try {
+    // adding to items
+    // need plantId (req.body.plantId) and cartId
+    const cart = await Cart.findOne({where: {userId: req.params.id}})
+    const newItem = await Item.create({
+      plantId: req.body.plantId,
+      cartId: cart.id,
+      quantity: req.body.quantity,
+    })
+    res.json(newItem)
+  } catch (error) {
+    console.log('there was an error in user/:id POST route')
+    next(error)
+  }
+})
+
+// PUT api/carts/user/:id
+router.put('/user/:id', async (req, res, next) => {
+  try {
+    const cart = await Cart.findOne({where: {userId: req.params.id}})
+    const item = await Item.findOne({
+      where: {
+        plantId: req.body.plantId,
+        cartId: cart.id,
+      },
+    })
+    const editedItem = await item.update({
+      quantity: req.body.quantity,
+    })
+    res.json(editedItem)
+  } catch (error) {
+    console.log('there was an error in user/:id/ PUT route')
+    next(error)
+  }
+})
+
+// DELETE api/carts/user/:id
+router.delete('/user/:id', async (req, res, next) => {
+  try {
+    const cart = await Cart.findOne({where: {userId: req.params.id}})
+    const item = await Item.findOne({
+      where: {
+        plantId: req.body.plantId,
+        cartId: cart.id,
+      },
+    })
+    await item.destroy()
+    res.sendStatus(204)
+  } catch (error) {
+    console.log('there was an error in user/:id DELETE route')
+    next(error)
   }
 })
