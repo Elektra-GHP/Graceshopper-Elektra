@@ -18,6 +18,13 @@ export const addPlantToCart = cart => {
   }
 }
 
+export const removeItem = cart => {
+  return {
+    type: DELETE_ITEM,
+    cart
+  }
+}
+
 // THUNK
 export const fetchCart = userId => {
   return async dispatch => {
@@ -47,6 +54,17 @@ export const addPlant = (userId, plantId) => {
     }
   }
 }
+
+// export const deleteItem = (userId, plantId) => {
+//   return async dispatch => {
+//     try {
+//       const {data: delete} = await axios.delete(`api/users/${userId}/cart`, {plantId})
+//       dispatch(removeItem(cart))
+//     } catch(error){
+//       console.log('Cannot delete item')
+//     }
+//   }
+// }
 //initial state
 const initialState = []
 //reducer
@@ -55,6 +73,8 @@ export default (state = initialState, action) => {
     case GET_CART:
       return action.cart
     case ADD_PLANT_TO_CART:
+      return action.cart
+    case DELETE_ITEM:
       return action.cart
     default:
       return state
