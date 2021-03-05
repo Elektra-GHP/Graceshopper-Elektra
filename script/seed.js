@@ -27,14 +27,37 @@ async function seed() {
   const carts = [
     {userId: cody.id},
     {userId: murphy.id},
-    {userId: cody.id, complete: true},
-    {userId: murphy.id, complete: true},
+    {
+      userId: cody.id,
+      complete: true,
+      orderId: '123sdfg',
+      orderDate: '2021-02-04 18:00:00',
+      shippingStatus: 'delivered',
+      shippingAddress: '123 Puppy Way, New York, NY',
+    },
+    {
+      userId: cody.id,
+      complete: true,
+      orderId: '125sdfb',
+      orderDate: '2021-02-28 10:31:00',
+      shippingStatus: 'shipped',
+      shippingAddress: '123 Puppy Way, New York, NY',
+    },
+    {
+      userId: murphy.id,
+      complete: true,
+      orderId: '345asdc',
+      orderDate: '2021-03-05 18:00:00',
+      shippingStatus: 'pending',
+      shippingAddress: '234 Doggy Lane, New York, NY',
+    },
   ]
 
   const [
     codyCart,
     murphyCart,
-    codyCompleted,
+    codyCompleted1,
+    codyCompleted2,
     murphyCompleted,
   ] = await Promise.all(carts.map((cart) => Cart.create(cart)))
 
@@ -333,14 +356,38 @@ async function seed() {
     },
     {
       quantity: 1,
-      cartId: codyCompleted.id,
+      cartId: codyCompleted1.id,
       plantId: plantNameObj.Dottie,
     },
     {
       quantity: 3,
-      cartId: codyCompleted.id,
+      cartId: codyCompleted1.id,
       userId: cody.id,
       plantId: plantNameObj['Old Lady Cactus'],
+    },
+    {
+      quantity: 1,
+      cartId: codyCompleted2.id,
+      userId: cody.id,
+      plantId: plantNameObj['Golden Angel Wing Cactus'],
+    },
+    {
+      quantity: 2,
+      cartId: codyCompleted2.id,
+      userId: cody.id,
+      plantId: plantNameObj['Peacock Plant'],
+    },
+    {
+      quantity: 4,
+      cartId: codyCompleted2.id,
+      userId: cody.id,
+      plantId: plantNameObj.Lily,
+    },
+    {
+      quantity: 3,
+      cartId: codyCompleted2.id,
+      userId: cody.id,
+      plantId: plantNameObj['Tiger Lily'],
     },
     {
       quantity: 1,

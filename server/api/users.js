@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {User, Cart, Item} = require('../db/models')
+const {User, Cart, Item, Plant} = require('../db/models')
 module.exports = router
 
 // GET api/users/
@@ -17,80 +17,62 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-// GET api/users/:id/cart
-router.get('/:id/cart', async (req, res, next) => {
+// GET api/users/:id
+router.get('/:id', async (req, res, next) => {
   try {
-    let cart = await Cart.findOne({
+    const user = await User.findOne({where: {id: req.params.id}})
+    res.json(user)
+  } catch (error) {
+    console.log('there was an error in GET api/users/:id')
+    next(error)
+  }
+})
+
+// GET api/users/:id/carts
+router.get('/:id/carts', async (req, res, next) => {
+  try {
+    let carts = await Cart.findAll({
       where: {
         userId: req.params.id,
-        complete: false
-      }
+        complete: true,
+      },
     })
-    if (!cart) {
-      cart = await Cart.create({userId: req.params.id})
+
+    let cartsWithItems = []
+    for (let i = 0; i < carts.length; i++) {
+      const cart = carts[i]
+      const plants = await cart.getPlants()
+      cartsWithItems.push({cart, plants})
     }
-    res.json(await cart.getPlants())
+
+    res.json(cartsWithItems)
   } catch (error) {
-    console.log('there was an error in user/:id/cart GET route')
+    console.log('there was an error in GET api/users/:id/carts')
     next(error)
   }
 })
 
-// POST api/users/:id/cart
-router.post('/:id/cart', async (req, res, next) => {
+// PUT api/users/:id
+router.put('/:id', async (req, res, next) => {
   try {
-    // adding to items
-    // need plantId (req.body.plantId) and cartId
-    const cart = await Cart.findOne({where: {userId: req.params.id}})
-    const newItem = await Item.create({
-      plantId: req.body.plantId,
-      cartId: cart.id,
-      quantity: req.body.quantity
-    })
-    //res.json(newItem)
-    res.json(await cart.getPlants())
+    const user = await User.findOne({where: {id: req.params.id}})
+    const updatedUser = await user.update(req.body)
+    res.json(updatedUser)
   } catch (error) {
-    console.log('there was an error in user/:id/cart POST route')
+    console.log('there was an error in PUT api/users/:id')
     next(error)
   }
 })
 
-// change quantity of item
-// PUT api/users/:id/cart
-router.put('/:id/cart', async (req, res, next) => {
+// DELETE api/users/:id
+router.delete('/:id', async (req, res, next) => {
   try {
-    const cart = await Cart.findOne({where: {userId: req.params.id}})
-    const item = await Item.findOne({
-      where: {
-        plantId: req.body.plantId,
-        cartId: cart.id
-      }
-    })
-    const editedItem = await item.update({
-      quantity: req.body.quantity
-    })
-    res.json(await cart.getPlants())
-  } catch (error) {
-    console.log('there was an error in user/:id/cart PUT route')
-    next(error)
-  }
-})
 
-// DELETE api/users/:id/cart
-router.delete('/:id/cart', async (req, res, next) => {
-  try {
-    const cart = await Cart.findOne({where: {userId: req.params.id}})
-    const item = await Item.findOne({
-      where: {
-        plantId: req.body.plantId,
-        cartId: cart.id
-      }
-    })
-    await item.destroy()
-    // res.sendStatus(204)
-    res.json(await cart.getPlants())
+    const user = await User.findOne({where: {id: req.params.id}})
+    await user.destroy()
+    res.sendStatus(204)
   } catch (error) {
-    console.log('there was an error in user/:id/cart DELETE route')
+    console.log('there was an error in DELETE api/users/:id')
     next(error)
   }
 })
