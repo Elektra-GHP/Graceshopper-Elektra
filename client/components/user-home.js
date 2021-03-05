@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import ContactForm from './ContactForm'
 import {getUser, updateUser, deleteUser} from '../store/userHomeReducer'
+
 /**
  * COMPONENT
  */
@@ -32,6 +33,7 @@ export class UserHome extends Component {
 
   render() {
     const {name} = this.props
+    console.log('inside render')
     return (
       <div>
         <h2>Welcome, {name}</h2>
@@ -55,6 +57,7 @@ export class UserHome extends Component {
  * CONTAINER
  */
 const mapState = (state) => {
+  console.log('inside mapState')
   return {
     user: state.user,
   }
@@ -62,6 +65,7 @@ const mapState = (state) => {
 
 // getUser, updateUser, deleteUser
 const mapDispatch = (dispatch) => {
+  console.log('inside mapdispatch')
   return {
     getUser: (id) => dispatch(getUser(id)),
     updateUser: (user) => dispatch(updateUser(user)),
