@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {User, Cart, Item} = require('../db/models')
+const {User, Cart, Item, Plant} = require('../db/models')
 module.exports = router
 
 // GET api/users/
@@ -31,18 +31,21 @@ router.get('/:id', async (req, res, next) => {
 // GET api/users/:id/carts
 router.get('/:id/carts', async (req, res, next) => {
   try {
-    const carts = await Cart.findAll({
+    let carts = await Cart.findAll({
       where: {
         userId: req.params.id,
         complete: true,
       },
     })
-    // if (Array.isArray(carts))
-    const cartsWithItems = {}
-    // carts.forEach(cart =>)
-    // want to also send plant info from each order
-    // [{cart: {cartInfo}, plants: [{plant}, {plant}]}]
-    res.send(cartsWithItems)
+
+    let cartsWithItems = []
+    for (let i = 0; i < carts.length; i++) {
+      const cart = carts[i]
+      const plants = await cart.getPlants()
+      cartsWithItems.push({cart, plants})
+    }
+
+    res.json(cartsWithItems)
   } catch (error) {
     console.log('there was an error in GET api/users/:id/carts')
     next(error)
