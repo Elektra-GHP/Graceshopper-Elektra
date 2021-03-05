@@ -32,6 +32,15 @@ label {
   font-family: 'Walter Turncoat';
 }
 
+.user-home-page button {
+  padding: 1vw;
+  background-color: #94c9a9;
+  color: white;
+  font-size: 13px;
+  border: none;
+  font-family: 'Walter Turncoat';
+}
+
 button:active {
   background-color: #fe5f55;
 }
@@ -102,4 +111,25 @@ form div {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+}
+
+.user-home-page {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+  align-items: center;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+}
+
+textarea {
+  width: 30rem;
+  height: 10rem;
+}
+
+.submit {
+  padding: 10px !important;
 }

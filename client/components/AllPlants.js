@@ -21,13 +21,13 @@ class AllPlants extends Component {
       <div>
         <h1>Plants</h1>
         <div className="container">
-          {plants.map(plant => {
+          {plants.map((plant) => {
             return (
               <div key={plant.id} className="all-plants-plant">
                 <img src={plant.imageUrl} className="all-plants-img" />
                 <div className="all-plants-name">
                   <Link to={`/plants/${plant.id}`}>{plant.name}</Link>
-                  <div>{plant.price}</div>
+                  <div>${plant.price}</div>
                 </div>
                 <div>{plant.type.name}</div>
                 <button type="button"> ADD </button>
@@ -41,15 +41,15 @@ class AllPlants extends Component {
   }
 }
 
-const mapState = state => {
+const mapState = (state) => {
   return {
-    plants: state.plants.all
+    plants: state.plants.all,
   }
 }
 
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch) => {
   return {
-    fetchPlants: () => dispatch(fetchPlants())
+    fetchPlants: () => dispatch(fetchPlants()),
   }
 }
 
