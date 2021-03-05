@@ -4,19 +4,19 @@ import axios from 'axios'
 const SET_PLANTS = 'SET_PLANTS'
 
 // ACTION CREATOR
-export const setPlants = (plants) => {
+export const setPlants = plants => {
   return {
     type: SET_PLANTS,
-    plants,
+    plants
   }
 }
 
 // THUNK
 export const fetchPlants = () => {
-  return async (dispatch) => {
+  return async dispatch => {
     try {
       const {data: plants} = await axios.get('/api/plants')
-      console.log('plants:', plants)
+      // console.log('plants:', plants)
       dispatch(setPlants(plants))
     } catch (error) {
       console.log('Error in fetching plants')
@@ -26,7 +26,7 @@ export const fetchPlants = () => {
 
 // INITIAL STATE
 const initialState = {
-  all: [],
+  all: []
 }
 
 //REDUCER
@@ -35,7 +35,7 @@ const plantsReducer = (state = initialState, action) => {
     case SET_PLANTS:
       return {
         ...state,
-        all: action.plants,
+        all: action.plants
       }
     default:
       return state
