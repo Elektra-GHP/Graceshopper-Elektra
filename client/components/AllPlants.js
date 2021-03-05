@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchPlants} from '../store/allPlantsReducer'
-// import Cart from './Cart'
+import Cart from './Cart'
 // COMPONENT
 
 class AllPlants extends Component {
@@ -16,25 +16,28 @@ class AllPlants extends Component {
 
   render() {
     const plants = this.props.plants
-    console.log('plants in AllPlants render:', plants)
+    console.log('props via Route-------', this.props)
+    // console.log('plants in AllPlants render:', plants)
     return (
       <div>
         <h1>Plants</h1>
-        <div className="container">
-          {plants.map(plant => {
-            return (
-              <div key={plant.id} className="all-plants-plant">
-                <img src={plant.imageUrl} className="all-plants-img" />
-                <div className="all-plants-name">
-                  <Link to={`/plants/${plant.id}`}>{plant.name}</Link>
-                  <div>{plant.price}</div>
+        <div className="view">
+          <div className="container">
+            {plants.map(plant => {
+              return (
+                <div key={plant.id} className="all-plants-plant">
+                  <img src={plant.imageUrl} className="all-plants-img" />
+                  <div className="all-plants-name">
+                    <Link to={`/plants/${plant.id}`}>{plant.name}</Link>
+                    <div>{plant.price}</div>
+                  </div>
+                  <div>{plant.type.name}</div>
+                  <button type="button"> ADD </button>
                 </div>
-                <div>{plant.type.name}</div>
-                <button type="button"> ADD </button>
-              </div>
-            )
-          })}
-          {/* <Cart /> */}
+              )
+            })}
+          </div>
+          <Cart />
         </div>
       </div>
     )
@@ -42,6 +45,7 @@ class AllPlants extends Component {
 }
 
 const mapState = state => {
+  console.log('state in all plants view', state)
   return {
     plants: state.plants.all
   }
