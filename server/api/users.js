@@ -69,7 +69,7 @@ router.put('/:id/cart', async (req, res, next) => {
     const editedItem = await item.update({
       quantity: req.body.quantity
     })
-    res.json(editedItem)
+    res.json(await cart.getPlants())
   } catch (error) {
     console.log('there was an error in user/:id/cart PUT route')
     next(error)

@@ -4,6 +4,7 @@ import axios from 'axios'
 const GET_CART = 'GET_CART'
 const ADD_PLANT_TO_CART = 'ADD_PLANT_TO_CART'
 const DELETE_ITEM = 'DELETE_ITEM'
+const EDIT_QUANTITY = 'EDIT_QUANTITY'
 
 // ACTION CREATOR
 export const getCart = cart => ({
@@ -21,6 +22,13 @@ export const addPlantToCart = cart => {
 export const removeItem = cart => {
   return {
     type: DELETE_ITEM,
+    cart
+  }
+}
+
+export const editQuant = cart => {
+  return {
+    type: EDIT_QUANTITY,
     cart
   }
 }
@@ -46,7 +54,7 @@ export const addPlant = (userId, plantId) => {
         plantId,
         quantity: 1
       })
-      console.log('CART IN CART REDUCER THUNK ---> ', {data: cart})
+      //console.log('CART IN CART REDUCER THUNK ---> ', {data: cart})
 
       dispatch(addPlantToCart(cart))
     } catch (error) {
@@ -58,13 +66,30 @@ export const addPlant = (userId, plantId) => {
 export const deleteItem = (userId, plantId) => {
   return async dispatch => {
     try {
-      console.log('delete thunk plantId----->', plantId)
+      //console.log('delete thunk plantId----->', plantId)
       const {data: newCart} = await axios.delete(`api/users/${userId}/cart`, {
         data: {plantId}
       })
       dispatch(removeItem(newCart))
     } catch (error) {
       console.log('Cannot delete item')
+    }
+  }
+}
+
+export const editQuantity = (userId, plantId, newQuant) => {
+  return async dispatch => {
+    try {
+      console.log('plantId in editQuantity Thunk -->', plantId)
+      const {data: newCart} = await axios.put(`api/users/${userId}/cart`, {
+        data: {plantId},
+        plantId,
+        quantity: newQuant
+      })
+      console.log('newCart in edit quantity thunk ---> ', newCart)
+      dispatch(editQuant(newCart))
+    } catch (err) {
+      console.log('Error in Editing Quantity Thunk')
     }
   }
 }
@@ -80,6 +105,8 @@ export default (state = initialState, action) => {
     case ADD_PLANT_TO_CART:
       return action.cart
     case DELETE_ITEM:
+      return action.cart
+    case EDIT_QUANTITY:
       return action.cart
     default:
       return state

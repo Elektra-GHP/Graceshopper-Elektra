@@ -13,8 +13,16 @@ label {
   display: block;
 }
 
+button {
+  padding: 1vh;
+  background-color: #94c9a9;
+  border: none;
+  font-family: 'Walter Turncoat';
+  color: white;
+}
+
 .all-plants-plant button {
-  padding: 3%;
+  padding: 1vh;
   background-color: #94c9a9;
   width: 25%;
   color: white;
@@ -116,4 +124,8 @@ form div {
 .cart {
   border-left: 3px dotted #c8a898;
   padding: 2vw;
+}
+
+.checkout-item {
+  margin-bottom: 5%;
 }

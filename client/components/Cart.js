@@ -1,12 +1,12 @@
 import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
-import {fetchCart, deleteItem} from '../store/cartReducer'
+import {fetchCart, deleteItem, editQuantity} from '../store/cartReducer'
 import {Link} from 'react-router-dom'
 // import {Cart, CheckoutButton, Product} from 'react-shopping-cart'
 
 class Cart extends PureComponent {
   componentDidMount() {
-    console.log('componenentDidMount props --> ', this.props)
+    //console.log('componenentDidMount props --> ', this.props)
   }
   componentDidUpdate(prevProps) {
     console.log('componenentDidUpdate props --> ', this.props)
@@ -31,7 +31,7 @@ class Cart extends PureComponent {
         )}
         {cart.map(plant => {
           return (
-            <div key={plant.id}>
+            <div key={plant.id} className="checkout-item">
               <img src={plant.imageUrl} className="checkout-plant-img" />
               <h2>{plant.name}</h2>
               <p>
@@ -43,9 +43,35 @@ class Cart extends PureComponent {
                   this.props.deleteItem(this.props.user.id, plant.id)
                 }
               >
-                {' '}
-                Remove Item{' '}
+                Remove Item
               </button>
+              <button
+                type="button"
+                onClick={() =>
+                  this.props.editQuantity(
+                    this.props.user.id,
+                    plant.id,
+                    plant.item.quantity + 1
+                  )
+                }
+              >
+                {' '}
+                +{' '}
+              </button>
+              <button
+                type="button"
+                onClick={() =>
+                  this.props.editQuantity(
+                    this.props.user.id,
+                    plant.id,
+                    plant.item.quantity - 1
+                  )
+                }
+              >
+                {' '}
+                -{' '}
+              </button>
+              <hr />
             </div>
           )
         })}
@@ -66,7 +92,9 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     fetchCart: id => dispatch(fetchCart(id)),
-    deleteItem: (userId, plantId) => dispatch(deleteItem(userId, plantId))
+    deleteItem: (userId, plantId) => dispatch(deleteItem(userId, plantId)),
+    editQuantity: (userId, plantId, newQuant) =>
+      dispatch(editQuantity(userId, plantId, newQuant))
   }
 }
 export default connect(mapState, mapDispatch)(Cart)
