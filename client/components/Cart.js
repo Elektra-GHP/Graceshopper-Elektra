@@ -1,8 +1,7 @@
 import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
-import {fetchCart} from '../store/cartReducer'
+import {fetchCart, deleteItem} from '../store/cartReducer'
 import {Link} from 'react-router-dom'
-import {deleteItem} from '../store/cartReducer'
 // import {Cart, CheckoutButton, Product} from 'react-shopping-cart'
 
 class Cart extends PureComponent {
@@ -21,7 +20,7 @@ class Cart extends PureComponent {
     const cart = this.props.cart
     //const cart = []
     // console.log('plant in singlePlant component:', plant)
-    console.log('PROPS IN CART ----->', this.props)
+    console.log('CART ----->', cart)
     return (
       <div className="cart">
         <Link to="/cart">Your Cart</Link>
@@ -38,7 +37,15 @@ class Cart extends PureComponent {
               <p>
                 ${plant.price} X {plant.item.quantity}
               </p>
-              <button type="button"> Remove Item </button>
+              <button
+                type="button"
+                onClick={() =>
+                  this.props.deleteItem(this.props.user.id, plant.id)
+                }
+              >
+                {' '}
+                Remove Item{' '}
+              </button>
             </div>
           )
         })}
@@ -50,7 +57,7 @@ class Cart extends PureComponent {
 }
 
 const mapState = state => {
-  //console.log('state in cart ---> ' , state)
+  // console.log('state in cart ---> ' , state)
   return {
     user: state.user,
     cart: state.cart
@@ -58,7 +65,8 @@ const mapState = state => {
 }
 const mapDispatch = dispatch => {
   return {
-    fetchCart: id => dispatch(fetchCart(id))
+    fetchCart: id => dispatch(fetchCart(id)),
+    deleteItem: (userId, plantId) => dispatch(deleteItem(userId, plantId))
   }
 }
 export default connect(mapState, mapDispatch)(Cart)

@@ -45,6 +45,7 @@ class AllPlants extends Component {
 }
 
 const mapState = state => {
+  console.log('state in all plants view', state)
   return {
     plants: state.plants.all
   }

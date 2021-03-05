@@ -46,7 +46,7 @@ export const addPlant = (userId, plantId) => {
         plantId,
         quantity: 1
       })
-      console.log('CART IN CART REDUCER THUNK ---> ', cart)
+      console.log('CART IN CART REDUCER THUNK ---> ', {data: cart})
 
       dispatch(addPlantToCart(cart))
     } catch (error) {
@@ -55,18 +55,23 @@ export const addPlant = (userId, plantId) => {
   }
 }
 
-// export const deleteItem = (userId, plantId) => {
-//   return async dispatch => {
-//     try {
-//       const {data: delete} = await axios.delete(`api/users/${userId}/cart`, {plantId})
-//       dispatch(removeItem(cart))
-//     } catch(error){
-//       console.log('Cannot delete item')
-//     }
-//   }
-// }
+export const deleteItem = (userId, plantId) => {
+  return async dispatch => {
+    try {
+      console.log('delete thunk plantId----->', plantId)
+      const {data: newCart} = await axios.delete(`api/users/${userId}/cart`, {
+        data: {plantId}
+      })
+      dispatch(removeItem(newCart))
+    } catch (error) {
+      console.log('Cannot delete item')
+    }
+  }
+}
+
 //initial state
 const initialState = []
+
 //reducer
 export default (state = initialState, action) => {
   switch (action.type) {

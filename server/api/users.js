@@ -88,7 +88,7 @@ router.delete('/:id/cart', async (req, res, next) => {
     })
     await item.destroy()
     // res.sendStatus(204)
-    res.json(cart)
+    res.json(await cart.getPlants())
   } catch (error) {
     console.log('there was an error in user/:id/cart DELETE route')
     next(error)
