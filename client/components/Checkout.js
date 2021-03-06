@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {checkout} from '../store/cartReducer'
+import Cart from './Cart'
 
 const initialState = {
   ccNumber: '',
@@ -43,65 +44,73 @@ class Checkout extends React.Component {
     if (errors.length < 1) {
       this.props.checkout(this.props.user.id, this.state.shippingAddress)
       this.setState(initialState)
+      // redirect to confirmation page
+      // this.props.history.push('/orderConfirmation')
+      // this.props.history.push('/home')
     }
     this.setState({errors: errors})
-    // redirect to confirmation page
   }
 
   render() {
-    console.log('user: ', this.props.user)
+    console.log('checking out?', this.props.checkingOut)
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <div className="shipping-details">
-            <h2>Shipping Details</h2>
-            <div>
-              <label htmlFor="shippingAddress">Shipping Address</label>
-              <input
-                className="input-box"
-                name="shippingAddress"
-                onChange={this.handleChange}
-                value={this.state.shippingAddress}
-              />
+      <div className="checkout-page">
+        <div>
+          <form id="checkout-form" onSubmit={this.handleSubmit}>
+            <div className="shipping-details">
+              <h2>Shipping Details</h2>
+              <div>
+                <label htmlFor="shippingAddress">Shipping Address</label>
+                <input
+                  className="input-box"
+                  name="shippingAddress"
+                  onChange={this.handleChange}
+                  value={this.state.shippingAddress}
+                />
+              </div>
             </div>
-          </div>
-          <div className="payment-details">
-            <h2>Payment Details</h2>
-            <div>
-              <label htmlFor="ccNumber">Card Number</label>
-              <input
-                className="input-box"
-                name="ccNumber"
-                onChange={this.handleChange}
-                value={this.state.ccNumber}
-              />
+            <div className="payment-details">
+              <h2>Payment Details</h2>
+              <div>
+                <label htmlFor="ccNumber">Card Number</label>
+                <input
+                  className="input-box"
+                  name="ccNumber"
+                  onChange={this.handleChange}
+                  value={this.state.ccNumber}
+                />
+              </div>
+              <div>
+                <label htmlFor="ccExpDate">Expiration Date (MM/YY)</label>
+                <input
+                  className="input-box"
+                  name="ccExpDate"
+                  onChange={this.handleChange}
+                  value={this.state.ccExpDate}
+                />
+              </div>
+              <div>
+                <label htmlFor="ccCVV">CVV</label>
+                <input
+                  className="input-box"
+                  name="ccCVV"
+                  onChange={this.handleChange}
+                  value={this.state.ccCVV}
+                />
+              </div>
             </div>
-            <div>
-              <label htmlFor="ccExpDate">Expiration Date (MM/YY)</label>
-              <input
-                className="input-box"
-                name="ccExpDate"
-                onChange={this.handleChange}
-                value={this.state.ccExpDate}
-              />
-            </div>
-            <div>
-              <label htmlFor="ccCVV">CVV</label>
-              <input
-                className="input-box"
-                name="ccCVV"
-                onChange={this.handleChange}
-                value={this.state.ccCVV}
-              />
-            </div>
-          </div>
-          <button type="submit">Confirm Order</button>
-        </form>
-        {this.state.errors.length > 0 &&
-          this.state.errors.map((error) => (
-            <h3 key={this.state.errors.indexOf(error)}>{error}</h3>
-          ))}
-        {/* <Cart /> */}
+            <button id="confirm-order-btn" type="submit">
+              Confirm Order
+            </button>
+          </form>
+          {this.state.errors.length > 0 &&
+            this.state.errors.map((error) => (
+              <h3 key={this.state.errors.indexOf(error)}>{error}</h3>
+            ))}
+        </div>
+        <div className="checkout-cart">
+          <Cart checkingOut={true} />
+        </div>
       </div>
     )
   }

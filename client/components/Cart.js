@@ -5,6 +5,11 @@ import {Link} from 'react-router-dom'
 // import {Cart, CheckoutButton, Product} from 'react-shopping-cart'
 
 class Cart extends PureComponent {
+  constructor(props) {
+    super(props)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
   componentDidMount() {
     //console.log('componenentDidMount props --> ', this.props)
   }
@@ -15,6 +20,12 @@ class Cart extends PureComponent {
       this.props.fetchCart(userId)
     }
   }
+
+  handleSubmit(event) {
+    event.preventDefault()
+    this.props.history.push('/checkout')
+  }
+
   render() {
     //const plant = this.props.plant
     const cart = this.props.cart
@@ -76,7 +87,12 @@ class Cart extends PureComponent {
           )
         })}
         <div>Total:</div>
-        <Link to="/checkout"> Checkout </Link>
+        {/* <button type="button" onClick={this.handleSubmit}> Checkout </button> */}
+        {this.props.checkingOut === false && (
+          <Link to="/checkout" id="checkout-btn">
+            Checkout
+          </Link>
+        )}
       </div>
     )
   }
