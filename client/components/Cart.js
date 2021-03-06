@@ -29,7 +29,7 @@ class Cart extends PureComponent {
         ) : (
           <p>You have {cart.length} items in your cart</p>
         )}
-        {cart.map(plant => {
+        {cart.map((plant) => {
           return (
             <div key={plant.id} className="checkout-item">
               <img src={plant.imageUrl} className="checkout-plant-img" />
@@ -76,25 +76,25 @@ class Cart extends PureComponent {
           )
         })}
         <div>Total:</div>
-        <button type="button"> Checkout </button>
+        <Link to="/checkout"> Checkout </Link>
       </div>
     )
   }
 }
 
-const mapState = state => {
+const mapState = (state) => {
   // console.log('state in cart ---> ' , state)
   return {
     user: state.user,
-    cart: state.cart
+    cart: state.cart,
   }
 }
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch) => {
   return {
-    fetchCart: id => dispatch(fetchCart(id)),
+    fetchCart: (id) => dispatch(fetchCart(id)),
     deleteItem: (userId, plantId) => dispatch(deleteItem(userId, plantId)),
     editQuantity: (userId, plantId, newQuant) =>
-      dispatch(editQuantity(userId, plantId, newQuant))
+      dispatch(editQuantity(userId, plantId, newQuant)),
   }
 }
 export default connect(mapState, mapDispatch)(Cart)
