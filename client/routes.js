@@ -8,6 +8,7 @@ import AllPlants from './components/AllPlants'
 import SinglePlant from './components/SinglePlant'
 import Cart from './components/Cart'
 import Checkout from './components/Checkout'
+import AddPlant from './components/AddPlant'
 
 /**
  * COMPONENT
@@ -28,6 +29,7 @@ class Routes extends Component {
         <Route path="/signup" component={Signup} />
         <Route exact path="/plants" component={AllPlants} />
         <Route path="/plants/:id" component={SinglePlant} />
+        <Route path="/add-plant" component={AddPlant} />
         <Route path="/cart" component={Cart} />
         <Route path="/checkout" component={Checkout} />
         {isLoggedIn && (

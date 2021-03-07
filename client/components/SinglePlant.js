@@ -7,10 +7,6 @@ import Cart from './Cart'
 // COMPONENT
 
 class SinglePlant extends Component {
-  // constructor(props) {
-  //   super(props)
-  // }
-
   componentDidMount() {
     const id = this.props.match.params.id
     this.props.fetchPlant(id)
@@ -48,18 +44,18 @@ class SinglePlant extends Component {
   }
 }
 
-const mapState = state => {
+const mapState = (state) => {
   console.log('state in single plant:', state)
   return {
     user: state.user,
-    plant: state.plant.single
+    plant: state.plant.single,
   }
 }
 
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch) => {
   return {
-    fetchPlant: id => dispatch(fetchPlant(id)),
-    addPlant: (userId, plantId) => dispatch(addPlant(userId, plantId))
+    fetchPlant: (id) => dispatch(fetchPlant(id)),
+    addPlant: (userId, plantId) => dispatch(addPlant(userId, plantId)),
   }
 }
 

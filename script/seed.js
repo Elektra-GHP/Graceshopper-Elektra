@@ -18,15 +18,22 @@ async function seed() {
       email: 'murphy@email.com',
       password: '123',
     },
+    {
+      name: 'Cooper',
+      isAdmin: true,
+      email: 'cooper@email.com',
+      password: '123',
+    },
   ]
 
-  const [cody, murphy] = await Promise.all(
+  const [cody, murphy, cooper] = await Promise.all(
     users.map((user) => User.create(user))
   )
 
   const carts = [
     {userId: cody.id},
     {userId: murphy.id},
+    {userId: cooper.id},
     {
       userId: cody.id,
       complete: true,
@@ -56,6 +63,7 @@ async function seed() {
   const [
     codyCart,
     murphyCart,
+    cooperCart,
     codyCompleted1,
     codyCompleted2,
     murphyCompleted,
@@ -320,10 +328,11 @@ async function seed() {
       typeId: cactus.id,
     },
   ]
-  // want plant name - id
+
   const plantsInDb = await Promise.all(
     plants.map((plant) => Plant.create(plant))
   )
+
   const plantNameObj = {}
   plantsInDb.forEach(function (plant) {
     plantNameObj[plant.name] = plant.id
@@ -400,6 +409,18 @@ async function seed() {
       cartId: murphyCompleted.id,
       userId: murphy.id,
       plantId: plantNameObj.Dottie,
+    },
+    {
+      quantity: 1,
+      cartId: cooperCart.id,
+      userId: cooper.id,
+      plantId: plantNameObj['Rattlesnake Plant'],
+    },
+    {
+      quantity: 2,
+      cartId: cooperCart.id,
+      userId: cooper.id,
+      plantId: plantNameObj['Tiger Lily'],
     },
   ]
 

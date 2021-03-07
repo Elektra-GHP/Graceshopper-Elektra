@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {fetchPlants} from '../store/allPlantsReducer'
+import {fetchPlants, deletePlant} from '../store/allPlantsReducer'
 import Cart from './Cart'
 // COMPONENT
 
@@ -31,11 +31,22 @@ class AllPlants extends Component {
                     <Link to={`/plants/${plant.id}`}>{plant.name}</Link>
                     <div>{plant.price}</div>
                   </div>
-                  <div>{plant.type.name}</div>
+                  {/* <div>{plant.type.name}</div> */}
                   <button type="button"> ADD </button>
+                  {this.props.user.isAdmin && (
+                    <div className="plants-admin-buttons">
+                      <button
+                        type="button"
+                        onClick={() => this.props.deletePlant(plant.id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  )}
                 </div>
               )
             })}
+            {this.props.user.isAdmin && <Link to="/add-plant">Add Plant</Link>}
           </div>
           <Cart checkingOut={false} />
         </div>
@@ -48,12 +59,14 @@ const mapState = (state) => {
   console.log('state in all plants view', state)
   return {
     plants: state.plants.all,
+    user: state.user,
   }
 }
 
 const mapDispatch = (dispatch) => {
   return {
     fetchPlants: () => dispatch(fetchPlants()),
+    deletePlant: (plantId) => dispatch(deletePlant(plantId)),
   }
 }
 
