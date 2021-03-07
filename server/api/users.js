@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {User, Cart} = require('../db/models')
+const {User, Cart, Item, Plant} = require('../db/models')
 module.exports = router
 
 // GET api/users/
@@ -76,6 +76,23 @@ router.put('/:id/checkout', async (req, res, next) => {
       },
     })
     console.log('in route, active cart:', activeCart)
+
+    // find items with cart id
+    // loop through, find each plant and subtract qty
+    const cartItems = await Item.findAll({where: {cartId: activeCart.id}})
+    console.log('cart items ----->', cartItems)
+    const plantIdAndQty = []
+    for (let i = 0; i < cartItems.length; i++) {
+      let item = cartItems[i]
+      plantIdAndQty.push({plantId: item.plantId, quantity: item.quantity})
+      const plantOfItem = await Plant.findOne({where: {id: item.plantId}})
+      const newQty = plantOfItem.inventory - item.quantity
+      // if (newQty < 0) {
+      //   throw new Error(`Sorry! We only have ${plantOfItem.inventory} ${plantOfItem.name}'s in stock.`)
+      // }
+      plantOfItem.update({inventory: newQty})
+    }
+
     const complete = true
     const orderId = Math.random().toString(36).substr(2, 9)
     const orderDate = new Date().toString()

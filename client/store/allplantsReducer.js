@@ -3,7 +3,6 @@ import axios from 'axios'
 // ACTION TYPE
 const SET_PLANTS = 'SET_PLANTS'
 const ADD_PLANT = 'ADD_PLANT'
-const EDIT_PLANT = 'EDIT_PLANT'
 const DELETE_PLANT = 'DELETE_PLANT'
 
 // ACTION CREATOR
@@ -18,13 +17,6 @@ const addPlantCreator = (plant) => {
   console.log('plant added to state:', plant)
   return {
     type: ADD_PLANT,
-    plant,
-  }
-}
-
-const editPlantCreator = (plant) => {
-  return {
-    type: EDIT_PLANT,
     plant,
   }
 }
@@ -60,20 +52,6 @@ export const addPlant = (plant) => {
   }
 }
 
-export const editPlant = (plantId, plant) => {
-  return async (dispatch) => {
-    try {
-      const {data: editedPlant} = await axios.put(
-        `/api/plants/${plantId}`,
-        plant
-      )
-      dispatch(editPlantCreator(editedPlant))
-    } catch (error) {
-      console.log('Error in editPlant thunk')
-    }
-  }
-}
-
 export const deletePlant = (plantId) => {
   return async (dispatch) => {
     try {
@@ -100,22 +78,6 @@ const plantsReducer = (state = initialState, action) => {
       }
     case ADD_PLANT:
       return {...state, all: [...state.all, action.plant]}
-    case EDIT_PLANT:
-      return {
-        ...state,
-        all: state.all.map((plant) => {
-          if (plant.id === action.plant.id) {
-            plant.name = action.plant.name
-            plant.description = action.plant.description
-            plant.inventory = action.plant.inventory
-            plant.price = action.plant.price
-            plant.light = action.plant.light
-            plant.water = action.plant.water
-            plant.humidity = action.plant.humidity
-          }
-          return plant
-        }),
-      }
     case DELETE_PLANT:
       return {
         ...state,
