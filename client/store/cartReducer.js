@@ -10,6 +10,7 @@ const CHECKOUT_CART = 'CHECKOUT_CART'
 const ADD_PLANT_GUEST = 'ADD_PLANT_GUEST'
 const EDIT_QUANTITY_GUEST = 'EDIT_QUANTITY_GUEST'
 const DELETE_ITEM_GUEST = 'DELETE_ITEM_GUEST'
+const CHECKOUT_GUEST = 'CHECKOUT_GUEST'
 
 // ACTION CREATOR
 const getCart = (cart) => ({
@@ -73,6 +74,12 @@ const checkoutCart = () => {
   }
 }
 
+const checkoutGuest = () => {
+  return {
+    type: CHECKOUT_GUEST,
+  }
+}
+
 // THUNK
 export const fetchCart = (userId) => {
   return async (dispatch) => {
@@ -91,12 +98,6 @@ export const fetchCart = (userId) => {
 export const addPlant = (userId, plantId) => {
   return async (dispatch) => {
     try {
-      /*
-      const {data: cart} = await axios.post(`/api/users/${userId}/cart`, {
-        plantId,
-        quantity: 1,
-      })
-      */
       const {data: cart} = await axios.post(`/api/carts/user/${userId}`, {
         plantId,
         quantity: 1,
@@ -111,12 +112,6 @@ export const addPlant = (userId, plantId) => {
 export const deleteItem = (userId, plantId) => {
   return async (dispatch) => {
     try {
-      //console.log('delete thunk plantId----->', plantId)
-      /*
-      const {data: newCart} = await axios.delete(`api/users/${userId}/cart`, {
-        data: {plantId},
-      })
-      */
       const {data: newCart} = await axios.delete(`/api/carts/user/${userId}`, {
         data: {plantId},
       })
@@ -130,14 +125,6 @@ export const deleteItem = (userId, plantId) => {
 export const editQuantity = (userId, plantId, newQuant) => {
   return async (dispatch) => {
     try {
-      /*
-      console.log('plantId in editQuantity Thunk -->', plantId)
-      const {data: newCart} = await axios.put(`api/users/${userId}/cart`, {
-        data: {plantId},
-        plantId,
-        quantity: newQuant,
-      })
-      */
       const {data: newCart} = await axios.put(`/api/carts/user/${userId}`, {
         data: {plantId},
         plantId,
@@ -154,10 +141,21 @@ export const editQuantity = (userId, plantId, newQuant) => {
 export const checkout = (userId, shippingAddress) => {
   return async (dispatch) => {
     try {
-      await axios.put(`api/checkout/user/${userId}`, {shippingAddress})
+      await axios.put(`/api/checkout/user/${userId}`, {shippingAddress})
       dispatch(checkoutCart())
     } catch (error) {
       console.log('Error in checkout thunk.')
+    }
+  }
+}
+
+export const guestCheckout = (cart, shippingAddress) => {
+  return async (dispatch) => {
+    try {
+      await axios.post(`/api/checkout/guest`, {cart, shippingAddress})
+      dispatch(checkoutGuest())
+    } catch (error) {
+      console.log('Error in guestCheckout thunk.')
     }
   }
 }
@@ -166,7 +164,7 @@ export const checkout = (userId, shippingAddress) => {
 const initialState = []
 
 //reducer
-export default (state = initialState, action) => {
+export default function (state = initialState, action) {
   switch (action.type) {
     case GET_CART:
       return action.cart
@@ -177,7 +175,6 @@ export default (state = initialState, action) => {
     case EDIT_QUANTITY:
       return action.cart
     case CHECKOUT_CART:
-      console.log('in CHECKOUT_CART reducer')
       return initialState
     case ADD_PLANT_GUEST:
       return [...state, action.plant]
@@ -191,6 +188,8 @@ export default (state = initialState, action) => {
       })
     case DELETE_ITEM_GUEST:
       return state.filter((plant) => plant.id !== action.plantId)
+    case CHECKOUT_GUEST:
+      return initialState
     default:
       return state
   }

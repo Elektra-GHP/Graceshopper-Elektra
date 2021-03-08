@@ -18,7 +18,9 @@ class Cart extends PureComponent {
 
   componentDidMount() {
     const userId = this.props.user.id
-    this.props.fetchCart(userId)
+    if (userId) {
+      this.props.fetchCart(userId)
+    }
   }
 
   componentDidUpdate(prevProps) {
