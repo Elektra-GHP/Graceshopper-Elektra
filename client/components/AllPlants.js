@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+import {addPlant} from '../store/cartReducer'
 import {fetchPlants, deletePlant} from '../store/allPlantsReducer'
 import Cart from './Cart'
 // COMPONENT
@@ -31,8 +32,15 @@ class AllPlants extends Component {
                     <Link to={`/plants/${plant.id}`}>{plant.name}</Link>
                     <div>{plant.price}</div>
                   </div>
-                  {/* <div>{plant.type.name}</div> */}
-                  <button type="button"> ADD </button>
+                  <div>{plant.type.name}</div>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      this.props.addPlant(this.props.user.id, plant.id)
+                    }
+                  >
+                    ADD
+                  </button>
                   {this.props.user.isAdmin && (
                     <div className="plants-admin-buttons">
                       <button
@@ -56,7 +64,6 @@ class AllPlants extends Component {
 }
 
 const mapState = (state) => {
-  console.log('state in all plants view', state)
   return {
     plants: state.plants.all,
     user: state.user,
@@ -66,6 +73,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     fetchPlants: () => dispatch(fetchPlants()),
+    addPlant: (userId, plantId) => dispatch(addPlant(userId, plantId)),
     deletePlant: (plantId) => dispatch(deletePlant(plantId)),
   }
 }

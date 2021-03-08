@@ -45,8 +45,8 @@ const checkoutCart = () => {
 export const fetchCart = (userId) => {
   return async (dispatch) => {
     try {
-      const {data: cart} = await axios.get(`/api/users/${userId}/cart`)
-      //console.log('CART IN CART REDUCER THUNK ---> ', cart)
+      //const {data: cart} = await axios.get(`/api/users/${userId}/cart`)
+      const {data: cart} = await axios.get(`/api/carts/user/${userId}`)
       dispatch(getCart(cart))
     } catch (error) {
       console.log("Problem getting user's cart")
@@ -58,12 +58,17 @@ export const fetchCart = (userId) => {
 export const addPlant = (userId, plantId) => {
   return async (dispatch) => {
     try {
+      /*
       const {data: cart} = await axios.post(`/api/users/${userId}/cart`, {
         plantId,
         quantity: 1,
       })
-      //console.log('CART IN CART REDUCER THUNK ---> ', {data: cart})
-
+      */
+      const {data: cart} = await axios.post(`/api/carts/user/${userId}`, {
+        plantId,
+        quantity: 1
+      })
+      console.log('IMPORTANT CART -->', cart)
       dispatch(addPlantToCart(cart))
     } catch (error) {
       console.log('Problem adding plant')
@@ -75,8 +80,13 @@ export const deleteItem = (userId, plantId) => {
   return async (dispatch) => {
     try {
       //console.log('delete thunk plantId----->', plantId)
+      /*
       const {data: newCart} = await axios.delete(`api/users/${userId}/cart`, {
         data: {plantId},
+      })
+      */
+      const {data: newCart} = await axios.delete(`/api/carts/user/${userId}`, {
+        data: {plantId}
       })
       dispatch(removeItem(newCart))
     } catch (error) {
@@ -88,11 +98,18 @@ export const deleteItem = (userId, plantId) => {
 export const editQuantity = (userId, plantId, newQuant) => {
   return async (dispatch) => {
     try {
+      /*
       console.log('plantId in editQuantity Thunk -->', plantId)
       const {data: newCart} = await axios.put(`api/users/${userId}/cart`, {
         data: {plantId},
         plantId,
         quantity: newQuant,
+      })
+      */
+      const {data: newCart} = await axios.put(`/api/carts/user/${userId}`, {
+        data: {plantId},
+        plantId,
+        quantity: newQuant
       })
       console.log('newCart in edit quantity thunk ---> ', newCart)
       dispatch(editQuant(newCart))
