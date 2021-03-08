@@ -6,6 +6,22 @@ const Cart = db.define('cart', {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
   },
+  orderId: {
+    type: Sequelize.STRING,
+    defaultValue: null,
+  },
+  orderDate: {
+    type: Sequelize.STRING,
+    defaultValue: null,
+  },
+  shippingStatus: {
+    type: Sequelize.ENUM('pending', 'confirmed', 'shipped', 'delivered'),
+    defaultValue: null,
+  },
+  shippingAddress: {
+    type: Sequelize.STRING,
+    defaultValue: null,
+  },
 })
 
 module.exports = Cart

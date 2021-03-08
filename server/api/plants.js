@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const {Plant, Type} = require('../db/models')
+const adminsOnly = require('../utils/adminsOnly')
 module.exports = router
 
 // GET api/plants/
@@ -13,6 +14,17 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+// GET api/plants/types
+router.get('/types', async (req, res, next) => {
+  try {
+    const types = await Type.findAll()
+    res.json(types)
+  } catch (error) {
+    next(error)
+    console.log('there was an error in GET api/types')
+  }
+})
+
 // GET api/plants/${plant.id}
 router.get('/:id', async (req, res, next) => {
   try {
@@ -23,8 +35,8 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
-// POST /api/plant
-router.post('/', async (req, res, next) => {
+// POST /api/plants
+router.post('/', adminsOnly, async (req, res, next) => {
   try {
     const newPlant = await Plant.create(req.body)
     res.status(201).send(newPlant)
@@ -33,11 +45,11 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-// PUT /api/plant/:id
-router.put('/:id', async (req, res, next) => {
+// PUT /api/plants/:id
+router.put('/:id', adminsOnly, async (req, res, next) => {
   try {
     const singlePlant = await Plant.findByPk(Number(req.params.id), {
-      include: Type
+      include: Type,
     })
     res.send(await singlePlant.update(req.body))
   } catch (e) {
@@ -45,8 +57,8 @@ router.put('/:id', async (req, res, next) => {
   }
 })
 
-// DELETE /api/plant/:id
-router.delete('/:id', async (req, res, next) => {
+// DELETE /api/plants/:id
+router.delete('/:id', adminsOnly, async (req, res, next) => {
   try {
     const singlePlant = await Plant.findByPk(Number(req.params.id))
     await singlePlant.destroy()

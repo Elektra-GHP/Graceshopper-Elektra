@@ -12,19 +12,19 @@ module.exports = router
 
 // GET api/carts/user/:id
 router.get('/user/:id', async (req, res, next) => {
-  console.log('inside get route')
+  //console.log('inside get route')
   try {
     let cart = await Cart.findOne({
       where: {
         userId: req.params.id,
-        complete: false,
-      },
+        complete: false
+      }
     })
-    console.log('CART --->', cart)
+    //console.log('CART --->', cart)
     if (!cart) {
       cart = await Cart.create({userId: req.params.id})
     }
-    console.log('cart', cart)
+    //console.log('cart', cart)
     res.json(await cart.getPlants())
   } catch (error) {
     console.log('there was an error in user/:id GET route')
@@ -41,9 +41,10 @@ router.post('/user/:id', async (req, res, next) => {
     const newItem = await Item.create({
       plantId: req.body.plantId,
       cartId: cart.id,
-      quantity: req.body.quantity,
+      quantity: req.body.quantity
     })
-    res.json(newItem)
+    //res.json(newItem)
+    res.json(await cart.getPlants())
   } catch (error) {
     console.log('there was an error in user/:id POST route')
     next(error)
@@ -57,13 +58,14 @@ router.put('/user/:id', async (req, res, next) => {
     const item = await Item.findOne({
       where: {
         plantId: req.body.plantId,
-        cartId: cart.id,
-      },
+        cartId: cart.id
+      }
     })
     const editedItem = await item.update({
-      quantity: req.body.quantity,
+      quantity: req.body.quantity
     })
-    res.json(editedItem)
+    //res.json(editedItem)
+    res.json(await cart.getPlants())
   } catch (error) {
     console.log('there was an error in user/:id/ PUT route')
     next(error)
@@ -77,11 +79,12 @@ router.delete('/user/:id', async (req, res, next) => {
     const item = await Item.findOne({
       where: {
         plantId: req.body.plantId,
-        cartId: cart.id,
-      },
+        cartId: cart.id
+      }
     })
     await item.destroy()
-    res.sendStatus(204)
+    //res.sendStatus(204)
+    res.json(await cart.getPlants())
   } catch (error) {
     console.log('there was an error in user/:id DELETE route')
     next(error)
