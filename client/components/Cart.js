@@ -5,6 +5,11 @@ import {Link} from 'react-router-dom'
 // import {Cart, CheckoutButton, Product} from 'react-shopping-cart'
 
 class Cart extends PureComponent {
+  constructor(props) {
+    super(props)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
   componentDidMount() {
     //console.log('componenentDidMount props --> ', this.props)
   }
@@ -15,6 +20,12 @@ class Cart extends PureComponent {
       this.props.fetchCart(userId)
     }
   }
+
+  handleSubmit(event) {
+    event.preventDefault()
+    this.props.history.push('/checkout')
+  }
+
   render() {
     //const plant = this.props.plant
     const cart = this.props.cart
@@ -29,7 +40,7 @@ class Cart extends PureComponent {
         ) : (
           <p>You have {cart.length} items in your cart</p>
         )}
-        {cart.map(plant => {
+        {cart.map((plant) => {
           return (
             <div key={plant.id} className="checkout-item">
               <img src={plant.imageUrl} className="checkout-plant-img" />
@@ -76,25 +87,30 @@ class Cart extends PureComponent {
           )
         })}
         <div>Total:</div>
-        <button type="button"> Checkout </button>
+        {/* <button type="button" onClick={this.handleSubmit}> Checkout </button> */}
+        {this.props.checkingOut === false && (
+          <Link to="/checkout" id="checkout-btn">
+            Checkout
+          </Link>
+        )}
       </div>
     )
   }
 }
 
-const mapState = state => {
+const mapState = (state) => {
   // console.log('state in cart ---> ' , state)
   return {
     user: state.user,
-    cart: state.cart
+    cart: state.cart,
   }
 }
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch) => {
   return {
-    fetchCart: id => dispatch(fetchCart(id)),
+    fetchCart: (id) => dispatch(fetchCart(id)),
     deleteItem: (userId, plantId) => dispatch(deleteItem(userId, plantId)),
     editQuantity: (userId, plantId, newQuant) =>
-      dispatch(editQuantity(userId, plantId, newQuant))
+      dispatch(editQuantity(userId, plantId, newQuant)),
   }
 }
 export default connect(mapState, mapDispatch)(Cart)
