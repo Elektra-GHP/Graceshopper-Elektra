@@ -99,7 +99,16 @@ class Cart extends PureComponent {
             </div>
           )
         })}
-        <div>Total:</div>
+        <div>
+          Total: $
+          {cart
+            .reduce(
+              (sum, currentPlant) =>
+                sum + currentPlant.item.quantity * currentPlant.price,
+              0
+            )
+            .toFixed(2)}
+        </div>
         {/* <button type="button" onClick={this.handleSubmit}> Checkout </button> */}
         {this.props.checkingOut === false && (
           <Link to="/checkout" id="checkout-btn">
