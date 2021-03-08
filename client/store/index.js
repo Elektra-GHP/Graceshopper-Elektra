@@ -5,16 +5,22 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import user from './user'
 import plantsReducer from '../store/allPlantsReducer'
 import plantReducer from '../store/singlePlantReducer'
+
+import userHomeReducer from '../store/userHomeReducer '
 import cartReducer from './cartReducer'
 import typesReducer from './typesReducer'
+
 
 const reducer = combineReducers({
   user,
   plants: plantsReducer,
   plant: plantReducer,
+  userHome: userHomeReducer,
   cart: cartReducer,
   types: typesReducer,
+
 })
+
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )
