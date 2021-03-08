@@ -117,6 +117,27 @@ form div {
   align-items: center;
 }
 
+.user-home-page {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+  align-items: center;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+}
+
+textarea {
+  width: 30rem;
+  height: 10rem;
+}
+
+.submit {
+  padding: 10px !important;
+}
+
 .checkout-plant-img {
   width: 10vw;
 }
