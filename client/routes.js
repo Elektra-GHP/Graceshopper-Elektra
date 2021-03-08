@@ -10,6 +10,7 @@ import Cart from './components/Cart'
 import Confirmation from './components/Confirmation'
 import Checkout from './components/Checkout'
 import AddPlant from './components/AddPlant'
+import Type from './components/Type'
 
 /**
  * COMPONENT
@@ -29,10 +30,11 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route exact path="/plants" component={AllPlants} />
-        <Route path="/plants/:id" component={SinglePlant} />
+        <Route exact path="/plants/:id" component={SinglePlant} />
         <Route path="/add-plant" component={AddPlant} />
         <Route path="/cart" component={Cart} />
         <Route path="/checkout" component={Checkout} />
+        <Route exact path="/plants/types/:id" component={Type} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}

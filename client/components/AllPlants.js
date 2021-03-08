@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 import {addPlant, addPlantGuest} from '../store/cartReducer'
 import {fetchPlants, deletePlant} from '../store/allPlantsReducer'
 import Cart from './Cart'
+import Type from './Type'
 // COMPONENT
 
 class AllPlants extends Component {
@@ -17,8 +18,7 @@ class AllPlants extends Component {
 
   render() {
     const plants = this.props.plants
-    console.log('props via Route-------', this.props)
-    // console.log('plants in AllPlants render:', plants)
+
     return (
       <div>
         <h1>Plants</h1>
@@ -32,7 +32,11 @@ class AllPlants extends Component {
                     <Link to={`/plants/${plant.id}`}>{plant.name}</Link>
                     <div>{plant.price}</div>
                   </div>
-                  <div>{plant.type.name}</div>
+                  <Link to={`/plants/types/${plant.type.id}`}>
+                    {plant.type.name}
+                    <Type />
+                  </Link>
+
                   <button
                     type="button"
                     onClick={() =>

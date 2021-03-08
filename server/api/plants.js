@@ -25,6 +25,20 @@ router.get('/types', async (req, res, next) => {
   }
 })
 
+//GET api/plants/types/:id
+router.get(`/types/:id`, async (req, res, next) => {
+  console.log('plants/types/:id')
+  try {
+    const id = +req.params.id
+    const type = await Type.findByPk(id)
+    console.log('type', type)
+    res.json(type)
+  } catch (error) {
+    next(error)
+    console.log('there was an error in GET api/plants/types/:id')
+  }
+})
+
 // GET api/plants/${plant.id}
 router.get('/:id', async (req, res, next) => {
   try {
