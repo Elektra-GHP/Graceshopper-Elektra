@@ -13,17 +13,6 @@ label {
   display: block;
 }
 
-.all-plants-plant button {
-  padding: 3%;
-  background-color: #94c9a9;
-  width: 25%;
-  color: white;
-  font-size: 13px;
-  border: none;
-  font-family: 'Walter Turncoat';
-}
-
-
 button #checkout-btn {
   padding: 1vh;
   background-color: #94c9a9;
@@ -41,7 +30,6 @@ button #checkout-btn {
   border: none;
   font-family: 'Walter Turncoat';
 }
-
 
 .single-plant button {
   padding: 1vw;
@@ -75,7 +63,6 @@ form div {
   flex-direction: row;
   justify-content: space-between;
 }
-
 
 .view {
   display: flex;
@@ -128,28 +115,6 @@ form div {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-}
-
-
-.user-home-page {
-  display: flex;
-  flex-direction: column;
-  /* justify-content: space-between; */
-  align-items: center;
-}
-
-.contact-form {
-  display: flex;
-  flex-direction: column;
-}
-
-textarea {
-  width: 30rem;
-  height: 10rem;
-}
-
-.submit {
-  padding: 10px !important;
 }
 
 .checkout-plant-img {

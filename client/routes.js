@@ -33,7 +33,6 @@ class Routes extends Component {
         <Route path="/add-plant" component={AddPlant} />
         <Route path="/cart" component={Cart} />
         <Route path="/checkout" component={Checkout} />
-
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
