@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchCart} from '../store/cartReducer'
 
-class Checkout extends Component {
+class Confirmation extends Component {
   componentdDidMount() {
     this.props.fetchCart()
   }
@@ -49,4 +49,4 @@ const mapDispatch = dispatch => {
     fetchCart: id => dispatch(fetchCart(id))
   }
 }
-export default connect(mapState, mapDispatch)(Checkout)
+export default connect(mapState, mapDispatch)(Confirmation)
