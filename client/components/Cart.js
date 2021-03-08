@@ -36,10 +36,7 @@ class Cart extends PureComponent {
   }
 
   render() {
-    //const plant = this.props.plant
     const cart = this.props.cart
-    //const cart = []
-    // console.log('plant in singlePlant component:', plant)
     console.log('CART ----->', cart)
     return (
       <div className="cart">
@@ -115,7 +112,6 @@ class Cart extends PureComponent {
 }
 
 const mapState = (state) => {
-  // console.log('state in cart ---> ' , state)
   return {
     user: state.user,
     cart: state.cart,

@@ -6,6 +6,9 @@ const Type = db.define('type', {
     type: Sequelize.STRING,
     unique: true,
     allowNull: false,
+    validate: {
+      notEmpty: 'Please enter a valid name.',
+    },
   },
   description: {
     type: Sequelize.TEXT,
