@@ -1,6 +1,11 @@
 import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
-import {fetchCart, deleteItem, editQuantity} from '../store/cartReducer'
+import {
+  fetchCart,
+  deleteItem,
+  editQuantity,
+  editQuantGuest
+} from '../store/cartReducer'
 import {Link} from 'react-router-dom'
 // import {Cart, CheckoutButton, Product} from 'react-shopping-cart'
 
@@ -60,11 +65,13 @@ class Cart extends PureComponent {
               <button
                 type="button"
                 onClick={() =>
-                  this.props.editQuantity(
-                    this.props.user.id,
-                    plant.id,
-                    plant.item.quantity + 1
-                  )
+                  this.props.user.id
+                    ? this.props.editQuantity(
+                        this.props.user.id,
+                        plant.id,
+                        plant.item.quantity + 1
+                      )
+                    : this.props.editQuantGuest(plant, plant.item.quantity + 1)
                 }
               >
                 {' '}
@@ -73,11 +80,13 @@ class Cart extends PureComponent {
               <button
                 type="button"
                 onClick={() =>
-                  this.props.editQuantity(
-                    this.props.user.id,
-                    plant.id,
-                    plant.item.quantity - 1
-                  )
+                  this.props.user.id
+                    ? this.props.editQuantity(
+                        this.props.user.id,
+                        plant.id,
+                        plant.item.quantity - 1
+                      )
+                    : this.props.editQuantGuest(plant, plant.item.quantity - 1)
                 }
               >
                 {' '}
@@ -111,7 +120,9 @@ const mapDispatch = dispatch => {
     fetchCart: id => dispatch(fetchCart(id)),
     deleteItem: (userId, plantId) => dispatch(deleteItem(userId, plantId)),
     editQuantity: (userId, plantId, newQuant) =>
-      dispatch(editQuantity(userId, plantId, newQuant))
+      dispatch(editQuantity(userId, plantId, newQuant)),
+    editQuantGuest: (plant, newQuant) =>
+      dispatch(editQuantGuest(plant, newQuant))
   }
 }
 export default connect(mapState, mapDispatch)(Cart)

@@ -8,6 +8,7 @@ const EDIT_QUANTITY = 'EDIT_QUANTITY'
 const CHECKOUT_CART = 'CHECKOUT_CART'
 // guest
 const ADD_PLANT_GUEST = 'ADD_PLANT_GUEST'
+const EDIT_QUANTITY_GUEST = 'EDIT_QUANTITY_GUEST'
 
 // ACTION CREATOR
 const getCart = cart => ({
@@ -46,6 +47,14 @@ const editQuant = cart => {
   return {
     type: EDIT_QUANTITY,
     cart
+  }
+}
+
+export const editQuantGuest = (plant, newQuant) => {
+  plant.item.quantity = newQuant
+  return {
+    type: EDIT_QUANTITY_GUEST,
+    plant
   }
 }
 
@@ -166,6 +175,14 @@ export default (state = initialState, action) => {
       return initialState
     case ADD_PLANT_GUEST:
       return [...state, action.plant]
+    case EDIT_QUANTITY_GUEST:
+      return state.map(plant => {
+        if (plant.id === action.plant.id) {
+          return action.plant
+        } else {
+          return plant
+        }
+      })
     default:
       return state
   }
