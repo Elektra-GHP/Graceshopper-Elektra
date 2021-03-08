@@ -102,8 +102,7 @@
     "simple-git": "^1.121.0",
     "supertest": "^4.0.2",
     "webpack": "^4.16.4",
-    "webpack-cli": "^3.3.6",
-    "webpack-node-externals": "^2.5.2",
+    "webpack-cli": "^3.1.0",
     "yaml": "^1.6.0"
   }
 }
