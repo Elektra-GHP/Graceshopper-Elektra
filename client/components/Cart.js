@@ -1,6 +1,12 @@
 import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
-import {fetchCart, deleteItem, editQuantity} from '../store/cartReducer'
+import {
+  fetchCart,
+  deleteItem,
+  editQuantity,
+  editQuantGuest,
+  removeItemGuest,
+} from '../store/cartReducer'
 import {Link} from 'react-router-dom'
 // import {Cart, CheckoutButton, Product} from 'react-shopping-cart'
 
@@ -11,10 +17,13 @@ class Cart extends PureComponent {
   }
 
   componentDidMount() {
-    //console.log('componenentDidMount props --> ', this.props)
+    const userId = this.props.user.id
+    if (userId) {
+      this.props.fetchCart(userId)
+    }
   }
+
   componentDidUpdate(prevProps) {
-    console.log('componenentDidUpdate props --> ', this.props)
     if (this.props.user.id !== prevProps.user.id) {
       const userId = this.props.user.id
       this.props.fetchCart(userId)
@@ -27,10 +36,7 @@ class Cart extends PureComponent {
   }
 
   render() {
-    //const plant = this.props.plant
     const cart = this.props.cart
-    //const cart = []
-    // console.log('plant in singlePlant component:', plant)
     console.log('CART ----->', cart)
     return (
       <div className="cart">
@@ -46,12 +52,15 @@ class Cart extends PureComponent {
               <img src={plant.imageUrl} className="checkout-plant-img" />
               <h2>{plant.name}</h2>
               <p>
-                ${plant.price} X {plant.item.quantity}
+                {console.log('PLANT--->', plant)}${plant.price} X{' '}
+                {plant.item.quantity}
               </p>
               <button
                 type="button"
                 onClick={() =>
-                  this.props.deleteItem(this.props.user.id, plant.id)
+                  this.props.user.id
+                    ? this.props.deleteItem(this.props.user.id, plant.id)
+                    : this.props.removeItemGuest(plant.id)
                 }
               >
                 Remove Item
@@ -59,11 +68,13 @@ class Cart extends PureComponent {
               <button
                 type="button"
                 onClick={() =>
-                  this.props.editQuantity(
-                    this.props.user.id,
-                    plant.id,
-                    plant.item.quantity + 1
-                  )
+                  this.props.user.id
+                    ? this.props.editQuantity(
+                        this.props.user.id,
+                        plant.id,
+                        plant.item.quantity + 1
+                      )
+                    : this.props.editQuantGuest(plant, plant.item.quantity + 1)
                 }
               >
                 {' '}
@@ -72,11 +83,13 @@ class Cart extends PureComponent {
               <button
                 type="button"
                 onClick={() =>
-                  this.props.editQuantity(
-                    this.props.user.id,
-                    plant.id,
-                    plant.item.quantity - 1
-                  )
+                  this.props.user.id
+                    ? this.props.editQuantity(
+                        this.props.user.id,
+                        plant.id,
+                        plant.item.quantity - 1
+                      )
+                    : this.props.editQuantGuest(plant, plant.item.quantity - 1)
                 }
               >
                 {' '}
@@ -86,7 +99,16 @@ class Cart extends PureComponent {
             </div>
           )
         })}
-        <div>Total:</div>
+        <div>
+          Total: $
+          {cart
+            .reduce(
+              (sum, currentPlant) =>
+                sum + currentPlant.item.quantity * currentPlant.price,
+              0
+            )
+            .toFixed(2)}
+        </div>
         {/* <button type="button" onClick={this.handleSubmit}> Checkout </button> */}
         {this.props.checkingOut === false && (
           <Link to="/checkout" id="checkout-btn">
@@ -99,7 +121,6 @@ class Cart extends PureComponent {
 }
 
 const mapState = (state) => {
-  // console.log('state in cart ---> ' , state)
   return {
     user: state.user,
     cart: state.cart,
@@ -111,6 +132,9 @@ const mapDispatch = (dispatch) => {
     deleteItem: (userId, plantId) => dispatch(deleteItem(userId, plantId)),
     editQuantity: (userId, plantId, newQuant) =>
       dispatch(editQuantity(userId, plantId, newQuant)),
+    editQuantGuest: (plant, newQuant) =>
+      dispatch(editQuantGuest(plant, newQuant)),
+    removeItemGuest: (plantId) => dispatch(removeItemGuest(plantId)),
   }
 }
 export default connect(mapState, mapDispatch)(Cart)

@@ -17,8 +17,8 @@ router.get('/user/:id', async (req, res, next) => {
     let cart = await Cart.findOne({
       where: {
         userId: req.params.id,
-        complete: false
-      }
+        complete: false,
+      },
     })
     //console.log('CART --->', cart)
     if (!cart) {
@@ -37,13 +37,14 @@ router.post('/user/:id', async (req, res, next) => {
   try {
     // adding to items
     // need plantId (req.body.plantId) and cartId
-    const cart = await Cart.findOne({where: {userId: req.params.id}})
-    const newItem = await Item.create({
+    const cart = await Cart.findOne({
+      where: {userId: req.params.id, complete: false},
+    })
+    await Item.create({
       plantId: req.body.plantId,
       cartId: cart.id,
-      quantity: req.body.quantity
+      quantity: req.body.quantity,
     })
-    //res.json(newItem)
     res.json(await cart.getPlants())
   } catch (error) {
     console.log('there was an error in user/:id POST route')
@@ -58,11 +59,11 @@ router.put('/user/:id', async (req, res, next) => {
     const item = await Item.findOne({
       where: {
         plantId: req.body.plantId,
-        cartId: cart.id
-      }
+        cartId: cart.id,
+      },
     })
     const editedItem = await item.update({
-      quantity: req.body.quantity
+      quantity: req.body.quantity,
     })
     //res.json(editedItem)
     res.json(await cart.getPlants())
@@ -79,8 +80,8 @@ router.delete('/user/:id', async (req, res, next) => {
     const item = await Item.findOne({
       where: {
         plantId: req.body.plantId,
-        cartId: cart.id
-      }
+        cartId: cart.id,
+      },
     })
     await item.destroy()
     //res.sendStatus(204)

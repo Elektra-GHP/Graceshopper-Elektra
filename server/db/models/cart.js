@@ -8,11 +8,12 @@ const Cart = db.define('cart', {
   },
   orderId: {
     type: Sequelize.STRING,
-    defaultValue: null,
+    defaultValue: '',
+    unique: true,
   },
   orderDate: {
     type: Sequelize.STRING,
-    defaultValue: null,
+    defaultValue: '',
   },
   shippingStatus: {
     type: Sequelize.ENUM('pending', 'confirmed', 'shipped', 'delivered'),
@@ -20,7 +21,7 @@ const Cart = db.define('cart', {
   },
   shippingAddress: {
     type: Sequelize.STRING,
-    defaultValue: null,
+    defaultValue: '',
   },
 })
 

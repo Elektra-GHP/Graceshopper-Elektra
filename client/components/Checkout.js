@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {checkout} from '../store/cartReducer'
+import {checkout, guestCheckout} from '../store/cartReducer'
 import Cart from './Cart'
 
 const initialState = {
@@ -42,7 +42,9 @@ class Checkout extends React.Component {
       errors.push('Please enter a valid CCV (3-4 digits).')
     }
     if (errors.length < 1) {
-      this.props.checkout(this.props.user.id, this.state.shippingAddress)
+      this.props.user.id
+        ? this.props.checkout(this.props.user.id, this.state.shippingAddress)
+        : this.props.guestCheckout(this.props.cart, this.state.shippingAddress)
       this.setState(initialState)
       // redirect to confirmation page
       // this.props.history.push('/orderConfirmation')
@@ -119,6 +121,7 @@ class Checkout extends React.Component {
 const mapState = (state) => {
   return {
     user: state.user,
+    cart: state.cart,
   }
 }
 
@@ -126,6 +129,8 @@ const mapDispatch = (dispatch) => {
   return {
     checkout: (userId, shippingAddress) =>
       dispatch(checkout(userId, shippingAddress)),
+    guestCheckout: (cart, shippingAddress) =>
+      dispatch(guestCheckout(cart, shippingAddress)),
   }
 }
 

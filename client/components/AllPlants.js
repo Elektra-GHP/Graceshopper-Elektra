@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {addPlant} from '../store/cartReducer'
+import {addPlant, addPlantGuest} from '../store/cartReducer'
 import {fetchPlants, deletePlant} from '../store/allPlantsReducer'
 import Cart from './Cart'
 // COMPONENT
@@ -24,7 +24,7 @@ class AllPlants extends Component {
         <h1>Plants</h1>
         <div className="view">
           <div className="container">
-            {plants.map((plant) => {
+            {plants.map(plant => {
               return (
                 <div key={plant.id} className="all-plants-plant">
                   <img src={plant.imageUrl} className="all-plants-img" />
@@ -36,7 +36,9 @@ class AllPlants extends Component {
                   <button
                     type="button"
                     onClick={() =>
-                      this.props.addPlant(this.props.user.id, plant.id)
+                      this.props.user.id
+                        ? this.props.addPlant(this.props.user.id, plant.id)
+                        : this.props.addPlantGuest(plant)
                     }
                   >
                     ADD
@@ -63,18 +65,19 @@ class AllPlants extends Component {
   }
 }
 
-const mapState = (state) => {
+const mapState = state => {
   return {
     plants: state.plants.all,
-    user: state.user,
+    user: state.user
   }
 }
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = dispatch => {
   return {
     fetchPlants: () => dispatch(fetchPlants()),
     addPlant: (userId, plantId) => dispatch(addPlant(userId, plantId)),
-    deletePlant: (plantId) => dispatch(deletePlant(plantId)),
+    deletePlant: plantId => dispatch(deletePlant(plantId)),
+    addPlantGuest: plant => dispatch(addPlantGuest(plant))
   }
 }
 
