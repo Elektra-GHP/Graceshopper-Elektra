@@ -9,7 +9,6 @@ const Cart = db.define('cart', {
   orderId: {
     type: Sequelize.STRING,
     defaultValue: '',
-    unique: true,
   },
   orderDate: {
     type: Sequelize.STRING,
