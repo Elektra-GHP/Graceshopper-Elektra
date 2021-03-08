@@ -18,20 +18,27 @@ async function seed() {
       email: 'murphy@email.com',
       password: '123',
     },
+    {
+      name: 'Cooper',
+      isAdmin: true,
+      email: 'cooper@email.com',
+      password: '123',
+    },
   ]
 
-  const [cody, murphy] = await Promise.all(
+  const [cody, murphy, cooper] = await Promise.all(
     users.map((user) => User.create(user))
   )
 
   const carts = [
     {userId: cody.id},
     {userId: murphy.id},
+    {userId: cooper.id},
     {
       userId: cody.id,
       complete: true,
       orderId: '123sdfg',
-      orderDate: '2021-02-04 18:00:00',
+      orderDate: 'Thu Feb 04 2021 18:00:00 GMT-0500 (Eastern Standard Time)',
       shippingStatus: 'delivered',
       shippingAddress: '123 Puppy Way, New York, NY',
     },
@@ -39,7 +46,7 @@ async function seed() {
       userId: cody.id,
       complete: true,
       orderId: '125sdfb',
-      orderDate: '2021-02-28 10:31:00',
+      orderDate: 'Sun Feb 28 2021 10:31:26 GMT-0500 (Eastern Standard Time)',
       shippingStatus: 'shipped',
       shippingAddress: '123 Puppy Way, New York, NY',
     },
@@ -47,7 +54,7 @@ async function seed() {
       userId: murphy.id,
       complete: true,
       orderId: '345asdc',
-      orderDate: '2021-03-05 18:00:00',
+      orderDate: 'Fri Mar 05 2021 05:22:49 GMT-0500 (Eastern Standard Time)',
       shippingStatus: 'pending',
       shippingAddress: '234 Doggy Lane, New York, NY',
     },
@@ -56,6 +63,7 @@ async function seed() {
   const [
     codyCart,
     murphyCart,
+    cooperCart,
     codyCompleted1,
     codyCompleted2,
     murphyCompleted,
@@ -320,10 +328,11 @@ async function seed() {
       typeId: cactus.id,
     },
   ]
-  // want plant name - id
+
   const plantsInDb = await Promise.all(
     plants.map((plant) => Plant.create(plant))
   )
+
   const plantNameObj = {}
   plantsInDb.forEach(function (plant) {
     plantNameObj[plant.name] = plant.id
@@ -400,6 +409,18 @@ async function seed() {
       cartId: murphyCompleted.id,
       userId: murphy.id,
       plantId: plantNameObj.Dottie,
+    },
+    {
+      quantity: 1,
+      cartId: cooperCart.id,
+      userId: cooper.id,
+      plantId: plantNameObj['Rattlesnake Plant'],
+    },
+    {
+      quantity: 2,
+      cartId: cooperCart.id,
+      userId: cooper.id,
+      plantId: plantNameObj['Tiger Lily'],
     },
   ]
 

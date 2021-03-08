@@ -13,7 +13,7 @@ label {
   display: block;
 }
 
-button {
+button #checkout-btn {
   padding: 1vh;
   background-color: #94c9a9;
   border: none;
@@ -128,4 +128,21 @@ form div {
 
 .checkout-item {
   margin-bottom: 5%;
+}
+
+.checkout-page {
+  display: flex;
+  flex-direction: row;
+}
+
+#checkout-form {
+  display: flex;
+  flex-direction: column;
+  width: 50vw;
+}
+
+#confirm-order-btn {
+  width: 10em;
+  margin-top: 3em;
+  margin-left: 1.5em;
 }
