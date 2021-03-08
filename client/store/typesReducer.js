@@ -2,18 +2,26 @@ import axios from 'axios'
 
 // ACTION TYPES
 const SET_TYPES = 'SET_TYPES'
+const SINGLE_TYPE = 'SINGLE_TYPE'
 
 // ACION CREATORS
-const setTypes = (types) => {
+const setTypes = types => {
   return {
     type: SET_TYPES,
-    types,
+    types
+  }
+}
+
+export const singleType = typeId => {
+  return {
+    type: SINGLE_TYPE,
+    typeId
   }
 }
 
 // THUNK CREATORS
 export const getTypes = () => {
-  return async (dispatch) => {
+  return async dispatch => {
     try {
       const {data: types} = await axios.get('/api/plants/types')
       dispatch(setTypes(types))
@@ -23,8 +31,20 @@ export const getTypes = () => {
   }
 }
 
+export const getSingleType = typeId => {
+  return async dispatch => {
+    try {
+      const {data: type} = await axios.get(`/api/plants/types/${typeId}`)
+      dispatch(singleType(type))
+    } catch (error) {
+      console.log('Problem getting single type of plant')
+    }
+  }
+}
+
 const initialState = {
   all: [],
+  singleType: {}
 }
 
 // REDUCER
@@ -32,6 +52,8 @@ const typesReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_TYPES:
       return {...state, all: action.types}
+    case SINGLE_TYPE:
+      return {...state, singleType: action.type}
     default:
       return state
   }
