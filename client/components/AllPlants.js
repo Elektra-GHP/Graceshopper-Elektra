@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchPlants} from '../store/allPlantsReducer'
+import {addPlant} from '../store/cartReducer'
 import Cart from './Cart'
 // COMPONENT
 
@@ -32,7 +33,15 @@ class AllPlants extends Component {
                     <div>{plant.price}</div>
                   </div>
                   <div>{plant.type.name}</div>
-                  <button type="button"> ADD </button>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      this.props.addPlant(this.props.user.id, plant.id)
+                    }
+                  >
+                    {' '}
+                    ADD{' '}
+                  </button>
                 </div>
               )
             })}
@@ -45,15 +54,16 @@ class AllPlants extends Component {
 }
 
 const mapState = state => {
-  console.log('state in all plants view', state)
   return {
+    user: state.user,
     plants: state.plants.all
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    fetchPlants: () => dispatch(fetchPlants())
+    fetchPlants: () => dispatch(fetchPlants()),
+    addPlant: (userId, plantId) => dispatch(addPlant(userId, plantId))
   }
 }
 
