@@ -1,26 +1,37 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {singleType} from '../store/typesReducer'
+import {getSingleType} from '../store/typesReducer'
+import {fetchPlants} from '../store/allplantsReducer'
 import {Link} from 'react-router-dom'
 
 class Type extends Component {
   componentDidMount() {
-    this.props.singleType(this.props.match.params.typeId)
+    this.props.getSingleType(this.props.match.params.id)
+    this.props.fetchPlants()
   }
   render() {
-    const types = this.props.types
+    const type = this.props.singleType
     const plants = this.props.plants
+    const filterPlants = plants.filter((plant) => {
+      return plant.type.id === type.id
+    })
+    console.log(plants)
+
     return (
       <div>
-        <h1>{types.name}</h1>
-        <p>{types.origin}</p>
-        <p>{types.description}</p>
+        <h1>Name: {type.name}</h1>
+        <p>Origin: {type.origin}</p>
+        <p>Description: {type.description}</p>
+
         <div>
-          {this.types.plants ? (
-            plants.map(plant => {
+          {filterPlants.length > 0 ? (
+            filterPlants.map((plant) => {
               return (
-                <div key={plant.id}>
-                  <Link to={`/plants/${plant.id}`}> {plant.name}</Link>
+                <div key={plant.id} className="all-plants-plant">
+                  <img src={plant.imageUrl} className="all-plants-img" />
+                  <div className="all-plants-name">
+                    <Link to={`/plants/${plant.id}`}>{plant.name}</Link>
+                  </div>
                 </div>
               )
             })
@@ -33,15 +44,17 @@ class Type extends Component {
   }
 }
 
-const mapState = state => {
+const mapState = (state) => {
   return {
-    type: state.type
+    singleType: state.types.singleType,
+    plants: state.plants.all,
   }
 }
 
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch) => {
   return {
-    singleType: typeId => dispatch(singleType(typeId))
+    getSingleType: (typeId) => dispatch(getSingleType(typeId)),
+    fetchPlants: () => dispatch(fetchPlants()),
   }
 }
 

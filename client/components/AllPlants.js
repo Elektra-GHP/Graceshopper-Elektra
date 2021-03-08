@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 import {addPlant} from '../store/cartReducer'
 import {fetchPlants, deletePlant} from '../store/allPlantsReducer'
 import Cart from './Cart'
+import Type from './Type'
 // COMPONENT
 
 class AllPlants extends Component {
@@ -17,15 +18,13 @@ class AllPlants extends Component {
 
   render() {
     const plants = this.props.plants
-    const type = this.props.plants.type
-    console.log('props via Route-------', this.props)
-    // console.log('plants in AllPlants render:', plants)
+
     return (
       <div>
         <h1>Plants</h1>
         <div className="view">
           <div className="container">
-            {plants.map(plant => {
+            {plants.map((plant) => {
               return (
                 <div key={plant.id} className="all-plants-plant">
                   <img src={plant.imageUrl} className="all-plants-img" />
@@ -33,9 +32,11 @@ class AllPlants extends Component {
                     <Link to={`/plants/${plant.id}`}>{plant.name}</Link>
                     <div>{plant.price}</div>
                   </div>
-                  <Link to={`/plants/types/${type.id}`}>
-                    <div>{plant.type.name}</div>
+                  <Link to={`/plants/types/${plant.type.id}`}>
+                    {plant.type.name}
+                    <Type />
                   </Link>
+
                   <button
                     type="button"
                     onClick={() =>
@@ -66,18 +67,18 @@ class AllPlants extends Component {
   }
 }
 
-const mapState = state => {
+const mapState = (state) => {
   return {
     plants: state.plants.all,
-    user: state.user
+    user: state.user,
   }
 }
 
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch) => {
   return {
     fetchPlants: () => dispatch(fetchPlants()),
     addPlant: (userId, plantId) => dispatch(addPlant(userId, plantId)),
-    deletePlant: plantId => dispatch(deletePlant(plantId))
+    deletePlant: (plantId) => dispatch(deletePlant(plantId)),
   }
 }
 

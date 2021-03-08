@@ -26,10 +26,12 @@ router.get('/types', async (req, res, next) => {
 })
 
 //GET api/plants/types/:id
-router.get(`/plants/types/:id`, async (req, res, next) => {
+router.get(`/types/:id`, async (req, res, next) => {
+  console.log('plants/types/:id')
   try {
-    const id = req.params.id
-    const type = await Type.findOne(id)
+    const id = +req.params.id
+    const type = await Type.findByPk(id)
+    console.log('type', type)
     res.json(type)
   } catch (error) {
     next(error)
@@ -61,7 +63,7 @@ router.post('/', adminsOnly, async (req, res, next) => {
 router.put('/:id', adminsOnly, async (req, res, next) => {
   try {
     const singlePlant = await Plant.findByPk(Number(req.params.id), {
-      include: Type
+      include: Type,
     })
     res.send(await singlePlant.update(req.body))
   } catch (e) {
