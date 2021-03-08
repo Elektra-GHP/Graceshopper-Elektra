@@ -9,44 +9,52 @@ const CHECKOUT_CART = 'CHECKOUT_CART'
 // guest
 const ADD_PLANT_GUEST = 'ADD_PLANT_GUEST'
 const EDIT_QUANTITY_GUEST = 'EDIT_QUANTITY_GUEST'
+const DELETE_ITEM_GUEST = 'DELETE_ITEM_GUEST'
 
 // ACTION CREATOR
-const getCart = cart => ({
+const getCart = (cart) => ({
   type: GET_CART,
-  cart
+  cart,
 })
 
-const addPlantToCart = cart => {
+const addPlantToCart = (cart) => {
   return {
     type: ADD_PLANT_TO_CART,
-    cart
+    cart,
   }
 }
 
 // guest
-export const addPlantGuest = plant => {
+export const addPlantGuest = (plant) => {
   plant.item = {
     quantity: 1,
     cartId: null,
-    plantId: plant.id
+    plantId: plant.id,
   }
   return {
     type: ADD_PLANT_GUEST,
-    plant
+    plant,
   }
 }
 
-const removeItem = cart => {
+const removeItem = (cart) => {
   return {
     type: DELETE_ITEM,
-    cart
+    cart,
   }
 }
 
-const editQuant = cart => {
+export const removeItemGuest = (plantId) => {
+  return {
+    type: DELETE_ITEM_GUEST,
+    plantId,
+  }
+}
+
+const editQuant = (cart) => {
   return {
     type: EDIT_QUANTITY,
-    cart
+    cart,
   }
 }
 
@@ -54,20 +62,20 @@ export const editQuantGuest = (plant, newQuant) => {
   plant.item.quantity = newQuant
   return {
     type: EDIT_QUANTITY_GUEST,
-    plant
+    plant,
   }
 }
 
 const checkoutCart = () => {
   console.log('in checkoutCart action creator')
   return {
-    type: CHECKOUT_CART
+    type: CHECKOUT_CART,
   }
 }
 
 // THUNK
-export const fetchCart = userId => {
-  return async dispatch => {
+export const fetchCart = (userId) => {
+  return async (dispatch) => {
     try {
       //const {data: cart} = await axios.get(`/api/users/${userId}/cart`)
       const {data: cart} = await axios.get(`/api/carts/user/${userId}`)
@@ -80,7 +88,7 @@ export const fetchCart = userId => {
 
 //updating the cart
 export const addPlant = (userId, plantId) => {
-  return async dispatch => {
+  return async (dispatch) => {
     try {
       /*
       const {data: cart} = await axios.post(`/api/users/${userId}/cart`, {
@@ -90,7 +98,7 @@ export const addPlant = (userId, plantId) => {
       */
       const {data: cart} = await axios.post(`/api/carts/user/${userId}`, {
         plantId,
-        quantity: 1
+        quantity: 1,
       })
       dispatch(addPlantToCart(cart))
     } catch (error) {
@@ -100,7 +108,7 @@ export const addPlant = (userId, plantId) => {
 }
 
 export const deleteItem = (userId, plantId) => {
-  return async dispatch => {
+  return async (dispatch) => {
     try {
       //console.log('delete thunk plantId----->', plantId)
       /*
@@ -109,7 +117,7 @@ export const deleteItem = (userId, plantId) => {
       })
       */
       const {data: newCart} = await axios.delete(`/api/carts/user/${userId}`, {
-        data: {plantId}
+        data: {plantId},
       })
       dispatch(removeItem(newCart))
     } catch (error) {
@@ -119,7 +127,7 @@ export const deleteItem = (userId, plantId) => {
 }
 
 export const editQuantity = (userId, plantId, newQuant) => {
-  return async dispatch => {
+  return async (dispatch) => {
     try {
       /*
       console.log('plantId in editQuantity Thunk -->', plantId)
@@ -132,7 +140,7 @@ export const editQuantity = (userId, plantId, newQuant) => {
       const {data: newCart} = await axios.put(`/api/carts/user/${userId}`, {
         data: {plantId},
         plantId,
-        quantity: newQuant
+        quantity: newQuant,
       })
       console.log('newCart in edit quantity thunk ---> ', newCart)
       dispatch(editQuant(newCart))
@@ -143,7 +151,7 @@ export const editQuantity = (userId, plantId, newQuant) => {
 }
 
 export const checkout = (userId, shippingAddress) => {
-  return async dispatch => {
+  return async (dispatch) => {
     try {
       console.log('in checkout thunk')
       console.log(`userId: ${userId}, address: ${shippingAddress}`)
@@ -176,13 +184,15 @@ export default (state = initialState, action) => {
     case ADD_PLANT_GUEST:
       return [...state, action.plant]
     case EDIT_QUANTITY_GUEST:
-      return state.map(plant => {
+      return state.map((plant) => {
         if (plant.id === action.plant.id) {
           return action.plant
         } else {
           return plant
         }
       })
+    case DELETE_ITEM_GUEST:
+      return state.filter((plant) => plant.id !== action.plantId)
     default:
       return state
   }

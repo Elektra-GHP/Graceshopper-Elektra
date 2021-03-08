@@ -4,7 +4,8 @@ import {
   fetchCart,
   deleteItem,
   editQuantity,
-  editQuantGuest
+  editQuantGuest,
+  removeItemGuest,
 } from '../store/cartReducer'
 import {Link} from 'react-router-dom'
 // import {Cart, CheckoutButton, Product} from 'react-shopping-cart'
@@ -45,19 +46,21 @@ class Cart extends PureComponent {
         ) : (
           <p>You have {cart.length} items in your cart</p>
         )}
-        {cart.map(plant => {
+        {cart.map((plant) => {
           return (
             <div key={plant.id} className="checkout-item">
               <img src={plant.imageUrl} className="checkout-plant-img" />
               <h2>{plant.name}</h2>
               <p>
-                {console.log('PLANT--->', plant)}
-                ${plant.price} X {plant.item.quantity}
+                {console.log('PLANT--->', plant)}${plant.price} X{' '}
+                {plant.item.quantity}
               </p>
               <button
                 type="button"
                 onClick={() =>
-                  this.props.deleteItem(this.props.user.id, plant.id)
+                  this.props.user.id
+                    ? this.props.deleteItem(this.props.user.id, plant.id)
+                    : this.props.removeItemGuest(plant.id)
                 }
               >
                 Remove Item
@@ -108,21 +111,22 @@ class Cart extends PureComponent {
   }
 }
 
-const mapState = state => {
+const mapState = (state) => {
   // console.log('state in cart ---> ' , state)
   return {
     user: state.user,
-    cart: state.cart
+    cart: state.cart,
   }
 }
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch) => {
   return {
-    fetchCart: id => dispatch(fetchCart(id)),
+    fetchCart: (id) => dispatch(fetchCart(id)),
     deleteItem: (userId, plantId) => dispatch(deleteItem(userId, plantId)),
     editQuantity: (userId, plantId, newQuant) =>
       dispatch(editQuantity(userId, plantId, newQuant)),
     editQuantGuest: (plant, newQuant) =>
-      dispatch(editQuantGuest(plant, newQuant))
+      dispatch(editQuantGuest(plant, newQuant)),
+    removeItemGuest: (plantId) => dispatch(removeItemGuest(plantId)),
   }
 }
 export default connect(mapState, mapDispatch)(Cart)
