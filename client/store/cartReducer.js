@@ -77,8 +77,9 @@ const checkoutCart = () => {
 export const fetchCart = (userId) => {
   return async (dispatch) => {
     try {
-      //const {data: cart} = await axios.get(`/api/users/${userId}/cart`)
+      console.log('in fetch cart thunk, userId:', userId)
       const {data: cart} = await axios.get(`/api/carts/user/${userId}`)
+      console.log('cart data in fetchCart thunk:', cart)
       dispatch(getCart(cart))
     } catch (error) {
       console.log("Problem getting user's cart")
@@ -153,10 +154,7 @@ export const editQuantity = (userId, plantId, newQuant) => {
 export const checkout = (userId, shippingAddress) => {
   return async (dispatch) => {
     try {
-      console.log('in checkout thunk')
-      console.log(`userId: ${userId}, address: ${shippingAddress}`)
-      await axios.put(`api/users/${userId}/checkout`, {})
-      console.log('sent axios put request')
+      await axios.put(`api/checkout/user/${userId}`, {shippingAddress})
       dispatch(checkoutCart())
     } catch (error) {
       console.log('Error in checkout thunk.')

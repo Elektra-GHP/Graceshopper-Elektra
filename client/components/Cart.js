@@ -17,10 +17,11 @@ class Cart extends PureComponent {
   }
 
   componentDidMount() {
-    //console.log('componenentDidMount props --> ', this.props)
+    const userId = this.props.user.id
+    this.props.fetchCart(userId)
   }
+
   componentDidUpdate(prevProps) {
-    console.log('componenentDidUpdate props --> ', this.props)
     if (this.props.user.id !== prevProps.user.id) {
       const userId = this.props.user.id
       this.props.fetchCart(userId)
