@@ -2,7 +2,7 @@ const {expect} = require('chai')
 const db = require('../index')
 const Cart = db.model('cart')
 
-describe.only('Cart model', () => {
+describe('Cart model', () => {
   beforeEach(() => db.sync({force: true}))
 
   describe('Column definitions and validations', () => {
@@ -23,45 +23,36 @@ describe.only('Cart model', () => {
       expect(cart.shippingStatus).to.equal('confirmed')
       expect(cart.shippingAddress).to.equal('123 fake st, NY NY 10003')
     })
+
     it('`complete` has a default value of false', async () => {
       const cart = await Cart.create({complete: false})
       expect(cart.complete).to.equal(false)
     })
 
-    // describe.only('Sequelize model', () => {
-    //   beforeEach(() => {
-    //     return db.sync({force: true})
-    //   })
+    it('`orderId` has a default value of an empty string', async () => {
+      const cart = await Cart.create({complete: false})
+      expect(cart.orderId).to.equal('')
+    })
 
-    //   describe('Column definitions and validations', () => {
-    //     describe('it has `complete`, `orderId`, `orderDate`, `shippingStatus`, and `shippingAddress`', () => {
-    //       beforeEach(async () => {
-    //         const cart = await Cart.create({
-    //           complete: false,
-    //           orderId: 'abc123',
-    //           orderDate: 'Thu Feb 04 2021 18:00:00 GMT-0500 (Eastern Standard Time)',
-    //           shippingStatus: 'confirmed',
-    //           shippingAddress: '123 fake st, NY NY 10003'
-    //         })
-    //         // cart2 = await Cart.create({
-    //         //   complete: true,
-    //         //   orderId: 'aa3352j',
-    //         //   orderDate: 'Thu Feb 04 2021 18:00:00 GMT-0500 (Eastern Standard Time)',
-    //         //   shippingStatus: 'shipped',
-    //         //   shippingAddress: '742 evergreen st, NY NY 10003'
-    //         // })
+    it('`orderDate` has a default value of an empty string', async () => {
+      const cart = await Cart.create({complete: false})
+      expect(cart.orderDate).to.equal('')
+    })
+    it('shippingStatus can only be either `pending`, `confirmed`, `shipped` , `delivered`', async () => {
+      const cart = await Cart.create({complete: false})
+      await expect(
+        cart,
+        "We shouldn't be able to create a cart with invalid shippingStatus (ordered)"
+      ).to.be.rejected
+    })
+    it('`shippingStatus` has a default value of null', async () => {
+      const cart = await Cart.create({complete: false})
+      expect(cart.shippingStatus).to.equal(null)
+    })
 
-    //         expect(cart.complete).to.equal("false")
-    //       })
-    //       // afterEach(() => db.sync({ force: true }));
-
-    //       // it('returns true if the password is correct', () => {
-    //       //   expect(cody.correctPassword('bones')).to.be.equal(true)
-    //       // })
-
-    //       // it('returns false if the password is incorrect', () => {
-    //       //   expect(cody.correctPassword('bonez')).to.be.equal(false)
-    //       // })
-    // }) // end describe('correctPassword')
+    it('`shippingAddress` has a default value of an empty string', async () => {
+      const cart = await Cart.create({complete: false})
+      expect(cart.shippingAddress).to.equal('')
+    })
   }) // end describe('instanceMethods')
 }) // end describe('User model')
