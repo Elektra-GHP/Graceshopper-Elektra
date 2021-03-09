@@ -245,7 +245,7 @@ export default function (state = initialState, action) {
     case CONFIRMED_CART:
       return {
         ...state,
-        order: action.order,
+        order: action.order[0],
       }
     default:
       return state

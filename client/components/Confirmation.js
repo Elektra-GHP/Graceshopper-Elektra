@@ -16,14 +16,14 @@ class Confirmation extends Component {
   }
 
   render() {
-    // const order = this.props.order
-    console.log('props:', this.props)
+    const order = this.props.order
     return (
       <div>
-        <h2>Order Confirmation</h2>
-        {/*<p>Order Number {order.orderId}</p>
-        <div className="cart">
-          {cart.map(plant => {
+        <h2>✅ Thank you for your order!</h2>
+        <p>Order Number: {order.orderId}</p>
+        <p>Shipped To: {order.shippingAddress}</p>
+        {/* <div className="cart">
+          {order.map(plant => {
             return (
               <div key={plant.id} className="checkout-item">
                 <h3>{plant.name}</h3>
@@ -34,15 +34,14 @@ class Confirmation extends Component {
               </div>
             )
           })}
-          <div>
-            Total: $0
-            {/* Total: ${cart.reduce((plant, total) => {
-               total+=({plant.price}*{plant.item.quantity})
-                return total
-              }, 0)} */}
-        {/*} </div>
-          <div>Shipping Address</div>
-        </div> */}
+            <div>
+              Total: $0
+              Total: ${cart.reduce((plant, total) => {
+                total+=({plant.price}*{plant.item.quantity})
+                  return total
+                }, 0)}
+            </div>
+        </div>  */}
       </div>
     )
   }
