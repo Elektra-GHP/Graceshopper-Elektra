@@ -5,7 +5,7 @@ import {
   deleteItem,
   editQuantity,
   editQuantGuest,
-  removeItemGuest,
+  removeItemGuest
 } from '../store/cartReducer'
 import {Link} from 'react-router-dom'
 // import {Cart, CheckoutButton, Product} from 'react-shopping-cart'
@@ -39,13 +39,17 @@ class Cart extends PureComponent {
     const cart = this.props.cart
     return (
       <div className="cart">
-        <Link to="/cart">Your Cart</Link>
+        <Link to="/cart">
+          <div className="cart-icon">
+            <img src="https://assets.website-files.com/5a0ca7f60d22aa0001465873/5a283c93be5d2300015bb57e_wheelbarrow-black.png" />
+          </div>
+        </Link>
         {cart.length === 0 ? (
           <div>Cart is empty</div>
         ) : (
-          <p>You have {cart.length} items in your cart</p>
+          <p>You have {cart.length} item(s) in your cart</p>
         )}
-        {cart.map((plant) => {
+        {cart.map(plant => {
           return (
             <div key={plant.id} className="checkout-item">
               <img src={plant.imageUrl} className="checkout-plant-img" />
@@ -121,21 +125,21 @@ class Cart extends PureComponent {
   }
 }
 
-const mapState = (state) => {
+const mapState = state => {
   return {
     user: state.user,
-    cart: state.cart.active,
+    cart: state.cart.active
   }
 }
-const mapDispatch = (dispatch) => {
+const mapDispatch = dispatch => {
   return {
-    fetchCart: (id) => dispatch(fetchCart(id)),
+    fetchCart: id => dispatch(fetchCart(id)),
     deleteItem: (userId, plantId) => dispatch(deleteItem(userId, plantId)),
     editQuantity: (userId, plantId, newQuant) =>
       dispatch(editQuantity(userId, plantId, newQuant)),
     editQuantGuest: (plant, newQuant) =>
       dispatch(editQuantGuest(plant, newQuant)),
-    removeItemGuest: (plantId) => dispatch(removeItemGuest(plantId)),
+    removeItemGuest: plantId => dispatch(removeItemGuest(plantId))
   }
 }
 export default connect(mapState, mapDispatch)(Cart)
