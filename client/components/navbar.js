@@ -26,13 +26,18 @@ const Navbar = ({handleClick, isLoggedIn}) => (
                 <p>Plants</p>
               </div>
             </Link>
+            <Link to="/types">
+              <div className="nav-link">
+                <img src="https://static.thenounproject.com/png/489416-200.png" />
+                <p>Types</p>
+              </div>
+            </Link>
             <Link to="/account">
               <div className="nav-link">
                 <img src="https://i.pinimg.com/originals/bb/24/ae/bb24aecc2d6e5d51bf29c72acb3f1741.png" />
                 <p>Account</p>
               </div>
             </Link>
-            <Link to="/types">Types</Link>
             <a href="#" onClick={handleClick}>
               <div className="nav-link">
                 <img src="https://images.vexels.com/media/users/3/202344/isolated/preview/242900d7a49739d3a909fbb7263b305d-tall-mushroom-stroke-by-vexels.png" />
@@ -49,6 +54,12 @@ const Navbar = ({handleClick, isLoggedIn}) => (
                 <p>Plants</p>
               </div>
             </Link>
+            <Link to="/types">
+              <div className="nav-link">
+                <img src="https://static.thenounproject.com/png/489416-200.png" />
+                <p>Types</p>
+              </div>
+            </Link>
             <Link to="/login">
               <div className="nav-link">
                 <img src="https://img.icons8.com/wired/2x/login-rounded-right.png" />
@@ -61,7 +72,6 @@ const Navbar = ({handleClick, isLoggedIn}) => (
                 <p>Sign Up</p>
               </div>
             </Link>
-            <Link to="/types">Types</Link>
           </div>
         )}
       </nav>

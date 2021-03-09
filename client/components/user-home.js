@@ -29,17 +29,19 @@ class UserHome extends React.Component {
         <div className="user-home-page">
           <h2>My Orders</h2>
           <table>
-            <tbody>
+            <thead>
               <tr>
-                <td>Order Date</td>
-                <td>Order ID</td>
-                <td>Shipping Status</td>
+                <th>Order Date</th>
+                <th>Order ID</th>
+                <th>Shipping Status</th>
               </tr>
-              {orders.map((order) => {
+            </thead>
+            <tbody>
+              {orders.map(order => {
                 return (
                   <tr key={order.cart.id}>
-                    <td>{order.cart.orderId}</td>
                     <td>{order.cart.orderDate}</td>
+                    <td>{order.cart.orderId}</td>
                     <td>{order.cart.shippingStatus}</td>
                   </tr>
                 )
@@ -65,17 +67,17 @@ class UserHome extends React.Component {
 /**
  * CONTAINER
  */
-const mapState = (state) => {
+const mapState = state => {
   console.log('state.userAccount:', state.userAccount)
   return {
     user: state.userAccount.user,
-    orders: state.userAccount.orders,
+    orders: state.userAccount.orders
   }
 }
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = dispatch => {
   return {
-    fetchOrders: (userId) => dispatch(fetchOrders(userId)),
+    fetchOrders: userId => dispatch(fetchOrders(userId))
   }
 }
 
@@ -85,5 +87,5 @@ export default connect(mapState, mapDispatch)(UserHome)
  * PROP TYPES
  */
 UserHome.propTypes = {
-  email: PropTypes.string,
+  email: PropTypes.string
 }
