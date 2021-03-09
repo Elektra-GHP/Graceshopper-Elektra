@@ -119,7 +119,7 @@ class Checkout extends React.Component {
 const mapState = (state) => {
   return {
     user: state.user,
-    cart: state.cart,
+    cart: state.cart.active,
   }
 }
 

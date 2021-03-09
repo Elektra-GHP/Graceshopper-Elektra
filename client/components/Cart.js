@@ -123,7 +123,7 @@ class Cart extends PureComponent {
 const mapState = (state) => {
   return {
     user: state.user,
-    cart: state.cart,
+    cart: state.cart.active,
   }
 }
 const mapDispatch = (dispatch) => {

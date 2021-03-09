@@ -34,11 +34,12 @@ router.get('/user/:id/confirmed', async (req, res, next) => {
         userId: req.params.id,
         complete: true,
       },
-      order: [['orderDate', 'DESC']],
+      order: [['orderDate', 'ASC']],
     })
     console.log('confirmedOrder --->', confirmedOrder)
 
-    res.json({cart: confirmedOrder, items: await confirmedOrder.getPlants()})
+    // {cart: confirmedOrder, items: await confirmedOrder.getPlants()}
+    res.json(confirmedOrder)
   } catch (error) {
     console.log('there was an error in user/:id/confirmed GET route')
     next(error)

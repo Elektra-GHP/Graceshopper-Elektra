@@ -26,10 +26,10 @@ const addPlantToCart = (cart) => {
   }
 }
 
-const getConfirmedCart = (cart) => {
+const getConfirmedOrder = (order) => {
   return {
     type: CONFIRMED_CART,
-    cart,
+    order,
   }
 }
 
@@ -169,11 +169,11 @@ export const fetchConfirmedCart = (userId) => {
   return async (dispatch) => {
     try {
       console.log('in fetchConfirmedCart thunk')
-      const {data: cart} = await axios.get(
+      const {data: order} = await axios.get(
         `/api/carts/user/${userId}/confirmed`
       )
-      console.log('cart from thunk:', cart)
-      dispatch(getConfirmedCart(cart))
+      console.log('cart from thunk:', order)
+      dispatch(getConfirmedOrder(order))
     } catch (error) {
       console.log('Error in fetchConfirmedCart thunk.')
     }
@@ -181,37 +181,70 @@ export const fetchConfirmedCart = (userId) => {
 }
 
 //initial state
-const initialState = []
+const initialState = {
+  active: [],
+  order: {},
+}
 
 //reducer
 export default function (state = initialState, action) {
   switch (action.type) {
     case GET_CART:
-      return action.cart
+      return {
+        ...state,
+        active: action.cart,
+      }
     case ADD_PLANT_TO_CART:
-      return action.cart
+      return {
+        ...state,
+        active: action.cart,
+      }
     case DELETE_ITEM:
-      return action.cart
+      return {
+        ...state,
+        active: action.cart,
+      }
     case EDIT_QUANTITY:
-      return action.cart
+      return {
+        ...state,
+        active: action.cart,
+      }
     case CHECKOUT_CART:
-      return initialState
+      return {
+        ...state,
+        active: initialState.active,
+      }
     case ADD_PLANT_GUEST:
-      return [...state, action.plant]
+      return {
+        ...state,
+        active: [...state.active, action.plant],
+      }
     case EDIT_QUANTITY_GUEST:
-      return state.map((plant) => {
-        if (plant.id === action.plant.id) {
-          return action.plant
-        } else {
-          return plant
-        }
-      })
+      return {
+        ...state,
+        active: state.active.map((plant) => {
+          if (plant.id === action.plant.id) {
+            return action.plant
+          } else {
+            return plant
+          }
+        }),
+      }
     case DELETE_ITEM_GUEST:
-      return state.filter((plant) => plant.id !== action.plantId)
+      return {
+        ...state,
+        active: state.active.filter((plant) => plant.id !== action.plantId),
+      }
     case CHECKOUT_GUEST:
-      return initialState
+      return {
+        ...state,
+        active: initialState.active,
+      }
     case CONFIRMED_CART:
-      return [action.cart]
+      return {
+        ...state,
+        order: action.order,
+      }
     default:
       return state
   }
