@@ -6,6 +6,7 @@ const ADD_PLANT_TO_CART = 'ADD_PLANT_TO_CART'
 const DELETE_ITEM = 'DELETE_ITEM'
 const EDIT_QUANTITY = 'EDIT_QUANTITY'
 const CHECKOUT_CART = 'CHECKOUT_CART'
+const CONFIRMED_CART = 'CONFIRMED_CART'
 // guest
 const ADD_PLANT_GUEST = 'ADD_PLANT_GUEST'
 const EDIT_QUANTITY_GUEST = 'EDIT_QUANTITY_GUEST'
@@ -21,6 +22,13 @@ const getCart = (cart) => ({
 const addPlantToCart = (cart) => {
   return {
     type: ADD_PLANT_TO_CART,
+    cart,
+  }
+}
+
+const getConfirmedCart = (cart) => {
+  return {
+    type: CONFIRMED_CART,
     cart,
   }
 }
@@ -68,13 +76,13 @@ export const editQuantGuest = (plant, newQuant) => {
 }
 
 const checkoutCart = () => {
-  console.log('in checkoutCart action creator')
   return {
     type: CHECKOUT_CART,
   }
 }
 
 const checkoutGuest = () => {
+  console.log('in checkoutGuest action creator')
   return {
     type: CHECKOUT_GUEST,
   }
@@ -84,9 +92,7 @@ const checkoutGuest = () => {
 export const fetchCart = (userId) => {
   return async (dispatch) => {
     try {
-      console.log('in fetch cart thunk, userId:', userId)
       const {data: cart} = await axios.get(`/api/carts/user/${userId}`)
-      console.log('cart data in fetchCart thunk:', cart)
       dispatch(getCart(cart))
     } catch (error) {
       console.log("Problem getting user's cart")
@@ -130,7 +136,6 @@ export const editQuantity = (userId, plantId, newQuant) => {
         plantId,
         quantity: newQuant,
       })
-      console.log('newCart in edit quantity thunk ---> ', newCart)
       dispatch(editQuant(newCart))
     } catch (err) {
       console.log('Error in Editing Quantity Thunk')
@@ -156,6 +161,21 @@ export const guestCheckout = (cart, shippingAddress) => {
       dispatch(checkoutGuest())
     } catch (error) {
       console.log('Error in guestCheckout thunk.')
+    }
+  }
+}
+
+export const fetchConfirmedCart = (userId) => {
+  return async (dispatch) => {
+    try {
+      console.log('in fetchConfirmedCart thunk')
+      const {data: cart} = await axios.get(
+        `/api/carts/user/${userId}/confirmed`
+      )
+      console.log('cart from thunk:', cart)
+      dispatch(getConfirmedCart(cart))
+    } catch (error) {
+      console.log('Error in fetchConfirmedCart thunk.')
     }
   }
 }
@@ -190,6 +210,8 @@ export default function (state = initialState, action) {
       return state.filter((plant) => plant.id !== action.plantId)
     case CHECKOUT_GUEST:
       return initialState
+    case CONFIRMED_CART:
+      return [action.cart]
     default:
       return state
   }

@@ -1,18 +1,23 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {fetchCart} from '../store/cartReducer'
+import {fetchCart, fetchConfirmedCart} from '../store/cartReducer'
 
 class Confirmation extends Component {
   componentdDidMount() {
-    this.props.fetchCart()
+    console.log('in component did mount')
+    const userId = this.props.user.id ? this.props.user.id : null
+    console.log('userId in Confirmation:', userId)
+    this.props.fetchConfirmedCart(userId)
   }
+
   render() {
-    console.log('user---', this.props.user)
-    const cart = this.props.cart
+    const order = this.props.order
+    console.log('order:', order)
     return (
       <div>
-        <h2>Order Confirmation</h2>
-        <p>Order Number {cart.id}</p>
+        <h2>Test</h2>
+        {/* <h2>Order Confirmation</h2>
+        <p>Order Number {order.orderId}</p>
         <div className="cart">
           {cart.map(plant => {
             return (
@@ -31,22 +36,23 @@ class Confirmation extends Component {
                total+=({plant.price}*{plant.item.quantity})
                 return total
               }, 0)} */}
-          </div>
+        {/*} </div>
           <div>Shipping Address</div>
-        </div>
+        </div> */}
       </div>
     )
   }
 }
-const mapState = state => {
+const mapState = (state) => {
   return {
     user: state.user,
-    cart: state.cart
+    order: state.cart,
   }
 }
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch) => {
   return {
-    fetchCart: id => dispatch(fetchCart(id))
+    fetchCart: (id) => dispatch(fetchCart(id)),
+    fetchConfirmedCart: (userId) => dispatch(fetchConfirmedCart(userId)),
   }
 }
 export default connect(mapState, mapDispatch)(Confirmation)

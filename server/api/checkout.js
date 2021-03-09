@@ -36,8 +36,7 @@ router.put('/user/:id', async (req, res, next) => {
       shippingStatus,
     })
 
-    const newCart = Cart.create({userId: req.params.id})
-    console.log('new cart in route:', newCart)
+    await Cart.create({userId: req.params.id})
 
     res.json(updatedCart)
   } catch (error) {
