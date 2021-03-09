@@ -37,7 +37,6 @@ class Cart extends PureComponent {
 
   render() {
     const cart = this.props.cart
-    console.log('CART ----->', cart)
     return (
       <div className="cart">
         <Link to="/cart">Your Cart</Link>
