@@ -29,6 +29,11 @@ button #checkout-btn {
   font-size: 13px;
   border: none;
   font-family: 'Walter Turncoat';
+  transition-duration: 0.4s;
+}
+
+.all-plants-plant button:hover {
+  background-color: #adce98;
 }
 
 .single-plant button {
@@ -197,9 +202,12 @@ textarea {
 }
 
 .cart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 60vw;
   max-width: 60vw;
-  border-left: 3px dotted #c8a898;
+  border-left: thin solid #c8a898;
   padding: 2vw;
 }
 
@@ -208,12 +216,17 @@ textarea {
 }
 
 .cart button {
-  padding: 1vw;
+  padding: 0.5vw;
   background-color: #94c9a9;
   color: white;
   font-size: 13px;
   border: none;
   font-family: 'Walter Turncoat';
+  transition-duration: 0.4s;
+}
+
+.cart button:hover {
+  background-color: #545f5c;
 }
 
 .checkout-item {
@@ -239,12 +252,29 @@ textarea {
 
 table,
 td {
-  border: 1px solid #333;
+  border: thin solid #333;
   background-color: white;
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  padding: 1vh;
+}
+
+th {
+  padding: 1vh;
+}
+
+tr {
+  padding: 1vh;
+  border-bottom: 1px solid #dddddd;
 }
 
 thead,
 tfoot {
-  background-color: #333;
+  padding: 2vh;
+  background-color: rgb(54, 51, 51);
   color: #fff;
 }

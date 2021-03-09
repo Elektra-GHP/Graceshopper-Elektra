@@ -56,10 +56,7 @@ class Cart extends PureComponent {
               <h2>
                 <Link to={`/plants/${plant.id}`}>{plant.name}</Link>
               </h2>
-              <p>
-                {console.log('PLANT--->', plant)}${plant.price} X{' '}
-                {plant.item.quantity}
-              </p>
+              <p>{plant.item.quantity}</p>
               <button
                 type="button"
                 onClick={() =>

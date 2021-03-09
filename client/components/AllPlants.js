@@ -12,7 +12,7 @@ class AllPlants extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      filter: 'all',
+      filter: 'all'
     }
     this.handleChange = this.handleChange.bind(this)
   }
@@ -29,7 +29,7 @@ class AllPlants extends Component {
   componentDidUpdate() {}
 
   render() {
-    const plants = this.props.plants.filter((plant) => {
+    const plants = this.props.plants.filter(plant => {
       if (this.state.filter !== 'all') {
         return plant.type.name === this.state.filter
       }
@@ -47,7 +47,7 @@ class AllPlants extends Component {
             name="filter"
           >
             <option>all</option>
-            {this.props.types.map((type) => {
+            {this.props.types.map(type => {
               return <option key={type.id}>{type.name}</option>
             })}
           </select>
@@ -99,14 +99,17 @@ class AllPlants extends Component {
         </div>
         <div className="pagination">
           <button
+            style={{
+              visibility: this.props.pageNum === 0 ? 'hidden' : 'visible'
+            }}
             type="button"
             onClick={() => this.props.fetchPlants(this.props.pageNum - 1)}
-          >{`Prev: ${this.props.pageNum - 1}`}</button>
-          <p>{`${this.props.pageNum}`}</p>
+          >{`Prev: ${this.props.pageNum}`}</button>
+          <p>{`${this.props.pageNum + 1}`}</p>
           <button
             type="button"
             onClick={() => this.props.fetchPlants(this.props.pageNum + 1)}
-          >{`Next: ${this.props.pageNum + 1}`}</button>
+          >{`Next: ${this.props.pageNum + 2}`}</button>
         </div>
       </div>
     )
@@ -118,7 +121,7 @@ const mapState = state => {
     plants: state.plants.all,
     user: state.user,
     pageNum: state.plants.pageNum,
-    types: state.types.all,
+    types: state.types.all
   }
 }
 
@@ -126,9 +129,9 @@ const mapDispatch = dispatch => {
   return {
     fetchPlants: pageNum => dispatch(fetchPlants(pageNum)),
     addPlant: (userId, plantId) => dispatch(addPlant(userId, plantId)),
-    deletePlant: (plantId) => dispatch(deletePlant(plantId)),
-    addPlantGuest: (plant) => dispatch(addPlantGuest(plant)),
-    getTypes: () => dispatch(getTypes()),
+    deletePlant: plantId => dispatch(deletePlant(plantId)),
+    addPlantGuest: plant => dispatch(addPlantGuest(plant)),
+    getTypes: () => dispatch(getTypes())
   }
 }
 
