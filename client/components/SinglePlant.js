@@ -228,7 +228,6 @@ class SinglePlant extends Component {
 }
 
 const mapState = (state) => {
-  console.log('state in single plant:', state)
   return {
     user: state.user,
     plant: state.plant.single,

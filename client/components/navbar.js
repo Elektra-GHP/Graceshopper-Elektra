@@ -32,6 +32,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
                 <p>Account</p>
               </div>
             </Link>
+            <Link to="/types">Types</Link>
             <a href="#" onClick={handleClick}>
               <div className="nav-link">
                 <img src="https://images.vexels.com/media/users/3/202344/isolated/preview/242900d7a49739d3a909fbb7263b305d-tall-mushroom-stroke-by-vexels.png" />
@@ -60,6 +61,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
                 <p>Sign Up</p>
               </div>
             </Link>
+            <Link to="/types">Types</Link>
           </div>
         )}
       </nav>

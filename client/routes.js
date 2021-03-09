@@ -13,6 +13,7 @@ import AddPlant from './components/AddPlant'
 import Type from './components/Type'
 import UserHome from './components/user-home'
 import HomePage from './components/HomePage'
+import Types from './components/Types'
 
 /**
  * COMPONENT
@@ -24,6 +25,7 @@ class Routes extends Component {
 
   render() {
     const {isLoggedIn} = this.props
+    // user object is available on props in routes
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
@@ -36,6 +38,7 @@ class Routes extends Component {
         <Route path="/cart" component={Cart} />
         <Route path="/checkout" component={Checkout} />
         <Route exact path="/plants/types/:id" component={Type} />
+        <Route exact path="/types" component={Types} />
         <Route path="/orderConfirmation" component={Confirmation} />
 
         {isLoggedIn && (

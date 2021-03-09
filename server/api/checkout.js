@@ -1,9 +1,10 @@
 const router = require('express').Router()
 const {Plant, Cart, Item} = require('../db/models')
+const isCurrentUser = require('../utils/isCurrentUser')
 module.exports = router
 
 // PUT api/checkout/user/:id
-router.put('/user/:id', async (req, res, next) => {
+router.put('/user/:id', isCurrentUser, async (req, res, next) => {
   try {
     const activeCart = await Cart.findOne({
       where: {

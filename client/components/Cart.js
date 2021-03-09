@@ -37,7 +37,6 @@ class Cart extends PureComponent {
 
   render() {
     const cart = this.props.cart
-    console.log('CART ----->', cart)
     return (
       <div className="cart">
         <Link to="/cart">
@@ -54,7 +53,9 @@ class Cart extends PureComponent {
           return (
             <div key={plant.id} className="checkout-item">
               <img src={plant.imageUrl} className="checkout-plant-img" />
-              <h2>{plant.name}</h2>
+              <h2>
+                <Link to={`/plants/${plant.id}`}>{plant.name}</Link>
+              </h2>
               <p>
                 {console.log('PLANT--->', plant)}${plant.price} X{' '}
                 {plant.item.quantity}

@@ -11,10 +11,10 @@ const initialState = {
   description: '',
   inventory: '',
   price: '',
-  light: 'none',
+  light: 'direct',
   water: 'daily',
-  humidity: '',
-  type: '',
+  humidity: 'low',
+  type: 'Calathea',
 }
 
 class AddPlant extends Component {
