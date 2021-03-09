@@ -169,7 +169,7 @@ form div {
 }
 
 .container {
-  width: 250vw;
+  /*width: 250vw;*/
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -206,8 +206,8 @@ textarea {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 60vw;
-  max-width: 60vw;
+  width: 40vw;
+  max-width: 40vw;
   border-left: thin solid #c8a898;
   padding: 2vw;
 }
@@ -242,7 +242,7 @@ textarea {
 #checkout-form {
   display: flex;
   flex-direction: column;
-  width: 50vw;
+  width: 40vw;
 }
 
 #confirm-order-btn {
