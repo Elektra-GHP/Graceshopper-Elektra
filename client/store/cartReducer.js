@@ -2,9 +2,6 @@ import axios from 'axios'
 
 // ACTION TYPE
 const GET_CART = 'GET_CART'
-const ADD_PLANT_TO_CART = 'ADD_PLANT_TO_CART'
-const DELETE_ITEM = 'DELETE_ITEM'
-const EDIT_QUANTITY = 'EDIT_QUANTITY'
 const CHECKOUT_CART = 'CHECKOUT_CART'
 const CONFIRMED_CART = 'CONFIRMED_CART'
 // guest
@@ -18,13 +15,6 @@ const getCart = (cart) => ({
   type: GET_CART,
   cart,
 })
-
-const addPlantToCart = (cart) => {
-  return {
-    type: ADD_PLANT_TO_CART,
-    cart,
-  }
-}
 
 const getConfirmedOrder = (order) => {
   return {
@@ -46,24 +36,10 @@ export const addPlantGuest = (plant) => {
   }
 }
 
-const removeItem = (cart) => {
-  return {
-    type: DELETE_ITEM,
-    cart,
-  }
-}
-
 export const removeItemGuest = (plantId) => {
   return {
     type: DELETE_ITEM_GUEST,
     plantId,
-  }
-}
-
-const editQuant = (cart) => {
-  return {
-    type: EDIT_QUANTITY,
-    cart,
   }
 }
 
@@ -108,7 +84,7 @@ export const addPlant = (userId, plantId) => {
         plantId,
         quantity: 1,
       })
-      dispatch(addPlantToCart(cart))
+      dispatch(getCart(cart))
     } catch (error) {
       console.log('Problem adding plant')
     }
@@ -121,7 +97,7 @@ export const deleteItem = (userId, plantId) => {
       const {data: newCart} = await axios.delete(`/api/carts/user/${userId}`, {
         data: {plantId},
       })
-      dispatch(removeItem(newCart))
+      dispatch(getCart(newCart))
     } catch (error) {
       console.log('Cannot delete item')
     }
@@ -136,7 +112,7 @@ export const editQuantity = (userId, plantId, newQuant) => {
         plantId,
         quantity: newQuant,
       })
-      dispatch(editQuant(newCart))
+      dispatch(getCart(newCart))
     } catch (err) {
       console.log('Error in Editing Quantity Thunk')
     }
@@ -169,12 +145,11 @@ export const guestCheckout = (cart, history, shippingAddress) => {
 
 export const fetchConfirmedCart = (userId) => {
   return async (dispatch) => {
+    console.log('in fetch Confirmed cart thunk')
     try {
-      console.log('in fetchConfirmedCart thunk')
       const {data: order} = await axios.get(
         `/api/carts/user/${userId}/confirmed`
       )
-      console.log('cart from thunk:', order)
       dispatch(getConfirmedOrder(order))
     } catch (error) {
       console.log('Error in fetchConfirmedCart thunk.')
@@ -192,21 +167,6 @@ const initialState = {
 export default function (state = initialState, action) {
   switch (action.type) {
     case GET_CART:
-      return {
-        ...state,
-        active: action.cart,
-      }
-    case ADD_PLANT_TO_CART:
-      return {
-        ...state,
-        active: action.cart,
-      }
-    case DELETE_ITEM:
-      return {
-        ...state,
-        active: action.cart,
-      }
-    case EDIT_QUANTITY:
       return {
         ...state,
         active: action.cart,

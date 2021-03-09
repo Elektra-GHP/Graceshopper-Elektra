@@ -7,7 +7,6 @@ import {Link} from 'react-router-dom'
 class Type extends Component {
   componentDidMount() {
     const id = this.props.match.params.id
-    console.log('this.props:', this.props, 'id:', id)
     this.props.getSingleType(id)
     this.props.fetchPlants()
   }
@@ -17,7 +16,6 @@ class Type extends Component {
     const filterPlants = plants.filter((plant) => {
       return plant.type.id === type.id
     })
-    console.log(plants)
 
     return (
       <div>

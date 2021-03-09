@@ -1,7 +1,7 @@
 body {
   font-family: 'Walter Turncoat';
   margin: 0% 5% 5% 5%;
-  background-color: #f2e2db;
+  background-color: #fdf4f1;
 }
 
 a {
@@ -50,7 +50,7 @@ hr {
 
 nav a {
   display: inline-block;
-  margin: 1em;
+  margin: 1em 1em 0em 1em;
 }
 
 form div {
@@ -62,6 +62,45 @@ form div {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+}
+
+.header-left {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+  font-family: 'Berkshire Swash';
+}
+
+.header-left a {
+  color: #3d292a;
+}
+
+.header img {
+  width: 3vw;
+}
+
+.nav-link {
+  display: flex;
+  flex-direction: column;
+  font-size: 10px;
+  align-items: center;
+  margin: 0%;
+  padding: 0%;
+}
+
+.nav-link p {
+  visibility: hidden;
+}
+
+.nav-link:hover p {
+  visibility: visible;
+}
+
+#logo {
+  width: 6vw;
+  height: 5vw;
 }
 
 .view {
@@ -94,6 +133,21 @@ form div {
   height: 200px;
 }
 
+.pagination {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.pagination button {
+  padding: 1vw;
+  background-color: #323834;
+  color: white;
+  font-size: 13px;
+  border: none;
+  font-family: 'Walter Turncoat';
+}
+
 .single-plant {
   display: flex;
   flex-direction: row;
@@ -110,6 +164,7 @@ form div {
 }
 
 .container {
+  width: 250vw;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -143,8 +198,23 @@ textarea {
 }
 
 .cart {
+  width: 60vw;
+  max-width: 60vw;
   border-left: 3px dotted #c8a898;
   padding: 2vw;
+}
+
+.cart-icon img {
+  width: 3vw;
+}
+
+.cart button {
+  padding: 1vw;
+  background-color: #94c9a9;
+  color: white;
+  font-size: 13px;
+  border: none;
+  font-family: 'Walter Turncoat';
 }
 
 .checkout-item {
@@ -178,4 +248,9 @@ thead,
 tfoot {
   background-color: #333;
   color: #fff;
+}
+
+.type {
+  margin: 0;
+  padding-bottom: 12px;
 }

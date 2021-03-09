@@ -4,9 +4,14 @@ const adminsOnly = require('../utils/adminsOnly')
 module.exports = router
 
 // GET api/plants/
-router.get('/', async (req, res, next) => {
+router.get('/page/:pageNum', async (req, res, next) => {
   try {
-    const plants = await Plant.findAll({include: Type})
+    let pageNum = req.params.pageNum
+    const plants = await Plant.findAll({
+      limit: 18,
+      offset: 18 * pageNum,
+      include: Type
+    })
     res.json(plants)
   } catch (e) {
     next(e)
@@ -37,7 +42,7 @@ router.get(`/types/:id`, async (req, res, next) => {
   }
 })
 
-// GET api/plants/${plant.id}
+// GET api/plants/:id
 router.get('/:id', async (req, res, next) => {
   try {
     const plant = await Plant.findByPk(req.params.id, {include: Type})

@@ -1,9 +1,11 @@
 const router = require('express').Router()
 const {User, Cart} = require('../db/models')
+const adminsOnly = require('../utils/adminsOnly')
+const adminsOrCurrentUserOnly = require('../utils/adminsOrCurrentUserOnly')
 module.exports = router
 
 // GET api/users/
-router.get('/', async (req, res, next) => {
+router.get('/', adminsOnly, async (req, res, next) => {
   try {
     const users = await User.findAll({
       // explicitly select only the id and email fields - even though
@@ -18,7 +20,7 @@ router.get('/', async (req, res, next) => {
 })
 
 // GET api/users/:id
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', adminsOrCurrentUserOnly, async (req, res, next) => {
   try {
     const user = await User.findOne({where: {id: req.params.id}})
     res.json(user)
@@ -29,7 +31,7 @@ router.get('/:id', async (req, res, next) => {
 })
 
 // GET api/users/:id/carts
-router.get('/:id/carts', async (req, res, next) => {
+router.get('/:id/carts', adminsOrCurrentUserOnly, async (req, res, next) => {
   try {
     const carts = await Cart.findAll({
       where: {
@@ -53,7 +55,7 @@ router.get('/:id/carts', async (req, res, next) => {
 })
 
 // PUT api/users/:id
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', adminsOrCurrentUserOnly, async (req, res, next) => {
   try {
     const user = await User.findOne({where: {id: req.params.id}})
     const updatedUser = await user.update(req.body)
@@ -65,7 +67,7 @@ router.put('/:id', async (req, res, next) => {
 })
 
 // DELETE api/users/:id
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', adminsOrCurrentUserOnly, async (req, res, next) => {
   try {
     const user = await User.findOne({where: {id: req.params.id}})
     await user.destroy()

@@ -221,14 +221,13 @@ class SinglePlant extends Component {
             </form>
           </div>
         )}
-        <Cart />
+        <Cart checkingOut={false} />
       </div>
     )
   }
 }
 
 const mapState = (state) => {
-  console.log('state in single plant:', state)
   return {
     user: state.user,
     plant: state.plant.single,
