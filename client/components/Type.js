@@ -6,7 +6,9 @@ import {Link} from 'react-router-dom'
 
 class Type extends Component {
   componentDidMount() {
-    this.props.getSingleType(this.props.match.params.id)
+    const id = this.props.match.params.id
+    console.log('this.props:', this.props, 'id:', id)
+    this.props.getSingleType(id)
     this.props.fetchPlants()
   }
   render() {

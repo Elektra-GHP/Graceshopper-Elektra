@@ -2,41 +2,84 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import ContactForm from './ContactForm'
+import {fetchOrders} from '../store/user-homeReducer'
 
 /**
  * COMPONENT
  */
-export const UserHome = (props) => {
-  const {email} = props
+class UserHome extends React.Component {
+  componentDidMount() {
+    this.props.fetchOrders(this.props.user.id)
+  }
 
-  return (
-    <div>
-      <h2>Welcome, {email}</h2>
-      <div className="user-home-page">
-        <h3>My Orders</h3>
-        <button type="button"> View Orders</button>
+  render() {
+    const user = this.props.user
+    const orders = this.props.orders
+    console.log('this.props.user:', user)
+    console.log('this.props.orders:', orders)
 
-        <h3>Settings</h3>
-        <button type="button"> Personal Info </button>
+    return (
+      <div>
+        {user.name.length > 0 ? (
+          <h2>Welcome, {user.name}!</h2>
+        ) : (
+          <h2>Welcome, {user.email}!</h2>
+        )}
 
-        <h3>Reach Out To Us</h3>
+        <div className="user-home-page">
+          <h2>My Orders</h2>
+          <table>
+            <tbody>
+              <tr>
+                <td>Order Date</td>
+                <td>Order ID</td>
+                <td>Shipping Status</td>
+              </tr>
+              {orders.map((order) => {
+                return (
+                  <tr key={order.cart.id}>
+                    <td>{order.cart.orderId}</td>
+                    <td>{order.cart.orderDate}</td>
+                    <td>{order.cart.shippingStatus}</td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
 
-        <ContactForm />
+          <div className="account-user-info">
+            <h2>User Info</h2>
+            <h4>Name: {user.name}</h4>
+            <h4>Email: {user.email}</h4>
+          </div>
+
+          <h2>Contact Us</h2>
+
+          <ContactForm />
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
 }
 
 /**
  * CONTAINER
  */
 const mapState = (state) => {
+  console.log('state.userAccount:', state.userAccount)
   return {
-    email: state.user.email,
+    user: state.userAccount.user,
+    orders: state.userAccount.orders,
   }
 }
 
-export default connect(mapState)(UserHome)
+const mapDispatch = (dispatch) => {
+  return {
+    fetchOrders: (userId) => dispatch(fetchOrders(userId)),
+  }
+}
+
+export default connect(mapState, mapDispatch)(UserHome)
 
 /**
  * PROP TYPES

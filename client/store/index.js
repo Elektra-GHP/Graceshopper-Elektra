@@ -7,6 +7,7 @@ import plantsReducer from '../store/allPlantsReducer'
 import plantReducer from '../store/singlePlantReducer'
 import cartReducer from './cartReducer'
 import typesReducer from './typesReducer'
+import userHomeReducer from './user-homeReducer'
 
 const reducer = combineReducers({
   user,
@@ -14,6 +15,7 @@ const reducer = combineReducers({
   plant: plantReducer,
   cart: cartReducer,
   types: typesReducer,
+  userAccount: userHomeReducer,
 })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
