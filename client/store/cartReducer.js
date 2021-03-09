@@ -143,22 +143,24 @@ export const editQuantity = (userId, plantId, newQuant) => {
   }
 }
 
-export const checkout = (userId, shippingAddress) => {
+export const checkout = (userId, history, shippingAddress) => {
   return async (dispatch) => {
     try {
       await axios.put(`/api/checkout/user/${userId}`, {shippingAddress})
       dispatch(checkoutCart())
+      history.push('/orderConfirmation')
     } catch (error) {
       console.log('Error in checkout thunk.')
     }
   }
 }
 
-export const guestCheckout = (cart, shippingAddress) => {
+export const guestCheckout = (cart, history, shippingAddress) => {
   return async (dispatch) => {
     try {
       await axios.post(`/api/checkout/guest`, {cart, shippingAddress})
       dispatch(checkoutGuest())
+      history.push('/orderConfirmation')
     } catch (error) {
       console.log('Error in guestCheckout thunk.')
     }

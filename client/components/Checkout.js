@@ -43,10 +43,17 @@ class Checkout extends React.Component {
     }
     if (errors.length < 1) {
       this.props.user.id
-        ? this.props.checkout(this.props.user.id, this.state.shippingAddress)
-        : this.props.guestCheckout(this.props.cart, this.state.shippingAddress)
+        ? this.props.checkout(
+            this.props.user.id,
+            this.props.history,
+            this.state.shippingAddress
+          )
+        : this.props.guestCheckout(
+            this.props.cart,
+            this.props.history,
+            this.state.shippingAddress
+          )
       this.setState(initialState)
-      this.props.history.push('/orderConfirmation')
     }
     this.setState({errors: errors})
   }
@@ -125,10 +132,10 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    checkout: (userId, shippingAddress) =>
-      dispatch(checkout(userId, shippingAddress)),
-    guestCheckout: (cart, shippingAddress) =>
-      dispatch(guestCheckout(cart, shippingAddress)),
+    checkout: (userId, history, shippingAddress) =>
+      dispatch(checkout(userId, history, shippingAddress)),
+    guestCheckout: (cart, history, shippingAddress) =>
+      dispatch(guestCheckout(cart, history, shippingAddress)),
   }
 }
 

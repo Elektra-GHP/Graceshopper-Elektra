@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {fetchConfirmedCart} from '../store/cartReducer'
 
 class Confirmation extends Component {
-  componentdDidMount() {
+  componentDidMount() {
     console.log('in component did mount')
     let userId
     if (this.props.user.id) {
