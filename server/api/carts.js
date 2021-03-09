@@ -1,14 +1,6 @@
 const router = require('express').Router()
-const {Cart, Item, Plant} = require('../db/models')
+const {Cart, Item} = require('../db/models')
 module.exports = router
-
-// var ID = function () {
-//   return '_' + Math.random().toString(36).substr(2, 9)
-// }
-// if (!req.session.cookie.id) {
-//   req.session.cookie.id = ID()
-//   await Cart.create({sessionId: req.session.cookie.id})
-// }
 
 // GET api/carts/user/:id
 router.get('/user/:id', async (req, res, next) => {
@@ -28,6 +20,28 @@ router.get('/user/:id', async (req, res, next) => {
     res.json(await cart.getPlants())
   } catch (error) {
     console.log('there was an error in user/:id GET route')
+    next(error)
+  }
+})
+
+// GET api/carts/user/:id/confirmed
+router.get('/user/:id/confirmed', async (req, res, next) => {
+  console.log('inside get confirmed route')
+  try {
+    let confirmedOrder = await Cart.findAll({
+      limit: 1,
+      where: {
+        userId: req.params.id,
+        complete: true,
+      },
+      order: [['orderDate', 'ASC']],
+    })
+    console.log('confirmedOrder --->', confirmedOrder)
+
+    // {cart: confirmedOrder, items: await confirmedOrder.getPlants()}
+    res.json(confirmedOrder)
+  } catch (error) {
+    console.log('there was an error in user/:id/confirmed GET route')
     next(error)
   }
 })

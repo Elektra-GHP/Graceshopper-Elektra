@@ -46,9 +46,7 @@ class Checkout extends React.Component {
         ? this.props.checkout(this.props.user.id, this.state.shippingAddress)
         : this.props.guestCheckout(this.props.cart, this.state.shippingAddress)
       this.setState(initialState)
-      // redirect to confirmation page
-      // this.props.history.push('/orderConfirmation')
-      // this.props.history.push('/home')
+      this.props.history.push('/orderConfirmation')
     }
     this.setState({errors: errors})
   }
@@ -121,7 +119,7 @@ class Checkout extends React.Component {
 const mapState = (state) => {
   return {
     user: state.user,
-    cart: state.cart,
+    cart: state.cart.active,
   }
 }
 

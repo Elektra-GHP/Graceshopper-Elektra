@@ -4,6 +4,7 @@ import axios from 'axios'
 const GET_USER = 'GET_USER'
 const DELETE_USER = 'DELETE_USER'
 const UPDATE_USER = 'UPDATE_USER'
+const GET_ORDERS = 'GET_ORDERS'
 
 // ACTION CREATOR
 export const _getUser = (user) => {
@@ -24,6 +25,13 @@ export const _updateUser = (user) => {
   return {
     type: UPDATE_USER,
     user,
+  }
+}
+
+const getOrders = (orders) => {
+  return {
+    type: GET_ORDERS,
+    orders,
   }
 }
 
@@ -61,9 +69,21 @@ export const deleteUser = (id) => {
   }
 }
 
+export const fetchOrders = (userId) => {
+  return async (dispatch) => {
+    try {
+      const {data: orders} = await axios.get(`/api/users/${userId}/carts`)
+      dispatch(getOrders(orders))
+    } catch (error) {
+      console.log('there was an error in fetchOrders thunk')
+    }
+  }
+}
+
 // INITIAL STATE
 const initialState = {
-  single: {},
+  user: {},
+  orders: [],
 }
 
 const userHomeReducer = (state = initialState, action) => {
@@ -71,17 +91,22 @@ const userHomeReducer = (state = initialState, action) => {
     case GET_USER:
       return {
         ...state,
-        single: action.user,
+        user: action.user,
       }
     case UPDATE_USER:
       return {
         ...state,
-        single: action.user,
+        user: action.user,
       }
     case DELETE_USER:
       return {
         ...state,
-        single: {},
+        user: {},
+      }
+    case GET_ORDERS:
+      return {
+        ...state,
+        orders: action.orders,
       }
     default:
       return state
