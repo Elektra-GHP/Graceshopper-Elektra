@@ -15,7 +15,7 @@ const Plant = db.define('plant', {
   imageUrl: {
     type: Sequelize.TEXT,
     defaultValue:
-      'https://cdn3.vectorstock.com/i/1000x1000/11/52/plant-icon-with-leaves-on-stems-that-grow-from-vector-20931152.jpg',
+      'https://previews.123rf.com/images/siamimages/siamimages1811/siamimages181100085/127420719-plant-icon-vector.jpg',
     validate: {
       isUrl: 'Please enter an image URL.',
     },

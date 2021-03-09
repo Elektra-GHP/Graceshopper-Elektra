@@ -1,14 +1,14 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {getSingleType} from '../store/typesReducer'
-import {fetchPlants} from '../store/allplantsReducer'
+import {fetchPlantsAll} from '../store/allplantsReducer'
 import {Link} from 'react-router-dom'
 
 class Type extends Component {
   componentDidMount() {
     const id = this.props.match.params.id
     this.props.getSingleType(id)
-    this.props.fetchPlants()
+    this.props.fetchPlantsAll()
   }
   render() {
     const type = this.props.singleType
@@ -54,7 +54,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     getSingleType: (typeId) => dispatch(getSingleType(typeId)),
-    fetchPlants: () => dispatch(fetchPlants()),
+    fetchPlantsAll: () => dispatch(fetchPlantsAll()),
   }
 }
 
