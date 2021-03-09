@@ -28,11 +28,10 @@ class AllPlants extends Component {
 
   render() {
     const plants = this.props.plants.filter((plant) => {
-      if (this.state.filter === 'all') {
-        return plant.inventory > 0
-      } else {
+      if (this.state.filter !== 'all') {
         return plant.type.name === this.state.filter
       }
+      return plant
     })
 
     return (
@@ -64,17 +63,21 @@ class AllPlants extends Component {
                   <Link to={`/plants/types/${plant.type.id}`}>
                     {plant.type.name}
                   </Link>
+                  {plant.inventory < 1 ? (
+                    <h3>Sold Out</h3>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() =>
+                        this.props.user.id
+                          ? this.props.addPlant(this.props.user.id, plant.id)
+                          : this.props.addPlantGuest(plant)
+                      }
+                    >
+                      ADD
+                    </button>
+                  )}
 
-                  <button
-                    type="button"
-                    onClick={() =>
-                      this.props.user.id
-                        ? this.props.addPlant(this.props.user.id, plant.id)
-                        : this.props.addPlantGuest(plant)
-                    }
-                  >
-                    ADD
-                  </button>
                   {this.props.user.isAdmin && (
                     <div className="plants-admin-buttons">
                       <button

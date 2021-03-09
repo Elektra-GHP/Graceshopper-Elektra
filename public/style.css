@@ -143,6 +143,8 @@ textarea {
 }
 
 .cart {
+  width: 60vw;
+  max-width: 60vw;
   border-left: 3px dotted #c8a898;
   padding: 2vw;
 }
