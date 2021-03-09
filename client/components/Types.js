@@ -18,9 +18,9 @@ class Types extends Component {
           return (
             <div key={type.id}>
               <Link to={`/plants/types/${type.id}`}>
-                <h3 key={type.name} className="type">
+                <h2 key={type.name} className="type">
                   {type.name}
-                </h3>
+                </h2>
               </Link>
 
               <p key={type.description} className="type">
