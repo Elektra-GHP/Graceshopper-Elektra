@@ -24,15 +24,13 @@ class Routes extends Component {
 
   render() {
     const {isLoggedIn} = this.props
-
-    console.log('props in routes.js------>', this.props) // user object is available on props in routes
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
         <Route exact path="/" component={HomePage} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route exact path="/plants" component={AllPlants} />
+        <Route exact path="/plants/page/:pageNum" component={AllPlants} />
         <Route exact path="/plants/:id" component={SinglePlant} />
         <Route path="/add-plant" component={AddPlant} />
         <Route path="/cart" component={Cart} />
@@ -56,20 +54,20 @@ class Routes extends Component {
 /**
  * CONTAINER
  */
-const mapState = (state) => {
+const mapState = state => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id,
-    user: state.user,
+    user: state.user
   }
 }
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
-    },
+    }
   }
 }
 
@@ -82,5 +80,5 @@ export default withRouter(connect(mapState, mapDispatch)(Routes))
  */
 Routes.propTypes = {
   loadInitialData: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired
 }

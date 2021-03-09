@@ -13,8 +13,10 @@ class AllPlants extends Component {
   // }
 
   componentDidMount() {
-    this.props.fetchPlants()
+    this.props.fetchPlants(this.props.pageNum)
   }
+
+  componentDidUpdate() {}
 
   render() {
     const plants = this.props.plants
@@ -24,7 +26,7 @@ class AllPlants extends Component {
         <h1>Plants</h1>
         <div className="view">
           <div className="container">
-            {plants.map((plant) => {
+            {plants.map(plant => {
               return (
                 <div key={plant.id} className="all-plants-plant">
                   <img src={plant.imageUrl} className="all-plants-img" />
@@ -63,24 +65,36 @@ class AllPlants extends Component {
           </div>
           <Cart checkingOut={false} />
         </div>
+        <div className="pagination">
+          <button
+            type="button"
+            onClick={() => this.props.fetchPlants(this.props.pageNum - 1)}
+          >{`Prev: ${this.props.pageNum - 1}`}</button>
+          <p>{`${this.props.pageNum}`}</p>
+          <button
+            type="button"
+            onClick={() => this.props.fetchPlants(this.props.pageNum + 1)}
+          >{`Next: ${this.props.pageNum + 1}`}</button>
+        </div>
       </div>
     )
   }
 }
 
-const mapState = (state) => {
+const mapState = state => {
   return {
     plants: state.plants.all,
     user: state.user,
+    pageNum: state.plants.pageNum
   }
 }
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = dispatch => {
   return {
-    fetchPlants: () => dispatch(fetchPlants()),
+    fetchPlants: pageNum => dispatch(fetchPlants(pageNum)),
     addPlant: (userId, plantId) => dispatch(addPlant(userId, plantId)),
-    deletePlant: (plantId) => dispatch(deletePlant(plantId)),
-    addPlantGuest: (plant) => dispatch(addPlantGuest(plant)),
+    deletePlant: plantId => dispatch(deletePlant(plantId)),
+    addPlantGuest: plant => dispatch(addPlantGuest(plant))
   }
 }
 

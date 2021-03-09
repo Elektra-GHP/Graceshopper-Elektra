@@ -6,44 +6,44 @@ const ADD_PLANT = 'ADD_PLANT'
 const DELETE_PLANT = 'DELETE_PLANT'
 
 // ACTION CREATOR
-export const setPlants = (plants) => {
+export const setPlants = (plants, pageNum) => {
   return {
     type: SET_PLANTS,
     plants,
+    pageNum
   }
 }
 
-const addPlantCreator = (plant) => {
+const addPlantCreator = plant => {
   console.log('plant added to state:', plant)
   return {
     type: ADD_PLANT,
-    plant,
+    plant
   }
 }
 
-const deletePlantCreator = (plant) => {
+const deletePlantCreator = plant => {
   return {
     type: DELETE_PLANT,
-    plant,
+    plant
   }
 }
 
 // THUNK
-export const fetchPlants = () => {
-  return async (dispatch) => {
+export const fetchPlants = pageNum => {
+  return async dispatch => {
     try {
-      const {data: plants} = await axios.get('/api/plants')
-      dispatch(setPlants(plants))
+      const {data: plants} = await axios.get(`/api/plants/page/${pageNum}`)
+      dispatch(setPlants(plants, pageNum))
     } catch (error) {
       console.log('Error in fetching plants')
     }
   }
 }
 
-export const addPlant = (plant) => {
-  return async (dispatch) => {
+export const addPlant = plant => {
+  return async dispatch => {
     try {
-      console.log('new plant:', plant)
       const {data: newPlant} = await axios.post('/api/plants', plant)
       dispatch(addPlantCreator(newPlant))
     } catch (error) {
@@ -52,8 +52,8 @@ export const addPlant = (plant) => {
   }
 }
 
-export const deletePlant = (plantId) => {
-  return async (dispatch) => {
+export const deletePlant = plantId => {
+  return async dispatch => {
     try {
       const {data: plant} = await axios.delete(`/api/plants/${plantId}`)
       dispatch(deletePlantCreator(plant))
@@ -66,6 +66,7 @@ export const deletePlant = (plantId) => {
 // INITIAL STATE
 const initialState = {
   all: [],
+  pageNum: 0
 }
 
 //REDUCER
@@ -75,13 +76,14 @@ const plantsReducer = (state = initialState, action) => {
       return {
         ...state,
         all: action.plants,
+        pageNum: action.pageNum
       }
     case ADD_PLANT:
       return {...state, all: [...state.all, action.plant]}
     case DELETE_PLANT:
       return {
         ...state,
-        all: state.all.filter((plant) => plant.id !== action.plant.id),
+        all: state.all.filter(plant => plant.id !== action.plant.id)
       }
     default:
       return state
