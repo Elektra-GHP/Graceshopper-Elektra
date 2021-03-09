@@ -4,24 +4,24 @@ const db = require('../db')
 const Cart = db.define('cart', {
   complete: {
     type: Sequelize.BOOLEAN,
-    defaultValue: false,
+    defaultValue: false
   },
   orderId: {
     type: Sequelize.STRING,
-    defaultValue: '',
+    defaultValue: ''
   },
   orderDate: {
     type: Sequelize.STRING,
-    defaultValue: '',
+    defaultValue: ''
   },
   shippingStatus: {
     type: Sequelize.ENUM('pending', 'confirmed', 'shipped', 'delivered'),
-    defaultValue: null,
+    defaultValue: null
   },
   shippingAddress: {
     type: Sequelize.STRING,
-    defaultValue: '',
-  },
+    defaultValue: ''
+  }
 })
 
 module.exports = Cart

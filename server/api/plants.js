@@ -31,7 +31,6 @@ router.get('/types', async (req, res, next) => {
 
 //GET api/plants/types/:id
 router.get(`/types/:id`, async (req, res, next) => {
-  console.log('plants/types/:id')
   try {
     const id = +req.params.id
     const type = await Type.findByPk(id)
@@ -56,7 +55,7 @@ router.get('/:id', async (req, res, next) => {
 // POST /api/plants
 router.post('/', adminsOnly, async (req, res, next) => {
   try {
-    const newPlant = await Plant.create(req.body)
+    const newPlant = await Plant.ceate(req.body)
     res.status(201).send(newPlant)
   } catch (e) {
     next(e)
