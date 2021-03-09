@@ -3,6 +3,17 @@ const {Plant, Type} = require('../db/models')
 const adminsOnly = require('../utils/adminsOnly')
 module.exports = router
 
+router.get('/', async (req, res, next) => {
+  try {
+    const plants = await Plant.findAll({
+      include: Type,
+    })
+    res.json(plants)
+  } catch (e) {
+    next(e)
+  }
+})
+
 // GET api/plants/
 router.get('/page/:pageNum', async (req, res, next) => {
   try {
@@ -10,7 +21,7 @@ router.get('/page/:pageNum', async (req, res, next) => {
     const plants = await Plant.findAll({
       limit: 18,
       offset: 18 * pageNum,
-      include: Type
+      include: Type,
     })
     res.json(plants)
   } catch (e) {
@@ -66,7 +77,7 @@ router.post('/', adminsOnly, async (req, res, next) => {
 router.put('/:id', adminsOnly, async (req, res, next) => {
   try {
     const singlePlant = await Plant.findByPk(Number(req.params.id), {
-      include: Type
+      include: Type,
     })
     res.send(await singlePlant.update(req.body))
   } catch (e) {
