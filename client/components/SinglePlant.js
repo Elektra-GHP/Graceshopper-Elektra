@@ -52,6 +52,9 @@ class SinglePlant extends Component {
     // const typeId = this.props.types.filter(
     //   (type) => type.name === this.state.type
     // )[0].id
+
+    // what is the below loop doing?
+    // try to leave a comment documenting your code
     const editedFields = {}
     for (let key in this.state) {
       if (

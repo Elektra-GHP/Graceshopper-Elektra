@@ -2,6 +2,8 @@ const router = require('express').Router()
 const {User, Cart} = require('../db/models')
 module.exports = router
 
+// what routes in here should be protected? (admin only)
+
 // GET api/users/
 router.get('/', async (req, res, next) => {
   try {

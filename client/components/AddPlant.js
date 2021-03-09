@@ -3,6 +3,8 @@ import {connect} from 'react-redux'
 import {addPlant} from '../store/allplantsReducer'
 import {getTypes} from '../store/typesReducer'
 
+// general note for the codebase: try to remove console logs and commented out code before merging / approving PRs
+
 // COMPONENT
 
 const initialState = {
@@ -46,6 +48,7 @@ class AddPlant extends Component {
   handleSubmit(event) {
     event.preventDefault()
     console.log('this.state', this.state)
+    // would the "find" prototype method be a better fit?
     const typeId = this.props.types.filter(
       (type) => type.name === this.state.type
     )[0].id

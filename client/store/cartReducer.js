@@ -163,6 +163,9 @@ export const guestCheckout = (cart, shippingAddress) => {
 //initial state
 const initialState = []
 
+
+// since most of your actions overwrite the cart, why don't you reduce the number of action types and call GET_CART from each of your thunks which result in a new cart?
+
 //reducer
 export default function (state = initialState, action) {
   switch (action.type) {

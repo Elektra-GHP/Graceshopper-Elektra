@@ -10,6 +10,7 @@ module.exports = router
 //   await Cart.create({sessionId: req.session.cookie.id})
 // }
 
+// How can we secure the below route so that users cannot access other people's carts?
 // GET api/carts/user/:id
 router.get('/user/:id', async (req, res, next) => {
   //console.log('inside get route')
@@ -55,6 +56,7 @@ router.post('/user/:id', async (req, res, next) => {
 // PUT api/carts/user/:id
 router.put('/user/:id', async (req, res, next) => {
   try {
+    // should the below query check to see if the cart is complete?
     const cart = await Cart.findOne({where: {userId: req.params.id}})
     const item = await Item.findOne({
       where: {
@@ -76,6 +78,7 @@ router.put('/user/:id', async (req, res, next) => {
 // DELETE api/carts/user/:id
 router.delete('/user/:id', async (req, res, next) => {
   try {
+    // same here: should the below check to see if the cart is open?
     const cart = await Cart.findOne({where: {userId: req.params.id}})
     const item = await Item.findOne({
       where: {

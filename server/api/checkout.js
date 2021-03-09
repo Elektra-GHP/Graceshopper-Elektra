@@ -5,6 +5,7 @@ module.exports = router
 // PUT api/checkout/user/:id
 router.put('/user/:id', async (req, res, next) => {
   try {
+    // this query is quite common - can we wrap it in a class method in our model code for reusability?
     const activeCart = await Cart.findOne({
       where: {
         userId: req.params.id,
@@ -62,6 +63,7 @@ router.post('/guest', async (req, res, next) => {
       cartItems.push(item)
     }
 
+    // similar logic in the other checkout function - can we make it more DRY?
     for (let i = 0; i < cartItems.length; i++) {
       let item = cartItems[i]
       const plantOfItem = await Plant.findOne({where: {id: item.plantId}})
