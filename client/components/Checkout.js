@@ -59,9 +59,8 @@ class Checkout extends React.Component {
   }
 
   render() {
-    console.log('checking out?', this.props.checkingOut)
     return (
-      <div className="checkout-page">
+      <div className="container">
         <div>
           <form id="checkout-form" onSubmit={this.handleSubmit}>
             <div className="shipping-details">
