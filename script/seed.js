@@ -97,13 +97,12 @@ async function seed() {
       origin:
         'This plant is a native of Australia, Indonesia, China, Japan and India.'
     },
-    /*
     {
       name: 'Painter’s Palette',
       description:
         'The Painter’s Palette has arrow shaped and highly polished leaves with an almost unreal looking appearance, which may get people wondering if the plant is genuine or artificial.The leaf or spathe surrounding the flowering spike is normally red, cream or purple but either way the flower spike itself is always straight.',
-      origin: 'Native to Columbia and Ecuador.',
-    },*/
+      origin: 'Native to Columbia and Ecuador.'
+    },
     {
       name: 'Arum-lily',
       description:
@@ -133,6 +132,7 @@ async function seed() {
     calathea,
     orchids,
     devilsIvy,
+    paintersPalette,
     arumLily,
     stromanthe,
     maranta,

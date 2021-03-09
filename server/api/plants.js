@@ -7,7 +7,6 @@ module.exports = router
 router.get('/page/:pageNum', async (req, res, next) => {
   try {
     let pageNum = req.params.pageNum
-    console.log('get pageNum route', pageNum)
     const plants = await Plant.findAll({
       limit: 18,
       offset: 18 * pageNum,
