@@ -3,25 +3,53 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {addPlant, addPlantGuest} from '../store/cartReducer'
 import {fetchPlants, deletePlant} from '../store/allPlantsReducer'
+import {getTypes} from '../store/typesReducer'
 import Cart from './Cart'
 
 // COMPONENT
 
 class AllPlants extends Component {
-  // constructor(props) {
-  //   super(props)
-  // }
+  constructor(props) {
+    super(props)
+    this.state = {
+      filter: 'all',
+    }
+    this.handleChange = this.handleChange.bind(this)
+  }
 
   componentDidMount() {
     this.props.fetchPlants()
+    this.props.getTypes()
+  }
+
+  handleChange(event) {
+    this.setState({[event.target.name]: event.target.value})
   }
 
   render() {
-    const plants = this.props.plants
+    const plants = this.props.plants.filter((plant) => {
+      if (this.state.filter !== 'all') {
+        return plant.type.name === this.state.filter
+      }
+      return plant
+    })
 
     return (
       <div>
         <h1>Plants</h1>
+        <span className="filter">
+          <label htmlFor="filter">Filter: </label>
+          <select
+            onChange={this.handleChange}
+            value={this.state.filter}
+            name="filter"
+          >
+            <option>all</option>
+            {this.props.types.map((type) => {
+              return <option key={type.id}>{type.name}</option>
+            })}
+          </select>
+        </span>
         <div className="view">
           <div className="container">
             {plants.map((plant) => {
@@ -35,17 +63,21 @@ class AllPlants extends Component {
                   <Link to={`/plants/types/${plant.type.id}`}>
                     {plant.type.name}
                   </Link>
+                  {plant.inventory < 1 ? (
+                    <h3>Sold Out</h3>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() =>
+                        this.props.user.id
+                          ? this.props.addPlant(this.props.user.id, plant.id)
+                          : this.props.addPlantGuest(plant)
+                      }
+                    >
+                      ADD
+                    </button>
+                  )}
 
-                  <button
-                    type="button"
-                    onClick={() =>
-                      this.props.user.id
-                        ? this.props.addPlant(this.props.user.id, plant.id)
-                        : this.props.addPlantGuest(plant)
-                    }
-                  >
-                    ADD
-                  </button>
                   {this.props.user.isAdmin && (
                     <div className="plants-admin-buttons">
                       <button
@@ -72,6 +104,7 @@ const mapState = (state) => {
   return {
     plants: state.plants.all,
     user: state.user,
+    types: state.types.all,
   }
 }
 
@@ -81,6 +114,7 @@ const mapDispatch = (dispatch) => {
     addPlant: (userId, plantId) => dispatch(addPlant(userId, plantId)),
     deletePlant: (plantId) => dispatch(deletePlant(plantId)),
     addPlantGuest: (plant) => dispatch(addPlantGuest(plant)),
+    getTypes: () => dispatch(getTypes()),
   }
 }
 
