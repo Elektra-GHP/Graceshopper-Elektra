@@ -164,6 +164,7 @@ form div {
 }
 
 .container {
+  width: 250vw;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

@@ -24,22 +24,27 @@ router.get('/user/:id', isCurrentUser, async (req, res, next) => {
 })
 
 // GET api/carts/user/:id/confirmed
-router.get('/user/:id/confirmed', isCurrentUser, async (req, res, next) => {
-  try {
-    let confirmedOrder = await Cart.findAll({
-      limit: 1,
-      where: {
-        userId: req.params.id,
-        complete: true,
-      },
-      order: [['orderDate', 'ASC']],
-    })
-    res.json(confirmedOrder)
-  } catch (error) {
-    console.log('there was an error in user/:id/confirmed GET route')
-    next(error)
+router.get(
+  '/user/:id/confirmed',
+  /*isCurrentUser,*/ async (req, res, next) => {
+    try {
+      let confirmedOrder = await Cart.findOne({
+        limit: 1,
+        where: {
+          userId: req.params.id,
+          complete: true,
+        },
+        order: [['orderDate', 'ASC']],
+      })
+      const plants = await confirmedOrder.getPlants()
+      const orderWithPlants = {order: confirmedOrder, plants}
+      res.json(orderWithPlants)
+    } catch (error) {
+      console.log('there was an error in user/:id/confirmed GET route')
+      next(error)
+    }
   }
-})
+)
 
 // POST api/carts/user/:id
 router.post('/user/:id', isCurrentUser, async (req, res, next) => {

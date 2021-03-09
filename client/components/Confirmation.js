@@ -16,32 +16,38 @@ class Confirmation extends Component {
   }
 
   render() {
-    const order = this.props.order
+    console.log('this.props.order', this.props.order)
+    const order = this.props.order.order
+    console.log('order in render:', order)
+    const plants = this.props.order.plants
+    console.log('plants of order:', plants)
+    // console.log(`orderId: ${order.orderId}, shippingAddress: ${order.shippingAddress}`)
+    // plants.forEach(plant => console.log('plant: ', plant))
     return (
       <div>
         <h2>✅ Thank you for your order!</h2>
-        <p>Order Number: {order.orderId}</p>
-        <p>Shipped To: {order.shippingAddress}</p>
-        {/* <div className="cart">
-          {order.map(plant => {
+        {/* {order && (<p>Order Number: {order.orderId}</p>)} */}
+        {/*<p>Shipped To: {order.shippingAddress}</p>
+        <div className="cart">
+          {plants.map(plant => {
             return (
               <div key={plant.id} className="checkout-item">
                 <h3>{plant.name}</h3>
                 <img src={plant.imageUrl} className="checkout-plant-img" />
                 <p>
-                  ${plant.price} X {plant.item.quantity}
+                  ${Number(plant.price)} X {plant.item.quantity}
                 </p>
               </div>
             )
-          })}
-            <div>
+          })} */}
+        {/* <div>
               Total: $0
               Total: ${cart.reduce((plant, total) => {
                 total+=({plant.price}*{plant.item.quantity})
                   return total
                 }, 0)}
-            </div>
-        </div>  */}
+            </div> */}
+        {/* </div> */}
       </div>
     )
   }

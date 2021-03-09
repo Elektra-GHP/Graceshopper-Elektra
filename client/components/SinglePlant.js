@@ -221,7 +221,7 @@ class SinglePlant extends Component {
             </form>
           </div>
         )}
-        <Cart />
+        <Cart checkingOut={false} />
       </div>
     )
   }
