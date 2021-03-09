@@ -1,7 +1,14 @@
 import React from 'react'
 
 const HomePage = () => {
-  return <h1>This is the Home Page.</h1>
+  return (
+    <div>
+      <img
+        src="https://sprout-assets.floodlight.design/wp-content/uploads/2018/05/landing_sketch_smallerhouse_template.jpg"
+        width="100%"
+      />
+    </div>
+  )
 }
 
 export default HomePage
