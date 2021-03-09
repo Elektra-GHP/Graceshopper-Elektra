@@ -24,6 +24,7 @@ export const getTypes = () => {
   return async (dispatch) => {
     try {
       const {data: types} = await axios.get('/api/plants/types')
+      console.log('inside thunk: types', types)
       dispatch(setTypes(types))
     } catch (error) {
       console.log('there was an error in getTypes thunk')
