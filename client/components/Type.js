@@ -16,7 +16,6 @@ class Type extends Component {
     const filterPlants = plants.filter((plant) => {
       return plant.type.id === type.id
     })
-    console.log(plants)
 
     return (
       <div>

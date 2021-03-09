@@ -179,3 +179,8 @@ tfoot {
   background-color: #333;
   color: #fff;
 }
+
+.type {
+  margin: 0;
+  padding-bottom: 12px;
+}
