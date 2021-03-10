@@ -57,7 +57,7 @@ class Cart extends PureComponent {
                 <Link to={`/plants/${plant.id}`}>{plant.name}</Link>
               </h2>
               <p>
-                {plant.item.quantity} x ${plant.price * plant.item.quantity}
+                {plant.item.quantity} @ ${plant.price}
               </p>
               <button
                 type="button"

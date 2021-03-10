@@ -60,7 +60,7 @@ class Checkout extends React.Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="checkout-container">
         <div>
           <form id="checkout-form" onSubmit={this.handleSubmit}>
             <div className="shipping-details">

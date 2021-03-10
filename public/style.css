@@ -132,10 +132,8 @@ form div {
 }
 
 .all-plants-img {
-  max-height: 30em;
-  max-width: 40em;
-  width: 300px;
-  height: 200px;
+  width: 250px;
+  height: 300px;
 }
 
 .pagination {
@@ -168,7 +166,17 @@ form div {
   margin: 3%;
 }
 
-.container {
+.all-plants-container {
+  width: 250vw;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.container,
+.checkout-container {
   /*width: 250vw;*/
   display: flex;
   flex-direction: row;
