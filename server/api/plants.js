@@ -19,8 +19,8 @@ router.get('/page/:pageNum', async (req, res, next) => {
   try {
     let pageNum = req.params.pageNum
     const plants = await Plant.findAll({
-      limit: 16,
-      offset: 16 * pageNum,
+      limit: 15,
+      offset: 15 * pageNum,
       include: Type,
     })
     res.json(plants)
