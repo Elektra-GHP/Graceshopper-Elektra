@@ -26,8 +26,8 @@ class SinglePlant extends Component {
       name: '',
       imageUrl: '',
       description: '',
-      inventory: '',
-      price: '',
+      inventory: 0,
+      price: 0,
       light: '',
       water: '',
       humidity: '',
@@ -37,10 +37,20 @@ class SinglePlant extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const id = this.props.match.params.id
-    this.props.fetchPlant(id)
-    this.props.getTypes()
+    await this.props.fetchPlant(id)
+    await this.props.getTypes()
+    await this.setState({
+      name: this.props.plant.name,
+      imageUrl: this.props.plant.imageUrl,
+      description: this.props.plant.description,
+      inventory: this.props.plant.inventory,
+      price: this.props.plant.price,
+      light: this.props.plant.light,
+      water: this.props.plant.water,
+      humidity: this.props.plant.humidity,
+    })
   }
 
   handleChange(event) {
@@ -52,17 +62,17 @@ class SinglePlant extends Component {
     // const typeId = this.props.types.filter(
     //   (type) => type.name === this.state.type
     // )[0].id
-    const editedFields = {}
-    for (let key in this.state) {
-      if (
-        this.state[key] !== this.props.plant[key] &&
-        this.state[key].length > 0
-      ) {
-        editedFields[key] = this.state[key]
-      }
-    }
-    this.props.editPlant(this.props.plant.id, editedFields)
-    this.setState(initialState)
+    // const editedFields = {}
+    // for (let key in this.state) {
+    //   if (
+    //     this.state[key] !== this.props.plant[key] &&
+    //     this.state[key].length > 0
+    //   ) {
+    //     editedFields[key] = this.state[key]
+    //   }
+    // }
+    // this.props.editPlant(this.props.plant.id, editedFields)
+    this.props.editPlant(this.props.plant.id, this.state)
   }
 
   render() {
@@ -140,34 +150,7 @@ class SinglePlant extends Component {
                   value={this.state.price}
                 />
               </div>
-              <div>
-                <label htmlFor="light">Light (none, indirect, direct)</label>
-                <input
-                  className="input-box"
-                  name="light"
-                  onChange={this.handleChange}
-                  value={this.state.light}
-                />
-              </div>
-              <div>
-                <label htmlFor="water">Water (daily, bi-weekly, weekly) </label>
-                <input
-                  className="input-box"
-                  name="water"
-                  onChange={this.handleChange}
-                  value={this.state.water}
-                />
-              </div>
-              <div>
-                <label htmlFor="humidity">Humidity (low, medium, high)</label>
-                <input
-                  className="input-box"
-                  name="humidity"
-                  onChange={this.handleChange}
-                  value={this.state.humidity}
-                />
-              </div>
-              {/* <div className="add-plant-light">
+              <div className="add-plant-light">
                 <label htmlFor="light">Light</label>
                 <select
                   onChange={this.handleChange}
@@ -214,7 +197,7 @@ class SinglePlant extends Component {
                     return <option key={type.id}>{type.name}</option>
                   })}
                 </select>
-              </div> */}
+              </div>
               <button id="add-plant-btn" type="submit">
                 Edit Plant
               </button>
